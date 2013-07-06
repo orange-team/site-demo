@@ -111,14 +111,6 @@ function toSearch(type)
             	<div style="float:left;">
                 <input id="button1" type="button" value="全选" onclick="selectBox('1','news_check')" />
 				<input id="button2" type="button" value="反选" onclick="selectBox('0','news_check')" />
-				<span style="margin-left:200px;">
-                    <input id="button3" type="button" value="推 荐" onclick="toServer('','news_check','__ROOT__/Adminsite/index.php/News/newsAttribute?act=recommend&val=1&aryid','recommend')" />
-                    <input id="button4" type="button" value="取消推荐" onclick="toServer('','news_check','__ROOT__/Adminsite/index.php/News/newsAttribute?act=recommend&val=2&aryid','recommend')" />
-                    
-                    <input id="button3" type="button" value="置 顶" onclick="toServer('','news_check','__ROOT__/Adminsite/index.php/News/newsAttribute?act=top&val=1&aryid','top')" />
-                    <input id="button4" type="button" value="取消置顶" onclick="toServer('','news_check','__ROOT__/Adminsite/index.php/News/newsAttribute?act=top&val=2&aryid','top')" />
-                </span>
-
                 </div>
 				<div style="float:right;"><?php echo (!empty($page)) ? $page : '';?></div>
             </td>
