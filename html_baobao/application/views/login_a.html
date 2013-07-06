@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>网站后台管理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="<?=base_url()?>adminStatic/css/transdmin.css" rel="stylesheet" type="text/css" media="screen" />
+<script type="text/javascript" src="<?=base_url()?>adminStatic/js/jquery.js"></script>
+<script type="text/javascript" src="<?=base_url()?>adminStatic/js/jNice.js"></script>
+<style type="text/css">
+body { background-color:#FFF;}
+#wrapper { width:380px; height:auto; background-color:#EEE; margin:100px auto; padding:9px;}
+#main { background-color:#FFF; border:1p #ddd solid;}
+.logopic { display:block; margin:10px auto;}
+h3 { text-align:center; padding: 0; margin: 15px 0;}
+#main fieldset { margin:10px;}
+</style>
+</head>
+
+<body>
+<div id="wrapper">
+	<div id="main">
+        <!--
+    	<img class="logopic" src="<?=base_url()?>adminStatic/img/transdmin-light.gif" width="225" height="50" border="0" />
+        -->
+    	
+        <form action="<?php echo site_url('login/doLogin');?>" method="post" class="jNice" onsubmit="return oValidate.vChk();">
+            <h3>管理员登录</h3>
+            <fieldset>
+            	<p><label>用户名：</label><input type="text" class="text-long" name="uname" id="usr" /></p>
+                <p><label>密 码：</label><input type="password" class="text-long" name="passwd" id="pwd" /></p>
+                <input type="submit" value=" 登 录" class="button-submit" name="btn" />
+			</fieldset>
+		</form>
+        
+        <div style="text-align:center; margin-bottom:10px;">Powered by <a href="#" target="_blank">ColdFrame</a></div>
+	</div>
+</div>
+<script type="text/javascript" src="/adminStatic/js/validateForm.js"></script>
+<script language="javascript">
+<!--
+document.getElementById('usr').focus();
+var vFldArr = new Array('usr', 'pwd');
+var vTipArr = new Array("<br/><br/><br/><span style='color:red'>用户名不能为空</span>", "<br/><br/><br /><span style='color:red'>密码不能为空</span>");
+var vPtnArr = new Array('', '');
+var oValidate = new ValidateForm(vFldArr, vTipArr, vPtnArr);
+-->
+</script>
+</body>
+</html>

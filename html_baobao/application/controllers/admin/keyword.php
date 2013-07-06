@@ -115,26 +115,29 @@ class Keyword extends MY_Controller
         $is_two = false;   //是否显示二级栏目
         $is_three = false; //是否显示三级栏目
         $arr['one'] = $arr['two'] = $arr['three'] = '';
-        if($section['parent'] != 0)
+        if(!empty($section))
         {
-            $section_up = $this->get_parent($section['parent']);
-            $is_two = true;
-            $arr['one'] = $section_up[0] ? $section_up[0] : '';
-            $arr['two'] = $section_up[1] ? $section_up[1] : '';
-            if('' != $arr['one'] && '' != $arr['two'])
+            if($section['parent'] != 0)
             {
-                $is_three = true;
+                $section_up = $this->get_parent($section['parent']);
+                $is_two = true;
+                $arr['one'] = $section_up[0] ? $section_up[0] : '';
+                $arr['two'] = $section_up[1] ? $section_up[1] : '';
+                if('' != $arr['one'] && '' != $arr['two'])
+                {
+                    $is_three = true;
+                }
+                if($arr['one'] == '')
+                {
+                    $arr['one'] = $arr['two']; unset($arr['two']);
+                    $arr['two'] = $section;
+                } 
+            }else
+            {
+                $arr['one'] = $section;
             }
-            if($arr['one'] == '')
-            {
-                $arr['one'] = $arr['two']; unset($arr['two']);
-                $arr['two'] = $section;
-            } 
-        }else
-        {
-            $arr['one'] = $section;
         }
-        
+
         //顶级栏目
         $arr['one_section'] = $this->section->getBy_parent(0);
         if( $is_two == true )
@@ -143,6 +146,7 @@ class Keyword extends MY_Controller
             $arr['two_section'] =  $this->section->getList(array('parent'=>$fid));
         }
         $arr['three_section'] = $is_three==true ? $this->section->getList(array('parent'=>$arr['two']['id'])) : '';
+        
 		
 		$this->load->view('admin/keywordEdit', $arr);
 	}
