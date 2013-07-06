@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
+<title>管理导航区域</title>
+<script  type="text/javascript" language="javascript">
+	var preClassName = "man_nav_2";
+	function list_sub_nav(Id,sortname){
+		if(preClassName != ""){
+			getObject(preClassName).className="bg_image";
+   		}
+   		if(getObject(Id).className == "bg_image"){
+      		getObject(Id).className="bg_image_onclick";
+      		preClassName = Id;
+	  		showInnerText(Id);
+	  		window.top.frames['leftFrame'].outlookbar.getbytitle(sortname);
+	  		window.top.frames['leftFrame'].outlookbar.getdefaultnav(sortname);
+   		}
+	}
+
+	function showInnerText(Id){
+    	var switchId = parseInt(Id.substring(8));
+		var showText = "对不起没有信息！";
+		switch(switchId){
+	    	case 1:
+		   		showText =  "欢迎使用babay网后台管理系统!";
+		   		break;
+			case 2:
+		   		showText =  "妈妈学习";
+		   		break;
+	    	case 3:
+		   		showText =  "妈妈说说";
+		   		break;		   	
+	    	case 4:
+		   		showText =  "其他设置";
+		   		break;		   		   
+		}
+		getObject('show_text').innerHTML = showText;
+	}
+	
+	//获取对象属性兼容方法
+ 	function getObject(objectId){
+    	if(document.getElementById && document.getElementById(objectId)){
+			// W3C DOM
+			return document.getElementById(objectId);
+    	}else if(document.all && document.all(objectId)){
+			// MSIE 4 DOM
+			return document.all(objectId);
+    	}else if(document.layers && document.layers[objectId]){
+			// NN 4 DOM.. note: this won't find nested layers
+			return document.layers[objectId];
+    	}else{
+			return false;
+		}
+	}
+</script>
+</head>
+
+<body>
+<div id="nav">
+    <ul>
+    	<li id="man_nav_1" onclick="list_sub_nav(id,'系统设置')"  class="bg_image">系统设置</li>
+        <li id="man_nav_2" onclick="list_sub_nav(id,'妈妈学习')"  class="bg_image_onclick">妈妈学习</li>
+        <li id="man_nav_3" onclick="list_sub_nav(id,'妈妈说说')"  class="bg_image">妈妈说说</li>
+        <li id="man_nav_4"  onclick="list_sub_nav(id,'其他设置')"  class="bg_image">其他设置</li>
+   	</ul>
+</div>
+<div id="sub_info">&nbsp;&nbsp;<img src="/adminStatic/img/hi.gif" />&nbsp;<span id="show_text">妈妈学习</span></div>
+</body>
+</html>

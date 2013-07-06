@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
+<script type="text/javascript" src="/adminStatic/js/jquery.min.js" ></script>
+<title>{$pagetitle} - 网站后台管理</title>
+</head>
+
+<body>
+<div id="man_zone">
+	<h2>{$pagetitle}</h2>
+    <table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style">
+    	<tr>
+      		<td><a href="../Index/cateadd">添加新类别</a></td>
+    	</tr>
+    </table>
+  	<table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style" style="margin:10px 0;">
+    	<tr>
+      		<td width="10%" class="left_title_1" style="text-align:center;">类别列表:</td>
+      		<td width="90%" valign="middle">
+            	<dl style="margin-bottom:0;">
+            	<volist name='category' id='catev' >
+                	<dt>{$catev.num}. ■ [<a href="../Index/catedel/id/{$catev.id}">删除</a>] [<a href="../Index/cateedit/id/{$catev.id}">更改</a>] <b>{$catev.catename_cn}</b></dt>
+                    <volist name='catev.lcate' id='lcatev' >
+                    	<dd>—— {$lcatev.catename_cn} [<a href="../Index/catedel/id/{$lcatev.id}">删除</a>] [<a href="../Index/cateedit/id/{$lcatev.id}">更改</a>]</dd>
+                    </volist>
+                </volist>
+            	</dl>
+            </td>
+    	</tr>
+  	</table>
+    <br />
+    <br /><br />
+</div>
+</body>
+</html>

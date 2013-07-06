@@ -1,0 +1,196 @@
+@charset "utf-8";
+body { padding:0px; margin: 0px;}
+form { padding:0px; margin: 0px;}
+html { padding:0px;	background-color: #F9F9F9; margin: 0px;}
+body { background-color: #F9F9F9; font-family: Verdana, Arial,Vrinda,Tahoma; line-height: 175%;	font-size:12px;	color:#666;}
+a { color: #555; text-decoration:none;}
+a:hover { color: #0099CC; text-decoration:underline;}
+.table_style a { color: #0099CC; text-decoration:none;}
+.table_style a:hover { color: #555; text-decoration:underline;}
+
+img { border:0; display:inline;}
+ul{ margin:0; padding:0; list-style-position: outside; list-style-type: none;}
+li{ margin:0; padding:0;}
+div{ margin:0; padding:0;}
+
+.header_content { margin: 0 auto; padding:0px; width: 100%;}
+.header_content .logo { height: 50px; width: 20%; float: left;}
+.header_content .right_nav { float: right; width: 80%; height: 50px;}
+
+.right_nav .text_left { float: left; width: 20%; padding: 22px 0 0 0; color: #CC3300;}
+.right_nav .text_right { float: right; width: 80%; display: inline; padding: 22px 0 0 0; text-align: right;}
+.nav_list a { display: inline; color:#3399CC;}
+.nav_list li { display:inline;}
+.nav_return a { display: inline; color:#3399CC;}
+.nav_return li { display: inline;}
+
+#left_content { clear: both; width: 199px;}
+#left_content #user_info { background-image: url(../img/manage_r2_c1.jpg); background-repeat: no-repeat; height: 55px; padding: 10px 0 0 55px;}
+#left_content #user_info a{ color:#0099CC;}
+#left_content #main_nav { width: 199px; background-image: url(../img/left_nav_bg.jpg); background-repeat: repeat-y;}
+#left_main_nav { float: left; width: 25px; line-height: 13px; color:#0099CC;}
+#left_main_nav li{ height:69px; width:12px; text-align: center; padding: 7px 6px 0 7px;}
+.left_back{ background-image: url(../img/manage_r7_c2.jpg); background-repeat: no-repeat; cursor:pointer;}
+.left_back_onclick{ background-image: url(../img/manage_r6_c2.jpg); background-repeat: no-repeat; color:#333333;}
+#left_main_nav a{ color:#0099CC;}
+
+#right_main_nav { width: 173px; border:1px #B4C9C6 solid; border-left:0; float: right; background-color: #FFFFFF; height: 560px; text-align: left;}
+.list_tilte {
+	background-image: url(../img/list_title.gif);
+	background-repeat: no-repeat;
+	margin: 0 auto;
+	clear: both;
+	height: 22px;
+	width: 140px;
+	padding-left: 30px;
+	font-weight: bold;
+	color: #0099CC;
+	margin-top: 9px;
+	cursor:pointer;
+}
+.list_tilte_onclick {
+	background-image: url(../img/list_title_onclick.gif);
+	background-repeat: no-repeat;
+	margin: 0 auto;
+	clear: both;
+	height: 22px;
+	width: 140px;
+	padding-left: 30px;
+	font-weight: bold;
+	color: #0099CC;
+	margin-top: 9px;
+	cursor:pointer;
+}
+.list_detail {
+	margin: 0 auto;
+}
+.list_detail li{
+	list-style-image: url(../img/direct_blue.gif);
+	list-style-position: inside;
+	padding: 0 0 0 4px;
+    }
+
+#switchpic {
+	width: 6px;
+	cursor:pointer;
+	clear: both;
+	vertical-align: bottom;
+	margin-top: 220px;
+}
+
+#nav { width:99%; float:left; background-image: url(../img/nav_bg.jpg);}
+#nav ul { margin:0; list-style:none; padding: 0;}
+#nav li {
+     float:left; 
+	 margin:0; 
+	 padding:2px 35px 0 30px;
+	 line-height:24px;
+	 font-weight:bold;
+}
+.bg_image{
+	 background: url(../img/manage_r2_c14.jpg) no-repeat;
+	 cursor:pointer;
+}
+.bg_image_onclick{
+	 background: url(../img/manage_r2_c13.jpg) no-repeat;
+	 color:#0099CC;
+}
+#sub_info {
+	width: 99%;
+	float:left;
+	background-image: url(../img/manage_r3_c11.jpg);
+	border:1px #B4C9C6 solid;
+	border-top:0;
+	height: 27px;
+	background-repeat: repeat-x;
+	padding: 5px 0 0 0;
+}
+
+#man_zone { height: 550px; width: 99%; border: 1px solid #B4C9C6; margin: 6px 0 0 0; background-color:#FFFFFF; padding: 5px 0 5px 0; overflow: auto;}
+#man_zone h2 { font-size:14px; padding:5px 10px; margin-bottom:0;}
+#man_zone table{
+    background-color:#DBE6E3;
+}
+#man_zone table tr{
+    background-color:#fff;
+}
+#man_zone table th{
+    background-color:#F2F2F2;
+}
+.left_title_1 {
+	background-color: #F3F8F7;
+	color:#73938E;
+	font-weight:bold;
+	line-height:30px;
+	text-align:right
+}
+.left_title_2 {
+	background-color: #fff;
+	color:#73938E;
+	font-weight:bold;
+	line-height:30px;
+	text-align:right;
+}
+
+/* 表单样式 */
+.text_style { width:450px; height:20px; line-height:20px; padding:2px; border:1px #CCC solid;}
+.w_50 { width:50px;}
+.w_150 { width:150px;}
+.w_300 { width:300px;}
+
+/* 文本样式 */
+span.green { color:#090;}
+span.red { color:#F00;}
+span.blue { color:#06C;}
+
+/*2013.06.29 后台栏目样式 add*/
+.add_fl{ height:30px;line-height:30px; }
+.add_height{ height:25px;line-height:25px; }
+.add_height a{ dispaly:inline-block;margin-left:15px; }
+.add_height a:link,.add_height a:visited{ text-decoration:underline;color:#0D78AF; }
+.add_titleg{ margin-top:10px; }
+.tab_t1 .add_cz,.tab_t1 .add_che{ display:inline-block;background:#dfdfdf; font-size:12px;color:#fff; width:40%; }
+.tab_t1 .add_che{ width:60%; }
+.add_height .add_cz,.add_height .add_che{ display:inline-block;font-size:12px;color:#fff; width:40% }
+.add_height .add_che{ width:60%; }
+.add_che select{ margin-left:40px; }
+.gy{ background:#f2f2f2; }
+.add_cz a{ display:inline-block;margin:0 25px 0 0; }
+.ts_color{ color:#CC0000; }
+.add_fl a:link,.add_fl a:visited{ color:#585858;text-decoration:none; }
+.add_fl span{ display:inline-block;margin-right:5px; }
+.fl2_mar a{ display:inline-block;padding-left:20px; }
+.fl3_mar a{ display:inline-block;padding-left:35px; }
+.add_width{ width:100px; }
+.add_che select,.main_2 select{ width:120px;}
+.add_href{ padding:10px 0 0 15px; }
+.batch_title{ margin-bottom:10px; }
+.add_batch{ padding-left:15px; margin-bottom:10px; }
+.add_batch select{ width:100px; margin-right:5px; }
+.add_batch_sub{ margin:25px 0 0 15px; }
+.add_batch_sub .excelbut{ font-weight:lighter; }
+.add_batch_sub span{ display:inline-block;margin-left:5px;color:#F00; }
+.formtabel1 select{ width:120px; }
+.add_error{ padding:5px 0 5px 10px;	}
+.add_error input[type="radio"]{ vertical-align:bottom; }
+.add_error img{ vertical-align:bottom; }
+.add_error span{ display:inline-block;margin-right:15px; }
+.add_error .error_time{ margin-left:20px; }
+.add_error .error_time input{ width:100px;margin-right:5px; }
+.add_batch_sub .erroe_tb_information{ color:#333; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

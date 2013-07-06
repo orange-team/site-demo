@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>首页</title>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<link href="css/tab.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/public.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript">
+<!--
+jQuery(document).ready(function($){
+    setInterval( "slideSwitch()", 5000 );
+	showDate();
+});
+function slideSwitch() {
+    var $active = jQuery('#slideshow div.active');
+    if ( $active.length == 0 ) $active = jQuery('#slideshow div:last');
+    var $next =  $active.next().length ? $active.next(): jQuery('#slideshow div:first');
+    $active.addClass('last-active');
+    $next.css({opacity: 0.0})
+        .addClass('active')
+        .animate({opacity: 1.0}, 1000, function() {
+            $active.removeClass('active last-active');
+    });
+}
+function showDate()
+{
+	var nd, mo, y, da;
+	nd=new Date();
+	mo=nd.getMonth()+1;
+	y=nd.getYear();
+	if(y<80)y+=2000;
+	if(y>=80&y<=138)y+=1900;
+	da=nd.getDay();
+	var txt = y+"年"+mo+"月"+nd.getDate()+"日 ";
+	//time
+	txt += "<span id='Clock' style='font-size:12px; color=#FFFF999'></span>";
+	var wee;
+	wee=new Array("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+	txt += wee[da];
+	//time
+	$('#showDate').html(txt);
+}
+//-->
+</script>
+</head>
+
+<body>
+<div id="warper">
+	<div id="header">
+    	<div class="logo">
+        	<img class="logoimg" src="http://www.bjprochina.com/images/logo2.jpg" border="0" height="90"/>
+        	<div class="serach">
+            	<form name="serach" action="/article/searchlist/18/18" method="get">
+                	<select name="cate" class="serchselect">
+                    	<option value="1">产品</option>
+                        <option value="2">新闻</option>
+                    </select>
+                	<input class="serchinput" type="text" name="key" value="请输入搜索内容..."/>
+                    <input class="serchsub" type="submit" value=""/>
+                </form>
+            </div>
+        	<div class="date"><span id="showDate"></span>&nbsp;&nbsp;&nbsp;&nbsp;语言选择：</div>
+			<div class="lg"><a href="#" title="中文简体"><img src="http://www.bjprochina.com/images/flag-cn.png" width="24" border="0" align="absmiddle" /></a><a href="#" title="俄文"><img src="http://www.bjprochina.com/images/flag-ru.png" width="24" border="0" align="absmiddle" /></a><a href="#" title="英国"><img src="http://www.bjprochina.com/images/flag-il.png" width="24" border="0" align="absmiddle" /></a></div>
+        </div>
+    	<div class="nav">
+        	<ul>
+			   
+			<li ><a href="/welcome/index_tmp" class="selected home">首页</a>
+				 
+			</li>
+			   
+			<li class="sub"><a href="javascript:;" >关于柏华汇川</a>
+								<div class="subnav">
+										<a href="/article/showone/10/">企业概况</a>
+										<a href="/article/showone/11/">生产基地</a>
+										<a href="/article/showone/12/">董事长致辞</a>
+					 
+				</div>
+				 
+			</li>
+			   
+			<li class="sub"><a href="javascript:;" >科技研发</a>
+								<div class="subnav">
+										<a href="/article/showone/13/">技术</a>
+										<a href="/article/showone/14/">资质证书</a>
+										<a href="/article/showone/15/">研发团队</a>
+					 					<a href="/article/showone/15/">客户反馈</a>
+				</div>
+				 
+			</li>
+			   
+			<li class="sub"><a href="javascript:;" >产品介绍</a>
+								<div class="subnav">
+										<a href="/product/showlist/16/1">上市产品</a>
+										<a href="/product/showlist/17/2">后续产品</a>
+					 
+				</div>
+				 
+			</li>
+			   
+			<li class="sub"><a href="javascript:;" >新闻中心</a>
+								<div class="subnav">
+										<a href="/article/showlist/18/18/">最新热点</a>
+										<a href="/article/showlist/19/19/">公司动态</a>
+					 
+				</div> 
+			</li>
+			   
+			<li class="sub"><a href="/dealer/login" >经销商平台</a>
+								<div class="subnav">
+										<a href="/dealer/message/25">在线留言</a>
+										<a href="/dealer/order/26">采购订单</a>
+					 
+				</div>
+			</li>
+			   
+			<li><a href="/offer/position_list/20">人才招聘</a></li>
+			<li><a href="/offer/position_list/20">常见问题</a></li>
+			<li><a href="/article/showone/21/">联系我们</a></li>
+			</ul>
+        </div>
+        
+        <div id="slideshow">
+        	<div class="active"><a href="javascript:void(0);"><img src="http://www.bjprochina.com/images/banner_1.jpg" alt="Slideshow Image 1" /></a> </div>
+          	<div><a href="javascript:void(0);"><img src="http://www.bjprochina.com/images/banner_2.jpg" alt="Slideshow Image 2" /></a> </div>
+          	<div><a href="javascript:void(0);"><img src="http://www.bjprochina.com/images/banner_3.jpg" alt="Slideshow Image 3" /></a> </div>
+          	<div><a href="javascript:void(0);"><img src="http://www.bjprochina.com/images/banner_4.jpg" alt="Slideshow Image 4" /></a> </div>
+        </div>
+        
+        <div class="hottel"></div>
+    </div>    
+    
+    <div id="main">
+    	<div class="sidecon">
+			<h2>&raquo; 资质荣誉</h2>
+            <div class="side_info">
+				<p align="center"><a href="http://www.bjprochina.com/article/showone/14/">资质证书</a></p>
+            	<a href="http://www.bjprochina.com/article/showone/14/"><img src="http://www.bjprochina.com/uploads/indexb/honour_20120115173603.jpg" width="180" border="0" /></a>
+            </div>
+            
+            <h2>&raquo; 相关链接</h2>
+            <div class="side_nav">
+							<a href="http://www.moh.gov.cn/publicfiles/business/htmlfiles/wsb/psjcx/200803/113.htm" target="_blank">中国卫生部</a>
+							<a href="http://www.chinacdc.cn" target="_blank">中国疾控中心</a>
+							<a href="http://www.novodez.ru/en/" target="_blank">OAO NPO NOVODEZ</a>
+          	</div>
+            
+            <h2>&raquo; 品牌优势</h2>
+            <div class="side_pinpai">
+				<ul class="pinpai">
+					  <li><a class="p1" href="http://www.novodez.ru/ru/category-75"><b></b>医疗机构</a></li>
+					  <li><a class="p2" href="http://www.novodez.ru/ru/category-76"><b></b>食品行业</a></li>
+					  <li><a class="p4" href="http://www.novodez.ru/ru/category-78"><b></b>公共场所</a></li>
+					  <li><a class="p5" href="http://www.novodez.ru/ru/category-79"><b></b>家居方面</a></li>
+					  <li><a class="p6" href="http://www.novodez.ru/ru/category-89"><b></b>手部及皮肤消毒</a></li>
+                      <li><a class="p3" href="http://www.novodez.ru/ru/category-89"><b></b>交通方面</a></li>
+				</ul>
+            </div>
+        
+      </div>
+        
+        <div class="maincon">
+        	<div class="corpinfo">
+            	<h2 style="padding-top:6px;">公司简介<em><a href="#">查看详情&raquo;</a></em></h2>
+            	<img src="http://www.bjprochina.com/uploads/indexb/boss_20120115181412.jpg" width="156" height="153" border="0" align="left" style="margin-right:15px; margin-bottom:5px;" />
+				<p><b>北京柏华汇川科技有限公司</b>成立于2011年，由香港柏华投资有限公司100%控股，是集生产、销售和服务为一体的新型高科技消毒企业。公司引进世界先进技术，致力于发展中国的“绿色消毒”产业，产品适用于医疗、公共场所、餐饮、家庭、工业、农业等众多领域，拥有覆盖全国的销售网络。我们力争成为中国绿色环保消毒产业的倡导者、国际先进技术的代表者和创新者。</p>
+				<p></p>
+				<p>公司目前的主要业务是代理销售俄罗斯诺沃爹兹科研生产联合体股份公司的高效、安全消毒剂产品系列，其中博纳姆、埃克姆、埃克尔等品牌已获得中国境内销售许可，顺利进入中国市场。此后将陆续引进更多世界领先的高科技产品服务中国。</p>
+				<p></p>
+				<p>为了更好的贴近消费者，服务消费者，公司已聘请以色列和俄罗斯消毒专业领域的数名专家组建研发团队，计划建立生产基地，用以开发和生产高科技绿色环保消毒产品，进而为中国的卫生消毒事业提供长期专业的服务。</p>
+				<p></p>
+				<p><b>战略合作伙伴：</b> <b>俄罗斯诺沃爹兹科研生产联合体股份公司</b>兴建于1998年，拥有一支由以色列著名生物化学专家和俄罗斯科学家组成的队伍致力于消毒产品的研发。公司从事专业卫生手消毒、外科手消毒、注射部位消毒、手术部位消毒、妇科粘膜消毒、口腔粘膜消毒、创面消毒、环境消毒、衣物织物消毒产品，消毒湿巾...
+                <div style="clear:left;"></div>
+            </div>
+            
+            <div class="info">
+            	<h2 class="green">产品展示<em><a href="#">更多&raquo;</a></em></h2>
+                <div id="demo" style="overflow:hidden;width:685px;">
+                  	<table border="0" align="center" cellpadding="1" cellspacing="1" cellspace="0">
+                    <tr>
+                      	<td id="demo1" valign="top" bgcolor="ffffff">                            
+                            <table border="0" cellspacing="0" cellpadding="0">
+                          	<tr align="center">
+                            	<td style="padding-right:20px;"><a href="/product/detail/1/17"><img class="pic" src="http://www.bjprochina.com//uploads/product/17/20120119170337_36709DM-博纳姆正面.jpg" width="125"  border="0" />博纳姆牌消毒液</a></td>
+								<td style="padding-right:20px;"><a href="/product/detail/1/16"><img class="pic" src="http://www.bjprochina.com//uploads/product/16/20120119153428_71305DM-埃克尔正面.jpg" width="125"  border="0" />埃克尔牌消毒液</a></td>
+								<td style="padding-right:20px;"><a href="/product/detail/1/15"><img class="pic" src="http://www.bjprochina.com//uploads/product/15/20120119155016_84256DM-埃克姆正面.jpg" width="125"  border="0" />埃克姆牌消毒液</a></td>
+								<td style="padding-right:20px;"><a href="/product/detail/1/14"><img class="pic" src="http://www.bjprochina.com//uploads/product/14/20120119155206_20086DM-博纳姆正面.jpg" width="125"  border="0" />博纳姆牌消毒液</a></td>
+                                <td style="padding-right:20px;"><a href="/product/detail/1/17"><img class="pic" src="http://www.bjprochina.com//uploads/product/17/20120119170337_36709DM-博纳姆正面.jpg" width="125"  border="0" />博纳姆牌消毒液</a></td>
+								<td style="padding-right:20px;"><a href="/product/detail/1/16"><img class="pic" src="http://www.bjprochina.com//uploads/product/16/20120119153428_71305DM-埃克尔正面.jpg" width="125"  border="0" />埃克尔牌消毒液</a></td>
+								<td style="padding-right:20px;"><a href="/product/detail/1/15"><img class="pic" src="http://www.bjprochina.com//uploads/product/15/20120119155016_84256DM-埃克姆正面.jpg" width="125"  border="0" />埃克姆牌消毒液</a></td>
+                          	  </tr>
+                        	</table>
+                      	</td>
+                      	<td id="demo2" valign="top"></td>
+                  	</tr>
+                  	</table>
+                </div>
+            </div>
+<!-- 图片滚动代码 -->
+<script type="text/javascript"> 
+var speed=30;
+var demo = $("#demo");
+var demo1 = $("#demo1");
+var demo2 = $("#demo2");
+demo2.html(demo1.html());
+function Marquee(){ 
+    if(demo.scrollLeft()>=demo1.width())
+        demo.scrollLeft(0); 
+    else{
+        demo.scrollLeft(demo.scrollLeft()+1);
+    }
+} 
+var MyMar=setInterval(Marquee,speed) 
+demo.mouseover(function(){
+    clearInterval(MyMar);
+});
+demo.mouseout(function(){
+    MyMar=setInterval(Marquee,speed);
+});
+function fun1(){
+    alert(demo.scrollLeft());
+}
+function fun2(){
+    alert(demo1.width());
+}
+</script>
+
+        </div>
+        <div style="clear:left;"></div>
+    </div>
+    
+
+    <div id="footer">
+    	<div class="footlink"><a href="http://www.bjprochina.com">首页</a> | <a href="http://www.bjprochina.com/article/showone/10/">关于柏华汇川</a> | <a href="http://www.bjprochina.com/article/showone/13/">科技研发</a> | <a href="http://www.bjprochina.com/product/showlist/16/1">产品介绍</a> | <a href="http://www.bjprochina.com/article/showlist/18/18/">新闻中心</a> | <a href="http://www.bjprochina.com/dealer/login">经销商平台</a> | <a href="http://www.bjprochina.com/offer/position_list/20">人才招聘</a> | <a href="http://www.bjprochina.com/dealer/login">常见问题</a> | <a href="http://www.bjprochina.com/article/showone/21/">联系我们</a></div>
+        <div class="corpright">
+            Copyright 2011 ProChina Corporation. All rights reserved.  京ICP备11043960<br />
+        	地址：北京市东城区东直门外大街48号东方银座A座26D &nbsp;&nbsp; 免费咨询:400-816-7300 &nbsp;&nbsp; 电话：010-84549285/88 &nbsp;&nbsp; 传真：010-84549286
+        </div>
+        <div class="footerlogo"></div>
+    </div>
+</div>
+</body>
+</html>

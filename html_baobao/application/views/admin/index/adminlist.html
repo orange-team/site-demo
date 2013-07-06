@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
+<title>{$pagetitle} - 网站后台管理</title>
+</head>
+
+<body>
+<div id="man_zone">
+	<h2>{$pagetitle}</h2>
+  	<table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style">
+    	<tr>
+      		<th width="5%">Id</th>
+      		<th width="12%">用户名</th>
+            <th width="14%">权限级别</th>
+            <th width="18%">创建时间</th>
+            <th width="18%">最近登录时间</th>
+            <th width="16%">登录次数</th>
+            <th width="17%">操作</th>
+    	</tr>
+        <volist name='adminlist' id='adm' >
+    	<tr>
+      		<td>{$adm.id}</td>
+      		<td>{$adm.admin_name}</td>
+            <td>
+                <switch name="adm.mid" >
+                    <case value="1">超级管理员</case>
+                    <case value="2">系统管理员</case>
+                    <default />内容管理员
+                </switch>
+            </td>
+            <td>{$adm.cTime}</td>
+            <td>{$adm.uTime}</td>
+            <td>{$adm.login_view}</td>
+            <td><a href="#">删除</a> <a href="#">更改</a></td>
+    	</tr>
+        </volist>
+  	</table>
+</div>
+</body>
+</html>
