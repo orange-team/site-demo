@@ -98,10 +98,10 @@ class Article extends MY_Controller
 		$this->data['page'] = $this->pagination->create_links();
 		$offset = $this->uri->segment(6);
 		$arr = $this->art->getList($this->data['pagesize'], $offset, $where);
-		foreach( $arr as $k=>$v )
-		{
-			$arr[$k]['title'] = $this->my_substr($v['title'],0,14);
-		}
+		//foreach( $arr as $k=>$v )
+		//{
+		//	$arr[$k]['title'] = $this->my_substr($v['title'],0,14);
+		//}
         //顶级栏目
         $this->data['one_section'] = $this->section->getBy_parent(0);
 		$this->data['articleArr'] = $arr;
