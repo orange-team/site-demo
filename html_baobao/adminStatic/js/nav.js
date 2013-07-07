@@ -31,6 +31,10 @@ outlookbar.additem('添加文章',t,'/admin/article/add')
 t=outlookbar.addtitle('关键词管理','妈妈学习',1)
 outlookbar.additem('关键词管理',t,'/admin/keyword/showlist/')
 outlookbar.additem('添加关键词',t,'/admin/keyword/add/')
+
+t=outlookbar.addtitle('百科管理','妈妈学习',1)
+outlookbar.additem('百科管理',t,'/admin/wiki/showlist/')
+outlookbar.additem('添加百科',t,'/admin/wiki/add/')
 /*
 
 t=outlookbar.addtitle('线下展会服务','妈妈学习',1)
