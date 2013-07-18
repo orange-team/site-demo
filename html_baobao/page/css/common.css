@@ -1,0 +1,27 @@
+@charset "utf-8";
+/* CSS Document */
+* { margin:0; padding:0;}
+body { font-family: "微软雅黑",Arial, Helvetica, sans-serif; font-size:12px; color:#333;}
+.clear { clear:both;}
+img.block { display:block;}
+a,a:visited { color:#333; text-decoration:none;}
+a:hover { color:#00839f; text-decoration:underline;}
+
+/* 面包屑导航 */
+.bread_nav { height:25px; margin:10px 0 0 10px; }
+/* 定义超出隐藏 */
+.pb_overflow { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+/* 用于调试 */
+.pb_b {border:1px red solid;}
+.pb_opacity { opacity:0.7; -moz-opacity: 0.70; filter: alpha(opacity=70); }
+/* 清除浮动代码 */
+.clearfloat:after{display:block;clear:both;content:"";visibility:hidden;height:0}
+.clearfloat{zoom:1}
+
+.left { width:680px; margin-left:10px; }
+
+.footer { width:100%; height:60px; margin-bottom:5px; border-top: 2px #ccc dashed; text-align:center; background: #e4e4e4; }
+.footer .about { height:35px; line-height:35px; }
+.footer .about a { margin:0 15px; }
+.footer .copyright { color:#aaa; }
+
