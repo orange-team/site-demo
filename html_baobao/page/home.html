@@ -4,41 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>妈妈学首页</title>
 <link href="css/common.css" rel="stylesheet" type="text/css" />
-<style type="text/css">
-/* 热门文章 */
-.art_hot { height:170px; border-bottom:2px #e4e4e4 solid; margin:4px 0px; }
-.art_hot .item { position:relative; float:left; margin-left:25px; }
-.art_hot .first { margin-left:0; }
-.art_hot img { width:210px; height:150px; }
-.art_hot a { display:block; width:200px; line-height:27px; padding:0 5px; position:absolute; left:0; bottom:0;  z-index:999; background: #222; text-align:center; color:#fff;}
-
-/* 文章列表 */
-.art_list { width:100%;}
-.art_list .item { width:100%; height:105px; border-bottom: 1px #e4e4e4 dashed; }
-.art_list .item_title { width:100%;}
-.art_list .item_title a { display:inline-block; float:left; width:590px; font-size: 20px; line-height:40px; font-weight:bold;}
-.art_list .item_title span { float:right; color:#bbb; line-height:40px; padding-right:10px;}
-.art_list .item_title em { color: #ff3300; font-size:15px; }
-.art_list .item_desc { height:45px; color: #666; }
-.art_list .item_desc a, .art_list .item_desc span{ color: #ff3300; font-size:13px; }
-.art_list .item_tag { display:none; height:20px; line-height:20px; background:#aaa; color:#fff;padding-left:10px;}
-.art_list .item_tag a { color:#fff; padding:0 5px;}
-
-.page { height:30px; margin:10px 0; line-height:30px; }
-/* 公共样式 */
-.page, .page_list a, .page_list input { border: 1px #e4e4e4 solid; }
-.page a, .page .next, .page_list span, .page_list input { height:16px; line-height:16px; text-align:center; }
-.page_list a, .page_list input { width:25px; }
-
-.page .num { margin-left: 10px; }
-.page_list { float:right; margin-right:10px; }
-.page_list a { display:inline-block; }
-.page_list .on , .page_list a:hover { background: orange; color:#fff; }
-.page_list .next { width:auto; padding:0 8px; }
-.page_list span { margin-left:10px; }
-.page_list input { margin-left:3px; }
-
-</style>
+<link href="css/home.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="warper">
@@ -46,49 +12,7 @@
         您的位置 : <a href="#">妈妈学</a> > <a href="#">怀孕期</a> > 母乳喂养
     </div>
     <div class="content">
-        <style type="text/css">
-            .pic_hot { height:274px; border-right:1px #333 solid; border-bottom:1px #333 solid; }
-            .pic_hot .item { position:relative; float:left; border-left:1px #333 solid; border-top:1px #333 solid; }
-            .pic_hot .pic1, .pic_hot .pic5 { width:336px; }
-            .pic_height { height:136px; }
-            .pic_hot .cover { display:none; position:absolute; left:0; top:0; background:#666; width:100%; height:100%; }
-            .pic_hot .pic2, .pic_hot .pic3, .pic_hot .pic4, .pic_hot .pic6 { width:170px; }
-
-            /* 幼儿百科 */
-            .wiki { height:200px; margin:20px 0 0 0; }
-            .head { height:25px; line-height:25px; border-bottom:4px #ffcc99 solid; }
-            .wiki h3 { float:left; }
-            .wiki a.more { display:inline-block; float:right; }
-            .wiki .note { height:36px; line-height:36px; margin-left:20px; color:#bbb; font-size:14px; }
-            .letter { margin-left:15px; }
-            .letter a { display:inline-block; width:21px; height:26px; line-height:26px; margin-right:4px; text-align:center; color:#1975A2; background: url(img/wiki_index_ui.png) no-repeat -150px -120px; font-weight:600; cursor:pointer; }
-            .letter a:hover { color: #fff; text-decoration: none; background: #ffcc99 url(img/wiki_index_ui.png) no-repeat -171px -120px; }
-            .wiki .tag { height:70px; background:#E1F0CD; }
-            .tag a, .tag a:hover { display:inline-block; width:90px; height:35px; line-height:35px; margin-left:19px; cursor:pointer; }
-            /* 向上的三角 */
-            .to_top{ display:block; overflow:hidden; margin-top:3px; width:0px; height:0px; border:9px solid #E1F0CD; border-color:#E1F0CD #fff; border-width:0 9px 9px 9px; }
-
-            /* 时间轴 */
-            .time {}
-            .time .head { height: 30px; }
-            .time dt { display:inline-block; width:100px; height:35px; margin-left:10px; text-align:center; }
-            .time dt:hover, .time .on{ background:#ffcc99; color:#fff; }
-
-        </style>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script type="text/javascript">
-            <!--
-            $(function(){
-                //$('#pic_hot .item').mouseenter(function(){
-                $('#pic_hot .item').mouseover(function(){
-                    $(this).siblings().find('div[rel=cover]').show();
-                }).mouseout( function(){
-                    $('#pic_hot div[rel=cover]').hide();
-                });
-            });
-            //-->
-        </script>
-        <div class="left">
+       <div class="left">
             <div class="pic_hot clearfloat" id="pic_hot">
                 <div class="item">
                     <a href="#">
@@ -163,35 +87,131 @@
                     <dt>1-3岁</dt>
                     <dt>3-6岁</dt>
                 </dl>
-                <div class="item">
-                    <div>
-                        <img src="" />
+                <div class="panel">
+                    <div class="line clearfloat">
+                        <div class="part">
+                            <span>孕早期(1-12周)</span>
+                            <div class="dot"></div>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                        </div>
+                        <div class="part">
+                            <span>孕中期(13-27周)</span>
+                            <div class="dot"></div>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                        </div>
+                        <div class="part">
+                            <span>孕晚期(28-40周)</span>
+                            <div class="dot"></div>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                        </div>
                     </div>
-                    <div class="art">
-                        <a href="#" class="pb_overflow">女性养生警惕：怀孕前4件事情不能做</a>
-                        <span>[<a href="#">饮食</a>]</span>
-                        <a href="#" class="pb_overflow">女性养生警惕：怀孕前4件事情不能做</a>
-                        <span>[<a href="#">饮食</a>]</span>
-                        <a href="#" class="pb_overflow">女性养生警惕：怀孕前4件事情不能做</a>
-                        <span>[<a href="#">饮饮食食</a>]</span>
+                    <div class="art_list">
+                        <!-- loop start -->
+                        <div class="item">
+                            <div class="week">
+                                <img src="img/week_num.jpg" />
+                                <span>周</span>
+                            </div>
+                            <div class="art clearfloat">
+                                <div class="clearfloat">
+                                    <a href="#" class="pb_overflow">女性养生警惕：怀孕前4件事情不能做</a>
+                                    <span>[<a href="#">饮食</a>]</span>
+                                </div>
+                                <div class="clearfloat">
+                                    <a href="#" class="pb_overflow">谁的基因 决定宝宝单双眼皮？</a>
+                                    <span>[<a href="#">饮食</a>]</span>
+                                </div>
+                                <div class="clearfloat">
+                                    <a href="#" class="pb_overflow">遗传与血型 父母血型遗传孩子的规律女性养生警惕：怀孕前4件事情不能做</a>
+                                    <span>[<a href="#">饮饮食食</a>]</span>
+                                </div>
+                            </div>
+                            <a href=#" class="more">了解更多</a>
+                        </div>
+                        <!-- loop end --><!-- loop start -->
+                        <div class="item">
+                            <div class="week">
+                                <img src="img/week_num.jpg" />
+                                <span>周</span>
+                            </div>
+                            <div class="art clearfloat">
+                                <div class="clearfloat">
+                                    <a href="#" class="pb_overflow">女性养生警惕：怀孕前4件事情不能做</a>
+                                    <span>[<a href="#">饮食</a>]</span>
+                                </div>
+                                <div class="clearfloat">
+                                    <a href="#" class="pb_overflow">谁的基因 决定宝宝单双眼皮？</a>
+                                    <span>[<a href="#">饮食</a>]</span>
+                                </div>
+                                <div class="clearfloat">
+                                    <a href="#" class="pb_overflow">遗传与血型 父母血型遗传孩子的规律女性养生警惕：怀孕前4件事情不能做</a>
+                                    <span>[<a href="#">饮饮食食</a>]</span>
+                                </div>
+                            </div>
+                            <a href=#" class="more">了解更多</a>
+                        </div>
+                        <!-- loop end --><!-- loop start -->
+                        <div class="item">
+                            <div class="week">
+                                <img src="img/week_num.jpg" />
+                                <span>周</span>
+                            </div>
+                            <div class="art clearfloat">
+                                <div class="clearfloat">
+                                    <a href="#" class="pb_overflow">女性养生警惕：怀孕前4件事情不能做</a>
+                                    <span>[<a href="#">饮食</a>]</span>
+                                </div>
+                                <div class="clearfloat">
+                                    <a href="#" class="pb_overflow">谁的基因 决定宝宝单双眼皮？</a>
+                                    <span>[<a href="#">饮食</a>]</span>
+                                </div>
+                                <div class="clearfloat">
+                                    <a href="#" class="pb_overflow">遗传与血型 父母血型遗传孩子的规律女性养生警惕：怀孕前4件事情不能做</a>
+                                    <span>[<a href="#">饮饮食食</a>]</span>
+                                </div>
+                            </div>
+                            <a href=#" class="more">了解更多</a>
+                        </div>
+                        <!-- loop end -->
+                    </div><!-- art_list -->
+                    <div class="next_page">
+                        还在翻页吗?直接选择时间轴吧<a href="#">下一页</a>
                     </div>
-                    <div>
-                        <a href=#" class="more">了解更多</a>
-                    </div>
-                </div>
-            </div>
-            <div class="page">
-                <span class="num">共 45 篇</span>
-                <div class="page_list">
-                    <a href="#" class="on">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#" class="next">下一页</a>
-                    <span>跳转<input type="text" name="go_page" value="" /></span>
-                </div>
-            </div><!-- page -->
+                </div><!-- panel -->
+            </div><!-- time -->
 
         </div><!-- left -->
     </div><!-- content -->
@@ -203,14 +223,18 @@
     </div>
     <div class="copyright">北京网络技术有限公司版权所有，所有内容未经授权，不得转载或做其他使用 京ICP证010534号</div>
 </div>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript">
 <!--
-var show_tag = function (t) {
-    $(t).css('border-bottom-color','#333').find("div[rel=tag]").show();
-};
-var hide_tag = function (t) {
-    $(t).css('border-bottom-color','#e4e4e4').find("div[rel=tag]").hide();
-};
+$(function(){
+    //6张焦点图区域效果
+    $('#pic_hot .item').mouseover(function(){
+            $(this).siblings().find('div[rel=cover]').show();
+        }).mouseout( function(){
+            $('#pic_hot div[rel=cover]').hide();
+        });
+});
+
 //-->
 </script>
 </body>
