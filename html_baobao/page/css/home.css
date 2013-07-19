@@ -1,0 +1,52 @@
+@charset "utf-8";
+
+/* 6张焦点图区域的 */
+.pic_hot { height:274px; border-right:1px #333 solid; border-bottom:1px #333 solid; }
+.pic_hot .item { position:relative; float:left; border-left:1px #333 solid; border-top:1px #333 solid; }
+.pic_hot .pic1, .pic_hot .pic5 { width:336px; }
+.pic_height { height:136px; _height:134px; height:134px !important; }
+.pic_hot .cover { display:none; position:absolute; left:0; top:0; background:#666; width:100%; height:100%; height:137px !important; }
+.pic_hot .pic2, .pic_hot .pic3, .pic_hot .pic4, .pic_hot .pic6 { width:170px; }
+
+/* 幼儿百科区域 */
+.wiki { height:200px; margin:20px 0 0 0; }
+.head { height:25px; line-height:25px; border-bottom:4px #ffcc99 solid; }
+.wiki h3 { float:left; }
+.wiki a.more { display:inline-block; float:right; }
+.wiki .note { height:36px; line-height:36px; margin-left:20px; color:#bbb; font-size:14px; }
+.letter { margin-left:15px; }
+.letter a { display:inline-block; width:21px; height:26px; line-height:26px; margin-right:4px; text-align:center; color:#1975A2; background: url(../img/wiki_index_ui.png) no-repeat -150px -120px; font-weight:600; cursor:pointer; }
+.letter a:hover { color: #fff; text-decoration: none; background: #ffcc99 url(../img/wiki_index_ui.png) no-repeat -171px -120px; }
+.wiki .tag { height:70px; background:#E1F0CD; }
+.tag a, .tag a:hover { display:inline-block; float:left; width:90px; height:35px; line-height:35px; margin-left:19px; cursor:pointer; }
+/* 向上的三角 */
+.to_top{ display:block; overflow:hidden; margin-top:3px; width:0px; height:0px; border:9px solid #E1F0CD; border-color:#E1F0CD #fff; border-width:0 9px 9px 9px; }
+
+/* 时间轴区域 */
+.time { height:580px; }
+.time .head { height: 30px; }
+.time dt { display:inline-block; width:100px; height:35px; line-height:35px; margin-left:10px; text-align:center; }
+.time dt:hover, .time .on{ background:#ffcc99; color:#fff; }
+.time .panel { width:620px; margin:0 auto; }
+.time .line { height:66px; }
+.time .part { display:inline-block; width:204px; position:relative; margin:15px 0 0 0; }
+.time .part span { display:block; width:185px; }
+.time .line a { display:inline-block; float:left; width:16px; height:6px; border-right:1px #333 solid; border-bottom:1px #333 dotted; }
+.time .line a:hover { background:#ffcc99; }
+.time .dot { position:absolute; left:-8px; top:27px; border:1px solid #aaa; width:12px; height:12px; background:#fff; margin:0 auto; -webkit-border-radius:50px; -moz-border-radius:50px; -o-border-radius:50px; border-radius:50px; }
+.time .dot:hover { background:#E1F0CD; border-color:#333; }
+.time .art_list { border-bottom: 2px #d7d7d7 solid; }
+.time .item { height:86px; border-top: 2px #d7d7d7 solid; }
+.time .week { float:left; width:110px; height:75px; }
+.time .week span { display:inline-block; width:auto; height:65px; padding:50px 0 0 0; }
+.time img { width:86px; height:82px; float:left; }
+.time .art { width:380px; float:left; margin:0 0 0 20px; }
+.time .art a, span { height:28px; line-height:28px; }
+.time .art a.pb_overflow { display:block; width:250px; float:left; color:#777; }
+.time .art span { width:130px; float:right; }
+.time .item a.more, .next_page { height:25px; line-height:25px; float:right; background:#E1F0CD; border:1px #d7d7d7 solid; }
+.time .item a.more { display:block; width:108px; text-align:center; }
+.time .next_page { width:306px; padding:0 0 0 15px; border-width:0 1px 1px 1px; }
+.time .next_page a { float:right; width:50px; }
+
+ 

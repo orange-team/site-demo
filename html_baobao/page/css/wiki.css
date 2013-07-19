@@ -1,0 +1,16 @@
+@charset "utf-8";
+/* 百科 */
+.content { border: 1px #ddd solid; -moz-border-radius: 10px; border-radius: 10px; padding:1px; margin-bottom:35px; }
+.wiki { border: 4px #ffcc99 solid; -moz-border-radius: 10px; border-radius: 10px; }
+.letter {margin-left:40px; }
+.letter { height:90px; }
+.letter .note { height:40px; line-height:40px; }
+.letter a { display:inline-block; width:21px; height:26px; line-height:26px; margin-right:10px; text-align:center; color:#1975A2; background: url(../img/wiki_index_ui.png) no-repeat -150px -120px; font-weight:600; cursor:pointer; }
+.letter a:hover { color: #fff; text-decoration: none; background: #ffcc99 url(../img/wiki_index_ui.png) no-repeat -171px -120px; }
+
+.wiki .item { display:block; height:auto; border-top:2px #ddd dashed; padding:15px 25px; margin:0 15px; }
+.wiki .item b { display:block; float:left; width:47px; height:47px; line-height:47px; text-align:center; background:#ffcc99; color:#fff; font-size:20px; }
+.wiki .tag { width:760px; margin:15px 0 0 91px; }
+.wiki .tag a { display:inline-block; height:15px; margin:7px 10px; padding-right:15px; border-right:2px #ddd solid; color:#1975A2; }
+/* 最后一个a没有右边线 */
+.wiki .tag .end { border-right:0; }
