@@ -1,16 +1,19 @@
 @charset "utf-8";
+/* 公共样式 */
+.head { height:25px; line-height:25px; border-bottom:4px #ffcc99 solid; }
+.head h3 { margin:0 0 0 10px; }
 
 /* 6张焦点图区域的 */
 .pic_hot { height:274px; border-right:1px #333 solid; border-bottom:1px #333 solid; }
 .pic_hot .item { position:relative; float:left; border-left:1px #333 solid; border-top:1px #333 solid; }
 .pic_hot .pic1, .pic_hot .pic5 { width:336px; }
-.pic_height { height:136px; _height:134px; height:134px !important; }
-.pic_hot .cover { display:none; position:absolute; left:0; top:0; background:#666; width:100%; height:100%; height:137px !important; }
+.pic_height { height:136px; height:134px\9; }
+.pic_hot .cover { display:none; position:absolute; left:0; top:0; background:#666; width:100%; height:100%; height:137px\9; }
 .pic_hot .pic2, .pic_hot .pic3, .pic_hot .pic4, .pic_hot .pic6 { width:170px; }
 
 /* 幼儿百科区域 */
 .wiki { height:200px; margin:20px 0 0 0; }
-.head { height:25px; line-height:25px; border-bottom:4px #ffcc99 solid; }
+.head {  }
 .wiki h3 { float:left; }
 .wiki a.more { display:inline-block; float:right; }
 .wiki .note { height:36px; line-height:36px; margin-left:20px; color:#bbb; font-size:14px; }
@@ -23,7 +26,7 @@
 .to_top{ display:block; overflow:hidden; margin-top:3px; width:0px; height:0px; border:9px solid #E1F0CD; border-color:#E1F0CD #fff; border-width:0 9px 9px 9px; }
 
 /* 时间轴区域 */
-.time { height:580px; }
+.time { height:auto; /* 580px; */ margin:0 0 50px 0; }
 .time .head { height: 30px; }
 .time dt { display:inline-block; width:100px; height:35px; line-height:35px; margin-left:10px; text-align:center; }
 .time dt:hover, .time .on{ background:#ffcc99; color:#fff; }
@@ -49,4 +52,20 @@
 .time .next_page { width:306px; padding:0 0 0 15px; border-width:0 1px 1px 1px; }
 .time .next_page a { float:right; width:50px; }
 
- 
+/* 妈妈关注 */
+.focus .item { height:75px; padding:10px 0 0 0; margin:0 0 0 30px; float:left; }
+.focus img { display:inline-block; float:left; width:55px; height:55px; border:1px solid #aaa; -webkit-border-radius:55px; -moz-border-radius:55px; -o-border-radius:55px; border-radius:55px; }
+.focus dl.info { width:220px; height:75px; float:left; margin:0 0 0 10px; font-size:14px; }
+.focus .info a { color:#006699; }
+.focus dt { display:block; width:220px; height:30px; line-height:30px; }
+.focus span.focus_wd { color:#aaa; }
+.focus dl.info a.tag { display:inline-block; margin:0 10px 0 0; }
+
+/* 实用小工具 */
+.tool { margin:0 0 50px; 0; }
+.tool .item { width:185px; height:42px; padding:0px 0 0 0; margin:10px 0 0 30px; float:left; }
+.tool img { width:30px; height:30px; float:left; border:1px solid #aaa; -webkit-border-radius:6px; -moz-border-radius:6px; -o-border-radius:6px; border-radius:6px; }
+.tool a.name { display:inline-block; height:32px; line-height:32px; margin:0px 0 0 10px; font-size:14px; color:#aaa; }
+.tool a.name:hover { color:#333; }
+
+
