@@ -7,11 +7,42 @@
 <link href="css/home.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div id="warper">
-	<div class="bread_nav">
+<div id="header">
+    <div class="top_nav"> </div>
+    <div class="nav"></div>
+    <div class="hd_box">
+        <div class="top_nav_rg">
+            <a class="login">登录</a> 
+            <a>免费注册</a> 
+            <a><img src="img/xina.png" width="25" height="25"> 微薄登录</a> 
+            <a><img src="img/qq.png" width="25" height="25"> QQ登录</a> 
+        </div>
+        <div class="search">
+            <form action="" method="">
+                <select name="type" class="input_select">
+                    <option value="全部">全部</option>
+                <select>
+                <input type="text" name="search_name"  class="input_type"/>
+                <input type="submit" name="search_submit" value class="input_submit" />
+            </form>
+        </div>
+        <img class="logo" src="img/logo.png" height="58" width="55" />
+        <img class="logo_font" src="img/logo_font.jpg" height="25" width="80">
+        <div class="nav_section">
+            <ul>
+                <li><a href="#" class="default">妈妈学</a></li>
+                <li><a href="#">妈妈说</a></li>
+                <li><a href="#">妈妈看</a></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<div id="wraper" class="clearfloat">
+    <div class="site_route">
         您的位置 : <a href="#">妈妈学</a> > <a href="#">怀孕期</a> > 母乳喂养
     </div>
-    <div class="content">
+    <div class="wraper_left">
        <div class="left">
             <div class="pic_hot clearfloat" id="pic_hot">
                 <div class="item">
@@ -59,7 +90,7 @@
                 </div>
                 <div class="note">按字母检索：</div>
                 <div class="letter" id="letter_nav">
-                    <a rel="#A">A</a><a rel="#B">B</a><a rel="#C">C</a><a rel="#D">D</a><a rel="#E">E</a><a rel="#F">F</a><a rel="#G">G</a><a rel="#H">H</a><a rel="#I">I</a><a rel="#J">J</a><a rel="#K">K</a><a rel="#L">L</a> <a rel="#M">M</a><a rel="#N">N</a><a rel="#O">O</a><a rel="#P">P</a><a rel="#Q">Q</a><a rel="#R">R</a><a rel="#S">S</a><a rel="#T">T</a><a rel="#U">U</a><a rel="#V">V</a><a rel="#W">W</a><a rel="#X">X</a><a rel="#Y">Y</a><a rel="#Z">Z</a>
+                    <a rel="#A" class="on">A</a><a rel="#B">B</a><a rel="#C" onclick="">C</a><a rel="#D">D</a><a rel="#E">E</a><a rel="#F">F</a><a rel="#G">G</a><a rel="#H">H</a><a rel="#I">I</a><a rel="#J">J</a><a rel="#K">K</a><a rel="#L">L</a> <a rel="#M">M</a><a rel="#N">N</a><a rel="#O">O</a><a rel="#P">P</a><a rel="#Q">Q</a><a rel="#R">R</a><a rel="#S">S</a><a rel="#T">T</a><a rel="#U">U</a><a rel="#V">V</a><a rel="#W">W</a><a rel="#X">X</a><a rel="#Y">Y</a><a rel="#Z">Z</a>
                     <div class="to_top"> </div>
                 </div>
                 <div class="tag">
@@ -80,14 +111,14 @@
 
             <div class="time">
                 <dl class="head clearfloat">
-                    <dt class="on">备孕期</dt>
-                    <dt>怀孕期</dt>
-                    <dt>分娩</dt>
-                    <dt>0-1岁</dt>
-                    <dt>1-3岁</dt>
-                    <dt>3-6岁</dt>
+                    <dt onclick="show_panel(this)" sort="1">备孕期</dt>
+                    <dt onclick="show_panel(this)" sort="2" class="on">怀孕期</dt>
+                    <dt onclick="show_panel(this)" sort="3">分娩</dt>
+                    <dt onclick="show_panel(this)" sort="4">0-1岁</dt>
+                    <dt onclick="show_panel(this)" sort="5">1-3岁</dt>
+                    <dt onclick="show_panel(this)" sort="6">3-6岁</dt>
                 </dl>
-                <div class="panel">
+                <div class="panel_2" id="panel_2">
                     <div class="line clearfloat">
                         <div class="part">
                             <span>孕早期(1-12周)</span>
@@ -161,7 +192,8 @@
                             </div>
                             <a href=#" class="more">了解更多</a>
                         </div>
-                        <!-- loop end --><!-- loop start -->
+                        <!-- loop end -->
+                        <!-- loop start -->
                         <div class="item">
                             <div class="week">
                                 <img src="img/week_num.jpg" />
@@ -183,7 +215,8 @@
                             </div>
                             <a href=#" class="more">了解更多</a>
                         </div>
-                        <!-- loop end --><!-- loop start -->
+                        <!-- loop end -->
+                        <!-- loop start -->
                         <div class="item">
                             <div class="week">
                                 <img src="img/week_num.jpg" />
@@ -211,6 +244,50 @@
                         还在翻页吗?直接选择时间轴吧<a href="#">下一页</a>
                     </div>
                 </div><!-- panel -->
+                <div class="panel_3" id="panel_3" style="display:none;">
+                    <div class="art_list">
+                        <!-- loop start -->
+                        <div class="item clearfloat">
+                            <div class="title1">产前心理</div>
+                            <div class="art clearfloat">
+                                <div>
+                                    <a href="#" class="pb_overflow">女性养生警惕：怀孕前4件事情不能做</a>
+                                </div>
+                                <div>
+                                    <a href="#" class="pb_overflow">谁的基因 决定宝宝单双眼皮？</a>
+                                </div>
+                                <div>
+                                    <a href="#" class="pb_overflow">遗传与血型 父母血型遗传孩子的规律女性养生警惕：怀孕前4件事情不能做</a>
+                                </div>
+                                <div>
+                                    <a href="#" class="pb_overflow">遗传与血型 父母血型遗传孩子的规律女性养生警惕：怀孕前4件事情不能做</a>
+                                </div>
+                                <div>
+                                    <a href="#" class="pb_overflow">遗传与血型 父母血型遗传孩子的规律女性养生警惕：怀孕前4件事情不能做</a>
+                                </div>
+                            </div>
+                            <a href=#" class="more">了解更多</a>
+                        </div>
+                        <!-- loop end -->
+                        <!-- loop start -->
+                        <div class="item clearfloat">
+                            <div class="title2">临盆待产</div>
+                            <div class="art clearfloat">
+                                <div class="clearfloat">
+                                    <a href="#" class="pb_overflow">女性养生警惕：怀孕前4件事情不能做</a>
+                                </div>
+                                <div class="clearfloat">
+                                    <a href="#" class="pb_overflow">谁的基因 决定宝宝单双眼皮？</a>
+                                </div>
+                                <div class="clearfloat">
+                                    <a href="#" class="pb_overflow">遗传与血型 父母血型遗传孩子的规律女性养生警惕：怀孕前4件事情不能做</a>
+                                </div>
+                            </div>
+                            <a href=#" class="more">了解更多</a>
+                        </div>
+                        <!-- loop end -->
+                    </div><!-- art_list -->
+                </div><!-- panel_3 -->
             </div><!-- time -->
             
             <div class="focus clearfloat">
@@ -265,7 +342,7 @@
                     </dl>
                 </div>
                 <!-- loop end -->
-<!-- loop start -->
+                <!-- loop start -->
                 <div class="item">
                     <a href="#">
                         <img src="http://pic2.nipic.com/20090414/386228_104922058_2.jpg" />
@@ -339,7 +416,7 @@
                     </dt>
                 </dl>
                 <!-- loop end -->
-<!-- loop start -->
+                <!-- loop start -->
                 <dl class="item">
                     <dt>
                         <a href="#">
@@ -349,7 +426,7 @@
                     </dt>
                 </dl>
                 <!-- loop end -->
-<!-- loop start -->
+                <!-- loop start -->
                 <dl class="item">
                     <dt>
                         <a href="#">
@@ -359,7 +436,7 @@
                     </dt>
                 </dl>
                 <!-- loop end -->
-<!-- loop start -->
+                <!-- loop start -->
                 <dl class="item">
                     <dt>
                         <a href="#">
@@ -369,7 +446,7 @@
                     </dt>
                 </dl>
                 <!-- loop end -->
-<!-- loop start -->
+                <!-- loop start -->
                 <dl class="item">
                     <dt>
                         <a href="#">
@@ -382,8 +459,126 @@
             </div><!-- tool -->
 
         </div><!-- left -->
-    </div><!-- content -->
-</div>
+    </div><!-- wraper_left -->
+
+    <div class="wraper_right">
+        <div class="border_area r_img">
+            <a href="#"><img src="img/art_detail_right.png" width="298" height="198" border="0"></a>
+        </div>
+        <h3>阶段选择</h3>
+        <div class="border_area r_height">
+            <div class="text_list">
+                <span class="font_1">备怀孕</span>
+                <img id="img_1" src="img/top.jpg" onclick="showHide(1)">
+                <div id="show_1">
+                    <p>[&nbsp;<a>饮食</a>&nbsp;]&nbsp;&nbsp;&nbsp; [&nbsp;<a>保健</a>&nbsp;]&nbsp;&nbsp;&nbsp; 
+                    [&nbsp;<a>好运</a>&nbsp;]&nbsp;&nbsp;&nbsp;<span class="right">[&nbsp;<a>遗传优生</a>&nbsp;]</span>
+                    [&nbsp;<a>不孕不育</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>夫妻生活</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>避孕流产</a>&nbsp;]</span>
+                    </p>
+                </div>
+            </div>
+            <div class="text_list">
+                <span class="font_1">怀孕期</span>
+                <img id="img_2" src="img/top.jpg" onclick="showHide(2)">
+                <div id="show_2">
+                    <span class="font_2"><a>孕早期</a></span>
+                    <p>
+                        [&nbsp;<a>母乳喂养</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>人工喂养</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>遗传优生</a>&nbsp;]</span>
+                        [&nbsp;<a>不孕不育</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>夫妻生活</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>避孕流产</a>&nbsp;]</span>
+                    </p>
+                    <span class="font_2"><a>孕中期</a></span>
+                    <p>
+                        [&nbsp;<a>产前心理</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>临盆待产</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>分娩时刻</a>&nbsp;]</span>
+                        [&nbsp;<a>月子护理</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>产后关注</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>遗传优生</a>&nbsp;]</span>
+                        [&nbsp;<a>饮食</a>&nbsp;]&nbsp;&nbsp;&nbsp; [&nbsp;<a>保健</a>&nbsp;]&nbsp;&nbsp;&nbsp; 
+                        [&nbsp;<a>好运</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>遗传优生</a>&nbsp;]</span>
+                        [&nbsp;<a>不孕不育</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>夫妻生活</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>避孕流产</a>&nbsp;]</span>
+                    </p>
+                    <span class="font_2"><a>孕晚期</a></span>
+                    <p>
+                        [&nbsp;<a>饮食</a>&nbsp;]&nbsp;&nbsp;&nbsp; [&nbsp;<a>保健</a>&nbsp;]&nbsp;&nbsp;&nbsp; 
+                        [&nbsp;<a>好运</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>遗传优生</a>&nbsp;]</span>
+                        [&nbsp;<a>不孕不育</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>夫妻生活</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>避孕流产</a>&nbsp;]</span>
+                        [&nbsp;<a>幼儿喂养</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>宝宝食谱</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>幼儿喂养</a>&nbsp;]</span>
+                        [&nbsp;<a>不孕不育</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>夫妻生活</a>&nbsp;]  
+                    </p>
+                </div>
+            </div>
+            <div class="text_list">
+                <span class="font_1">分娩期</span>
+                <img id="img_3" src="img/top.jpg" onclick="showHide(3)">
+                <div id="show_3">
+                    <p>
+                        [&nbsp;<a>产前心理</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>临盆待产</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>分娩时刻</a>&nbsp;]</span>
+                        [&nbsp;<a>月子护理</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>产后关注</a>&nbsp;]
+                    </p>
+                </div>
+            </div>
+            <div class="text_list">
+                <span class="font_1">0-1岁</span>
+                <img id="img_4" src="img/top.jpg" onclick="showHide(4)">
+                <div id="show_4">
+                    <span class="font_2"><a>0-3个月</a></span>
+                    <p>
+                        [&nbsp;<a>母乳喂养</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>人工喂养</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>微量元素</a>&nbsp;]</span>
+                        [&nbsp;<a>体检免疫</a>&nbsp;]&nbsp;&nbsp; [<a>新生儿护理</a>]&nbsp;<span class="right">[<a>新生儿疾病</a>]</span>
+                    </p>
+                    <span class="font_2"><a>3-1岁</a></span>
+                    <p>
+                        [&nbsp;<a>母乳喂养</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>人工喂养</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>辅食添加</a>&nbsp;]</span>
+                        [&nbsp;<a>微量元素</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>体检免疫</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>婴儿护理</a>&nbsp;]</span>
+                        [&nbsp;<a>婴儿疾病</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>智力开发</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>游戏玩具</a>&nbsp;]</span>
+                    </p>
+                </div>
+            </div>
+            <div class="text_list">
+                <span class="font_1">1-3岁</span>
+                <img id="img_5" src="img/top.jpg" onclick="showHide(5)">
+                <div id="show_5">
+                    <span class="font_2"><a>幼早期</a></span>
+                    <p>
+                        [&nbsp;<a>母乳喂养</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>人工喂养</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>宝宝食谱</a>&nbsp;]</span>
+                        [&nbsp;<a>微量元素</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>体检免疫</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>幼儿护理</a>&nbsp;]</span>
+                        [&nbsp;<a>幼儿疾病</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>智力开发</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>游戏玩具</a>&nbsp;]</span>
+                        [&nbsp;<a>生长发育</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>行为教养</a>&nbsp;]
+                    </p>
+                    <span class="font_2"><a>幼儿期</a></span>
+                    <p>
+                        [&nbsp;<a>母乳喂养</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>人工喂养</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>辅食添加</a>&nbsp;]</span>
+                        [&nbsp;<a>微量元素</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>体检免疫</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>婴儿护理</a>&nbsp;]</span>
+                        [&nbsp;<a>婴儿疾病</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>智力开发</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>游戏玩具</a>&nbsp;]</span>
+                        [&nbsp;<a>生长发育</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>行为教养</a>&nbsp;]
+                    </p>
+                </div>
+            </div>
+            <div class="text_list no_border">
+                <span class="font_1">3-6岁</span>
+                <img id="img_6" src="img/top.jpg" onclick="showHide(6)">
+                <div id="show_6">
+                    <p>
+                        [&nbsp;<a>幼儿喂养</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>宝宝食谱</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>生长发育</a>&nbsp;]</span>
+                        [&nbsp;<a>体检免疫</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>儿童疾病</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>儿童心理</a>&nbsp;]</span>
+                        [&nbsp;<a>智力开发</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>生长发育</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>行为教养</a>&nbsp;]</span>
+                        [&nbsp;<a>才艺培养</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>入园入托</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>安全防范</a>&nbsp;]</span>
+                        [&nbsp;<a>儿童性教育</a>&nbsp;]
+                    </p>
+                </div>
+            </div>
+        </div>
+        <h3>标签推荐</h3>
+        <div class="border_area r_height">
+            <div class="text_list no_border">
+                <p>结果快速路    标签1   知识尝试    怀孕 热门标签    举例    关键字    子    优生优
+                结果快速路    标签1   知识尝试     生子
+                热门标签    举例    关键字     老刘专场
+                结果快速路    标签1   知识尝试     尝试
+                热门标签    举例    关键字     关键词
+                结果快速路    标签1   知识尝试     尝试
+                热门标签    举例    关键字     关键词</p>
+            </div>
+        </div>
+    </div><!-- wraper_right -->
+</div><!-- wraper -->
 
 <div class="footer">
     <div class="about">
@@ -391,19 +586,7 @@
     </div>
     <div class="copyright">北京网络技术有限公司版权所有，所有内容未经授权，不得转载或做其他使用 京ICP证010534号</div>
 </div>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script type="text/javascript">
-<!--
-$(function(){
-    //6张焦点图区域效果
-    $('#pic_hot .item').mouseover(function(){
-            $(this).siblings().find('div[rel=cover]').show();
-        }).mouseout( function(){
-            $('#pic_hot div[rel=cover]').hide();
-        });
-});
-
-//-->
-</script>
+<script type="text/javascript" src="./js/jquery.min.js"></script>
+<script type="text/javascript" src="./js/home.js"></script>
 </body>
 </html>
