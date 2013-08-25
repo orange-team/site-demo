@@ -1,0 +1,85 @@
+@charset "utf-8";
+/* 公共样式 */
+.head { height:25px; line-height:25px; border-bottom:4px #ffcc99 solid; color:#585858; }
+.head h3 { margin:0 0 0 10px; }
+
+/* 主体左侧部分 */
+/* 6张焦点图区域的 */
+.pic_hot { height:274px; border-right:1px #333 solid; border-bottom:1px #333 solid; }
+.pic_hot .item { height:136px; position:relative; float:left; border-left:1px #333 solid; border-top:1px #333 solid; }
+.pic_hot .pic1, .pic_hot .pic5 { width:336px; }
+.pic_height { height:136px; height:134px\9; }
+.pic_hot .cover { display:none; position:absolute; left:0; top:0; background:#222; width:100%; height:100%; height:137px\9; }
+.pic_hot .pic2, .pic_hot .pic3, .pic_hot .pic4, .pic_hot .pic6 { width:170px; }
+
+/* 幼儿百科区域 */
+.wiki { height:200px; margin:20px 0 0 0; }
+.wiki h3 { float:left; }
+.wiki a.more { display:inline-block; float:right; margin:0 15px 0 0; color:#888; text-decoration:underline;}
+.wiki .note { height:36px; line-height:36px; margin-left:20px; color:#bbb; font-size:14px; }
+.letter { margin-left:15px; }
+.letter a { display:inline-block; width:21px; height:26px; line-height:26px; margin-right:4px; text-align:center; color:#1975A2; background: url(/img/wiki_index_ui.png) no-repeat -150px -120px; font-weight:600; cursor:pointer; }
+.letter a:hover, .letter a.on { color: #fff; text-decoration: none; background: #E1F0CD url(/img/wiki_index_ui.png) no-repeat -171px -120px; }
+.wiki .tag { height:70px; background:#E1F0CD; display:none; }
+.wiki .show { display:block; }
+.wiki .tag a, .wiki .tag a:hover { display:inline-block; float:left; width:90px; height:35px; line-height:35px; margin-left:19px; cursor:pointer; }
+.wiki .tag p { text-align:center; height:70px; line-height:70px; }
+/* 向上的三角 */
+.to_top{ display:block; overflow:hidden; margin:3px 0 0 1px; width:0px; height:0px; border:9px solid #E1F0CD; border-color:#E1F0CD #fff; border-width:0 9px 9px 9px; }
+
+/* 时间轴区域 */
+.time { height:auto; /* 580px; */ margin:0 0 50px 0; }
+.time .head { height: 30px; cursor:pointer; font-weight:bold; }
+.time dt { display:inline-block; width:100px; height:35px; line-height:35px; margin-left:10px; text-align:center; }
+.time dt:hover, .time .on{ background:#ffcc99; color:#fff; }
+.panel_2 { width:620px; margin:0 auto; }
+.panel_2 .line { height:60px; }
+.panel_2 .part { display:inline-block; width:204px; position:relative; margin:15px 0 0 0; }
+.panel_2 .part span { display:block; width:185px; }
+.panel_2 .line a { display:inline-block; float:left; width:16px; height:6px; border-right:1px #333 solid; border-bottom:1px #333 dotted; }
+.panel_2 .line a:hover { background:#ffcc99; }
+.panel_2 .dot { position:absolute; left:-8px; top:14px; border:1px solid #aaa; width:12px; height:12px; background:#fff; margin:0 auto; -webkit-border-radius:50px; -moz-border-radius:50px; -o-border-radius:50px; border-radius:50px; }
+.panel_2 .dot:hover { background:#E1F0CD; border-color:#333; }
+/* panel_2 panel_3公共css */
+.panel_2 .item, .panel_3 .item { height:86px; border-top: 2px #d7d7d7 solid; }
+.panel_2 .art, .panel_3 .art { width:380px; float:left; margin:0 0 0 20px; }
+.panel_2 .art a, .panel_2 .art span, .panel_3 .art a, .panel_3 .art span { height:28px; line-height:28px; }
+.panel_2 .art a.pb_overflow, .panel_3 .art a.pb_overflow { display:block; width:250px; float:left; color:#777; }
+.panel_2 .art span, .panel_3 .art span { width:130px; float:right; }
+.panel_2 .item a.more, .panel_2 .next_page, .panel_3 .item a.more { height:25px; line-height:25px; float:right; background:#E1F0CD; border:1px #d7d7d7 solid; }
+.panel_2 .item a.more, .panel_3 .item a.more { display:block; width:108px; text-align:center; text-decoration:underline; }
+
+/* panel_2 对应div */
+.panel_2 .art_list { border-bottom: 2px #d7d7d7 solid; }
+.panel_2 .week { float:left; width:110px; height:75px; }
+.panel_2 .week span { display:inline-block; width:auto; height:65px; padding:50px 0 0 0; }
+.panel_2 img { width:86px; height:82px; float:left; }
+.panel_2 .next_page { width:306px; padding:0 0 0 15px; border-width:0 1px 1px 1px; }
+.panel_2 .next_page a { float:right; width:50px; }
+/* panel_3 对应div */
+.panel_3 { width:620px; margin:25px auto 0 auto; }
+.panel_3 .item { height:auto; }
+.panel_3 .title1 ,.time .panel_3 .title2 { float:left; width:80px; font-size:30px; font-weight:700; margin:10px 0 0 10px; } 
+.panel_3 .title1 { color:#006699; }
+.panel_3 .title2 { color:#b88; float:left; }
+.panel_3 .art { margin:2px 0 0 20px; }
+.panel_3 .art a.pb_overflow { width:360px; }
+.panel_3 .item a.more { background:#d7d7d7; }
+
+/* 妈妈关注 */
+.focus .item { height:75px; padding:10px 0 0 0; margin:0 0 0 30px; float:left; }
+.focus img { display:inline-block; float:left; width:55px; height:55px; border:1px solid #aaa; -webkit-border-radius:55px; -moz-border-radius:55px; -o-border-radius:55px; border-radius:55px; }
+.focus dl.info { width:220px; height:75px; float:left; margin:0 0 0 10px; font-size:14px; }
+.focus .info a { color:#006699; }
+.focus dt { display:block; width:220px; height:30px; line-height:30px; }
+.focus span.focus_wd { color:#aaa; }
+.focus dl.info a.tag { display:inline-block; margin:0 10px 0 0; }
+
+/* 实用小工具 */
+.tool { margin:0 0 50px; 0; }
+.tool .item { width:185px; height:42px; padding:0px 0 0 0; margin:10px 0 0 30px; float:left; }
+.tool img { width:30px; height:30px; float:left; border:1px solid #aaa; -webkit-border-radius:6px; -moz-border-radius:6px; -o-border-radius:6px; border-radius:6px; }
+.tool a.name { display:inline-block; height:32px; line-height:32px; margin:0px 0 0 10px; font-size:14px; color:#aaa; }
+.tool a.name:hover { color:#333; }
+
+
