@@ -19,6 +19,7 @@ string '/adminStatic/editor/php/' (length=24)
 //文件保存目录路径
 //$save_path = $php_path . '../attache';
 $save_path = $php_path . '../../../uploads/article/';
+echo $save_path;
 //文件保存目录URL
 //$save_url = $php_url . '/uploads/article/';
 $save_url = $php_url.'../../../uploads/article/';
