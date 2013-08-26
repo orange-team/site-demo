@@ -13,6 +13,12 @@ class Wiki_model extends CI_Model
 		parent::__construct();
 	}
 
+	function getBy_id($id)
+	{
+		$this->db->select('*')->from($this->_table)->where('id', (int)$id);
+		return $this->db->get()->row_array();
+    }
+
     //育儿百科--字母检索标签
 	function get_wiki_key($A_Z, $limit=null)
     {
