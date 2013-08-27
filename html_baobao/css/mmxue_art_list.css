@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+/* 热门文章 */
+.art_hot { height:170px; border-bottom:2px #e4e4e4 solid; margin:4px 0px; }
+.art_hot .item { position:relative; float:left; margin-left:25px; }
+.art_hot .first { margin-left:0; }
+.art_hot img { width:210px; height:150px; }
+.art_hot a { display:block; width:200px; line-height:27px; padding:0 5px; position:absolute; left:0; bottom:0;  z-index:999; background: #222; text-align:center; color:#fff;}
+
+/* 文章列表 */
+.art_list { width:100%;}
+.art_list .item { width:100%; height:105px; border-bottom: 1px #e4e4e4 dashed; }
+.art_list .item_title { width:100%;}
+.art_list .item_title a { display:inline-block; float:left; width:590px; font-size: 20px; line-height:40px; font-weight:bold;}
+.art_list .item_title span { float:right; color:#bbb; line-height:40px; padding-right:10px;}
+.art_list .item_title em { color: #ff3300; font-size:15px; }
+.art_list .item_desc { height:45px; color: #666; }
+.art_list .item_desc a, .art_list .item_desc span{ color: #ff3300; font-size:13px; }
+.art_list .item_tag { display:none; height:20px; line-height:20px; background:#aaa; color:#fff;padding-left:10px;}
+.art_list .item_tag a { color:#fff; padding:0 5px;}
+
+.page { height:30px; margin:10px 0; line-height:30px; }
+/* 公共样式 */
+.page, .page_list a, .page_list input { border: 1px #e4e4e4 solid; }
+.page a, .page .next, .page_list span, .page_list input { height:16px; line-height:16px; text-align:center; }
+.page_list a, .page_list input { width:25px; }
+
+.page .num { margin-left: 10px; }
+.page .page_list { float:right; margin-right:10px;}
+.page .page_list a { display:inline-block; }
+.page .page_list .on , .page_list a:hover { background: orange; color:#fff; }
+.page .page_list .next { width:auto; padding:0 5px; }
+.page .page_list span { margin-left:0px; }
+.page .page_list input { margin-left:3px; }
+.page .page_list .next a { width:auto; padding:0 5px;}
+

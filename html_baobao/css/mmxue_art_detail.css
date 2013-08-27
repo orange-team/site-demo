@@ -1,0 +1,14 @@
+@charset "utf-8";
+/* CSS Document */
+.w_left_top { width:auto; height:70px; border-bottom:1px #d8d8d8 solid; }
+.w_left_top h1 { width:auto; height:18px; padding-top:8px; font-size:18px; position:relative;}
+.w_left_top .title_b { position:relative; left:10px; bottom:-4px; cursor:pointer;} 
+.w_left_top #info { display:none; color:#929292; width:360px; height:25px; line-height:25px; padding:0 10px; overflow:hidden; background:#FFCC99; margin-top:15px; } 
+.art_detail { padding:10px; line-height:25px; border-bottom:1px #8c8c8c dashed; margin-bottom:10px; }
+.share { float:left; padding-left:10px; }
+.wraper_left .detail_page { float:right; padding-right:10px;  font:normal bold 14px Arial;}
+ h2 { font-size:14px; margin-top:10px; padding:10px 0 5px 15px;}
+.art_detail_list { padding:10px; border-top:3px #FFCC99 solid; border-bottom:1px #8c8c8c dashed;}
+.art_detail_list ul { list-style-type:none; width:305px;  padding:5px 0 10px 25px; float:left; }
+.art_detail_list ul li { position:relative; height:25px; } 
+.art_detail_list ul li span { position:absolute; top:0; left:0; display:block; width:305px; height:25px; line-height:25px; overflow:hidden;} 
