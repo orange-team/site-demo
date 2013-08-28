@@ -1,3 +1,4 @@
+<?php $this->load->view('header')?>
 <div id="wraper">
     <div class="site_route">
         您的位置：<?php echo $nav?>
@@ -5,7 +6,7 @@
     <div class="wraper_left">
         <div class="w_left_top">
             <h1><?php echo $title ?> <img class="title_b" src="<?php echo base_url();?>img/title_button.jpg" onmouseover="showTitle()" onmouseout="hideTitle()"></h1>
-            <div id="info" > 日期：<?php echo $add_time;?> &nbsp;&nbsp; 作者：张三 &nbsp;&nbsp; 来源：<?php echo $source;?> </div>
+            <div id="info" > 日期：<?php echo $add_time;?> &nbsp;&nbsp; 作者：<?php echo $author?> &nbsp;&nbsp; 来源：<?php echo $source;?> </div>
         </div>    
         <div class="art_detail">
             <?php echo $content;?>
@@ -35,5 +36,6 @@
             <div class="clear"></div>
         </div>
     </div>
-
-
+    <?php $this->load->view('mmxue_right')?>
+</div>
+<?php $this->load->view('footer')?>

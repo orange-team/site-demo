@@ -12,6 +12,8 @@ class mmxue_art_list extends MY_Controller
 		parent::__construct();
 		$this->load->model('admin/article_model','art');
 		$this->load->model('admin/section_model','section');
+		$this->load->model('tag_model','tag');
+		$this->load->model('relation_tag_model','relation_tag');
 	}
 	public function index($section)
 	{
@@ -34,19 +36,22 @@ class mmxue_art_list extends MY_Controller
         }
         //获取对应栏目
         $section = $this->section->get_one(array('id'=>$section));
-        $row['nav'] = "<a href='".base_url()."mmxue_art_list/index/".$section['id']."' > ".$section['name']."</a>";
+        //$row['nav'] = "<a href='".base_url()."mmxue_art_list/index/".$section['id']."' > ".$section['name']."</a>";
+        $row['nav'] = "<a href='".base_url()."mmxue'> ".$section['name']."</a>";
 
         //获得上级栏目
         if(3 == $section['pt_depth'])
         {
             $section_parent = $this->get_section($section['parent']);
-            $row['nav'] = "<a href='".base_url()."mmxue_art_list/index/".$section_parent[0]['id']."' > ".$section_parent[0]['name']."</a> > ";
+            //$row['nav'] = "<a href='".base_url()."mmxue_art_list/index/".$section_parent[0]['id']."' > ".$section_parent[0]['name']."</a> > ";
+            $row['nav'] = "<a href='".base_url()."mmxue'> ".$section_parent[0]['name']."</a> > ";
             $row['nav'] .= "<a href='".base_url()."mmxue_art_list/index/".$section_parent[1]['id']."' > ".$section_parent[1]['name']."</a> > ";
             $row['nav'] .= "<a href='".base_url()."mmxue_art_list/index/".$section['id']."'>".$section['name']."</a>";
         }else if(2 == $section['pt_depth'])
         {
             $section_parent = $this->section->get_one(array('id'=>$section['parent']));
-            $row['nav'] = "<a href='".base_url()."mmxue_art_list/index/".$section_parent['id']."' > ".$section_parent['name']."</a> >";
+            //$row['nav'] = "<a href='".base_url()."mmxue_art_list/index/".$section_parent['id']."' > ".$section_parent['name']."</a> >";
+            $row['nav'] = "<a href='".base_url()."mmxue' > ".$section_parent['name']."</a> >";
             $row['nav'] .= "<a href='".base_url()."mmxue_art_list/index/".$section['id']."' > ".$section['name']."</a>";
         }
         $this->data['nav'] = $row['nav'];
@@ -94,9 +99,20 @@ class mmxue_art_list extends MY_Controller
         foreach($arr as &$v)
         {
             $v['content'] = $this->remove_tag($v['content']);
+            //获取标签
+            $tag_ids = $this->relation_tag->get(array('target_type'=>1,'target_id'=>$v['id']));
+            $tag_id = '';
+            foreach($tag_ids as $val)
+            {
+                $tag_id[] = $val['tag_id'];
+            }
+            $v['tags'] = $this->tag->getBy_ids($tag_id);
+            unset($tag_ids);
         }
 		$this->data['articleArr'] = $arr;
+        unset($arr);
         $this->data['number'] = $offset+1; 
+        //专栏图片信息
 
         $this->data['seo'] = array('title'=>'妈妈学文章列表页',
                 'description'=>'妈妈学文章列表页的描述页面信息',
@@ -107,10 +123,7 @@ class mmxue_art_list extends MY_Controller
 
 
 		$this->load->helper('url');
-		$this->load->view('header',$this->data);
 		$this->load->view('mmxue_art_list',$this->data);
-		$this->load->view('mmxue_right');
-		$this->load->view('footer');
 	}
 
     //递归获取子分类信息

@@ -17,6 +17,11 @@ class mmxue_art_detail extends MY_Controller
 	{
         $id = intval($id);
         $row = $this->art->getBy_id($id);
+        //关注度
+        $attention = intval($row['attention']+1);  
+        $this->art->update($id,array('attention'=>$attention));
+        unset($attention);
+
         //获取对应栏目
         $section = $this->section->get_one(array('id'=>$row['section']));
         //$row['nav'] = "<a href='".base_url()."mmxue_art_list/index/".$section['id']."'>".$section['name']."</a>";
@@ -44,18 +49,15 @@ class mmxue_art_detail extends MY_Controller
         $row['pre'] = $id-1==0 ? 1 : $id-1;
         //下一篇
         $row['next'] = $id+1;
-        $head['seo'] = array('title'=>'妈妈学文章内容页',
+        $row['seo'] = array('title'=>'妈妈学文章内容页',
                 'description'=>'妈妈学文章内容页的描述页面信息',
                 'keywords'=>'妈妈学,母婴知识,宝宝健康'
                 );
         //要载入的css, js文件
-        $head['file'] = array('js'=>'mmxue_art','css'=>'mmxue_art_detail');
+        $row['file'] = array('js'=>'mmxue_art','css'=>'mmxue_art_detail');
 
-        $head['title'] = '文章详情页面';
 		$this->load->helper('url');
-		$this->load->view('header',$head);
 		$this->load->view('mmxue_art_detail',$row);
-		$this->load->view('mmxue_right',$row);
 		$this->load->view('footer');
 	}
     //获取父及栏目内容

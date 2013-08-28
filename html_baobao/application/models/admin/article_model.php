@@ -44,7 +44,7 @@ class article_model extends CI_Model
             $this->db->like('title',$where['title']);
             unset($where['title']);
         } 
-		$this->db->select('id, title, section, add_time, keyword ')->from($this->_table);
+		$this->db->select('id, title, section, add_time, keyword, attention')->from($this->_table);
         if($where['section'])
         {
             $in_where = $where['section'];
