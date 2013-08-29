@@ -20,18 +20,35 @@ class Wiki extends MY_Controller
     //详细页
 	public function index()
 	{
+        //详细页id
+        $id = (int)trim(addslashes($this->uri->segment(3)));
+        $this->data['prev'] = $this->get_prev($id);
+        $this->data['next'] = $this->get_next($id);
+
         $this->data['seo'] = array('title'=>'百科知识详细页',
                 'description'=>'百科知识的详细页面信息',
                 'keywords'=>'百科知识,母婴知识,宝宝健康'
                 );
         //要载入的css, js文件
-        $this->data['file'] = array('js'=>'wiki_detail','css'=>'wiki_detail');
-        //详细页id
-        $id = (int)trim(addslashes($this->uri->segment(3)));
+        $this->data['file'] = array('js'=>'mmxue_art','css'=>'mmxue_art_detail');
         $this->data['wikiArr'] = $this->wiki->getBy_id($id);
 		$this->load->view('wiki_detail', $this->data);
 	}
 
+    //得到上一篇
+	private function get_prev($id)
+    {
+		$this->db->select('id, wiki_key')->from($this->_table)->where('id <',$id)->order_by('id desc')->limit(1);
+		return $this->db->get()->row_array();
+	}
+    
+    //得到下一篇
+	private function get_next($id)
+    {
+		$this->db->select('id, wiki_key')->from($this->_table)->where('id >',$id)->limit(1);
+		return $this->db->get()->row_array();
+	}
+ 
     //关键词字典页
     public function dict()
 	{
@@ -43,7 +60,7 @@ class Wiki extends MY_Controller
         $this->data['file'] = array('js'=>'wiki_dict','css'=>'wiki_dict');
         //育儿百科--字母检索
         $this->data['A_Z'] = range('A', 'Z');
-        $this->data['keyArr'] = $this->wiki->get_wiki_dict($this->data['A_Z']);
+        $this->data['keyArr'] = $this->wiki->get_wiki_key($this->data['A_Z']);
 		$this->load->view('wiki_dict', $this->data);
 	}
     
