@@ -14,6 +14,7 @@ class mmxue_art_list extends MY_Controller
 		$this->load->model('admin/section_model','section');
 		$this->load->model('tag_model','tag');
 		$this->load->model('relation_tag_model','relation_tag');
+		$this->load->model('specpage_model','specpage');
 	}
 	public function index($section)
 	{
@@ -112,7 +113,9 @@ class mmxue_art_list extends MY_Controller
 		$this->data['articleArr'] = $arr;
         unset($arr);
         $this->data['number'] = $offset+1; 
-        //专栏图片信息
+
+        //3张专栏图片信息
+        $this->data['specpage'] = $this->specpage->getList(3,0,array('cover != '=>''));
 
         $this->data['seo'] = array('title'=>'妈妈学文章列表页',
                 'description'=>'妈妈学文章列表页的描述页面信息',

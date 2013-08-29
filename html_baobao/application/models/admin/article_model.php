@@ -21,7 +21,7 @@ class article_model extends CI_Model
 
 	function getTotal($where=array())
 	{
-        if($where['title']) 
+        if(isset($where['title'])) 
         {
             $this->db->like('title',$where['title']);
             unset($where['title']);
@@ -39,13 +39,14 @@ class article_model extends CI_Model
 	//列表页
 	function getList($limit, $offset, $where=array())
     {
-        if($where['title']) 
+        $in_where = '';
+        if(isset($where['title'])) 
         {
             $this->db->like('title',$where['title']);
             unset($where['title']);
         } 
-		$this->db->select('id, title, section, add_time, keyword, attention')->from($this->_table);
-        if($where['section'])
+		$this->db->select('id, title, content, section, add_time, keyword,attention ')->from($this->_table);
+        if(isset($where['section']))
         {
             $in_where = $where['section'];
             unset($where['section']);

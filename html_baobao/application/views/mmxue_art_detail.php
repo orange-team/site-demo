@@ -20,22 +20,18 @@
         <h2>相关文章推荐</h2>
         <div class="art_detail_list">
             <ul> 
-                <li><span><a>孕期的饮食是保证健康的首要条件我看见天地那个哦旧相机fdsafdfdsffsafdsa</a></span></li>
-                <li><span><a>孕期的饮食是保证</a></span></li>
-                <li><span><a>备孕推荐文章--孕妇夏季对付蚊子的小招术</a></span></li>
-                <li><span><a>备孕推荐文章--孕妇夏季对付蚊子的小招术</a></span></li>
-                <li><span><a>孕期的饮食是保证健康的首要条件</a></span></li>
+                <?php foreach($artList_1 as $v){?>
+                <li><span><a href="/mmxue_art_detail/index/<?php echo $v['id']?>"><?php echo $v['title']?></a></span></li>
+                <?php }?>
             </ul>
             <ul> 
-                <li><span><a>孕期的饮食是保证健康的首要条件</a></span></li>
-                <li><span><a>孕期的饮食是保证</a></span></li>
-                <li><span><a>备孕推荐文章--孕妇夏季对付蚊子的小招术</a></span></li>
-                <li><span><a>备孕推荐文章--孕妇夏季对付蚊子的小招术</a></span></li>
-                <li><span><a>孕期的饮食是保证健康的首要条件</a></span></li>
+                <?php foreach($artList_2 as $v){?>
+                <li><span><a href="/mmxue_art_detail/index/<?php echo $v['id']?>"><?php echo $v['title']?></a></span></li>
+                <?php }?>
             </ul>
             <div class="clear"></div>
         </div>
     </div>
-    <?php $this->load->view('mmxue_right')?>
+    <?php $this->load->view('mmxue_right');?>
 </div>
 <?php $this->load->view('footer')?>

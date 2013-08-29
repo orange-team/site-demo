@@ -105,13 +105,11 @@
         <h3>标签推荐</h3>
         <div class="border_area r_height">
             <div class="text_list no_border">
-                <p>结果快速路    标签1   知识尝试    怀孕 热门标签    举例    关键字    子    优生优
-                结果快速路    标签1   知识尝试     生子
-                热门标签    举例    关键字     老刘专场
-                结果快速路    标签1   知识尝试     尝试
-                热门标签    举例    关键字     关键词
-                结果快速路    标签1   知识尝试     尝试
-                热门标签    举例    关键字     关键词</p>
+                <p>
+                    <?php foreach($tagList as $v){?>
+                    <a href=""><?php echo $v['name']?></a>&nbsp;&nbsp;
+                    <?php }?>
+                </p>
             </div>
         </div>
     </div>

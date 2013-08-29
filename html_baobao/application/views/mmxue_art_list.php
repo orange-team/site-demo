@@ -6,18 +6,16 @@
     <div class="wraper_left">
         <div class="left">
             <div class="art_hot clearfloat">
+                <?php foreach($specpage as $k=>$v){ ?>
+                <?php if(0==$k){?>
                 <div class="item first">
-                    <img src="http://pic2.nipic.com/20090414/386228_104922058_2.jpg" title="图片名称"/>
-                    <a href="#" class="pb_overflow pb_opacity" title="显示整个标题">热门推荐文章热门推荐文章热门推荐文章热门推荐文章</a>
-                </div>
+                <?php }else{?>
                 <div class="item">
-                    <img src="http://pic2.nipic.com/20090414/386228_104922058_2.jpg" title="图片名称"/>
-                    <a href="#" class="pb_overflow pb_opacity" title="显示整个标题">热门推荐文章</a>
+                <?php }?>
+                    <img src="<?php echo $v['cover']?>" title="<?php echo $v['title']?>"/>
+                    <a href="/specpage/index/<?php echo $v['id'];?>/" class="pb_overflow pb_opacity" title="<?php echo $v['title'];?>"><?php echo $v['title']?></a>
                 </div>
-                <div class="item">
-                    <img src="http://pic2.nipic.com/20090414/386228_104922058_2.jpg" title="图片名称"/>
-                    <a href="#" class="pb_overflow pb_opacity">热门推荐文章热门推荐文章</a>
-                </div>
+                <?php }?>
             </div>
             <div class="art_list" id="art_list">
                 <!-- loop start -->
