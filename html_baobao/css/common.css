@@ -47,7 +47,7 @@ a:hover { color:#F6724A; text-decoration:underline; cursor:pointer; }
 #wraper { width:1000px; margin:0 auto; padding:10px 0;  }
 /* 面包屑导航 */
 .site_route { width:auto; height:30px; line-height:30px; position:relative; }
-.wraper_left { width:680px; height:680px;  float:left; position:relative;}
+.wraper_left { width:680px; height:auto;  float:left; position:relative;}
 .wraper_right { width:300px; height:auto;float:right;}
 
 /* 主体右侧部分 */

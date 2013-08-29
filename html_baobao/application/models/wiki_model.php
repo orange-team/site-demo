@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-* description: 后台--专栏模型
+* description: 专栏模型
 * author: zg
 * date: 2013-07-28
 */

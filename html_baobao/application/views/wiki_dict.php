@@ -17,7 +17,7 @@
                 <div class="tag">
                 <?php if(0>=count($val)) echo '<p>抱歉，该字母索引下暂时还没有百科关键词</p>';
                 foreach($val as $k=>$v) {?>
-                    <a href="/wiki/<?php echo $v['id']?>" <?php if(0==$k) echo 'class="first"';?>><?php echo $v['wiki_key']?></a>
+                    <a href="/wiki/index/<?php echo $v['id']?>/" <?php if(0==$k) echo 'class="first"';?>><?php echo $v['wiki_key']?></a>
                 <?php } ?>
                 </div>
             </div>

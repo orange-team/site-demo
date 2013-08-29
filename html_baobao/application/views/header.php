@@ -32,7 +32,7 @@
         <img class="logo_font" src="/img/logo_font.jpg" height="25" width="80">
         <div class="nav_section">
             <ul>
-                <li><a href="#" class="default">妈妈学</a></li>
+                <li><a href="/mmxue/" class="default">妈妈学</a></li>
                 <li><a href="#">妈妈说</a></li>
                 <li><a href="#">妈妈看</a></li>
             </ul>
