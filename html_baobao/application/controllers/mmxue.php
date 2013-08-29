@@ -70,16 +70,42 @@ class Mmxue extends MY_Controller
     }
 
     //得到各分类的文章
-    private function get_panel()
+    public function get_panel()
     {
-        $tab = array('备孕期', '怀孕期', '分娩期', '0-1岁', '1-3岁', '3-6岁');
         //初始化数组
         $articleArr = $timelineArr = array();
-        $this->db->select('id')->from('a_timeline')->where('time_bucket >=',1)->where('time_bucket <=',6);
-        $timelineArr = $this->db->get()->result_array();
-        foreach( $timelineArr as $k=>$v )
+        $tab = array('备孕期', '怀孕期', '分娩期', '0-1岁', '1-3岁', '3-6岁');
+        echo '<pre>';
+        foreach( $tab as $key=>$val )
         {
-            //limit 6 是因为页面上只有6个可显示
+            /*
+            $query = $this->db->get_where('a_section', array('name' => $val), 1);
+            $arr = $query->result();
+            print_r($arr);continue;
+            */
+            $this->db->select('id')->from('a_section')->where('name',$val)->limit(1);
+            $section = $this->db->get()->row_array();
+            print_r($section);
+            if( 0 < count($section) )
+            {
+                //得到所有子id
+                $this->db->select('id')->from('a_section')->where('parent',$section['id']);
+                $tmpArr = array();
+                $sub_ids = $this->db->get()->result_array();
+                foreach( $sub_ids as $sv )
+                {
+                    $sub_ids_new[] = $sv['id'];
+                }
+                //echo 'sub_ids';
+                //print_r($sub_ids_new);
+                if( is_array($sub_ids_new) && 0 < count($sub_ids_new) )
+                {
+                    $this->db->select('id, title')->from('a_article')->where_in('section',$sub_ids_new)->limit(3);
+                    $article = $this->db->get()->result_array();
+                    print_r($article);
+                }
+            }
+            continue;
             $this->db->select('id, title, keyword')->from('a_article')->where('timeline_id',$v['id'])->order_by('timeline_id')->limit($this->limit_num);
             $tmpArr = array();
             $tmpArr = $this->db->get()->result_array();
