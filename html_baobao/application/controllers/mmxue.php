@@ -37,11 +37,12 @@ class Mmxue extends MY_Controller
         //定义默认显示A相关wiki_key
         $this->data['showKey'] = 'F';
         $this->data['A_Z'] = range('A', 'Z');
+        //$this->db->start_cache();
         $this->data['keyArr'] = $this->wiki->get_wiki_key($this->data['A_Z'], 12);
-        //$sectionArticleArr = array();
-        //$sectionArticleArr = $this->get_section_article(4);
         //得到时间轴文章
         $this->data['timelineArr'] = $this->get_timeline();
+        $this->data['panelArr'] = $this->get_panel();
+        //$this->db->stop_cache();
 		$this->load->view('mmxue', $this->data);
 	}
 
@@ -73,51 +74,39 @@ class Mmxue extends MY_Controller
     public function get_panel()
     {
         //初始化数组
-        $articleArr = $timelineArr = array();
-        $tab = array('备孕期', '怀孕期', '分娩期', '0-1岁', '1-3岁', '3-6岁');
-        echo '<pre>';
-        foreach( $tab as $key=>$val )
+        $panel_article = array();
+        //echo '<pre>';
+        //得到妈妈学栏目的子分类
+        $this->db->select('id, name')->from('a_section')->where('parent',1)->limit(5);
+        $section = $this->db->get()->result_array();
+        foreach( $section as $key=>$val )
         {
-            /*
-            $query = $this->db->get_where('a_section', array('name' => $val), 1);
-            $arr = $query->result();
-            print_r($arr);continue;
-            */
-            $this->db->select('id')->from('a_section')->where('name',$val)->limit(1);
-            $section = $this->db->get()->row_array();
-            print_r($section);
-            if( 0 < count($section) )
+            $sub_ids = $sub_ids_new = array();
+            //得到所有子id
+            $this->db->select('id')->from('a_section')->where('parent',$val['id']);
+            $sub_ids = $this->db->get()->result_array();
+            foreach( $sub_ids as $sv )
             {
-                //得到所有子id
-                $this->db->select('id')->from('a_section')->where('parent',$section['id']);
-                $tmpArr = array();
-                $sub_ids = $this->db->get()->result_array();
-                foreach( $sub_ids as $sv )
-                {
-                    $sub_ids_new[] = $sv['id'];
-                }
-                //echo 'sub_ids';
-                //print_r($sub_ids_new);
-                if( is_array($sub_ids_new) && 0 < count($sub_ids_new) )
-                {
-                    $this->db->select('id, title')->from('a_article')->where_in('section',$sub_ids_new)->limit(3);
-                    $article = $this->db->get()->result_array();
-                    print_r($article);
-                }
+                $sub_ids_new[] = $sv['id'];
             }
-            continue;
-            $this->db->select('id, title, keyword')->from('a_article')->where('timeline_id',$v['id'])->order_by('timeline_id')->limit($this->limit_num);
-            $tmpArr = array();
-            $tmpArr = $this->db->get()->result_array();
-            //var_dump($tmpArr, count($tmpArr));
-            foreach( $tmpArr as $kv=>$tv )
+            if( is_array($sub_ids_new) && 0 < count($sub_ids_new) )
             {
-                $tmpArr[$kv]['keywordName'] = array_pop($this->get_keyword((int)$tv['keyword']));
+                //得到关联keyword
+                $this->db->select('id, name')->from('a_keyword')->where_in('section',$sub_ids_new)->limit($this->limit_num);
+                $keywords = $keywords_new = array(0);
+                $keywords = $this->db->get()->result_array();
+                foreach( $keywords as $kv )
+                {
+                    $this->db->select('id, title')->from('a_article')->where('keyword =',$kv['id'])->limit(3);
+                    $panel_article[$val['id']][$kv['name']] = $this->db->get()->result_array();
+                }
+                //$this->db->select('id, title')->from('a_article')->where_in('keyword',$keywords_new)->limit(3);
+                //$tab_article[$val['id']] = $this->db->get()->result_array();
             }
-            $articleArr[$v['id']] = $tmpArr;
         }
-        unset($timelineArr, $tmpArr);
-        return $articleArr;
+        unset($sub_ids, $sub_ids_new, $section);
+        //print_r($panel_article);
+        return $panel_article;
     }
 
     //得到关键词

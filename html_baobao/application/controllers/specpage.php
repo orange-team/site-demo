@@ -31,8 +31,12 @@ class specpage extends MY_Controller
                 );
         //要载入的css, js文件
         $this->data['file'] = array('js'=>'mmxue_art','css'=>'mmxue_art_detail');
-        $this->data['specpageArr'] = $this->specpage->getBy_id($id);
+        $specpageArr = $this->specpage->getBy_id($id);
+        $this->data['specpageArr'] = $specpageArr;
         $this->data['specpageArr']['source'] = '本站';
+        //得到推荐文章
+        $this->data['recommend'] = $this->get_recommend((int)$specpageArr['tag_id']);
+        unset($specpageArr);
 		$this->load->view('specpage_detail', $this->data);
 	}
 
@@ -50,12 +54,22 @@ class specpage extends MY_Controller
 		return $this->db->get()->row_array();
 	}
 
-    //相关推荐文章
-    private function get_recommend_art($id)
+    //得到推荐文章,涉及两张表，故没放到model中
+	private function get_recommend($specpage_id)
     {
-		$this->db->select('id, title')->from($this->_table)->where('id >',$id)->limit(1);
-		return $this->db->get()->row_array();
-    }
-
+        $arr = array();
+        //得到专栏的tag_id
+		$this->db->select('tag_id')->from('a_relation_tag')->where('target_id',$specpage_id)->where('status',1)->where('target_type',2)->limit(6);
+		$resIds = $this->db->get()->result_array();
+        if( is_array($resIds) && 0 < count($resIds) )
+        {
+            $this->db->select('id, title')->from('a_article')->where_in('id >',$resIds)->limit(10);
+        } else {
+            $this->db->select('id, title')->from('a_article')->order_by('attention desc')->limit(10);
+        }
+        $arr = $this->db->get()->result_array();
+        return $arr;
+	}
+ 
 
 }

@@ -1,7 +1,7 @@
 <?php $this->load->view('header')?>
 <div id="wraper">
     <div class="site_route">
-        您的位置 : <a href="#">妈妈学</a> > 百科知识
+        您的位置 : <a href="/mmxue/">妈妈学</a> > 百科知识
     </div>
     <div class="content">
         <div class="wiki clearfloat" id="myTop">
@@ -22,6 +22,7 @@
                 </div>
             </div>
             <?php } ?>
+        </div>
   </div><!-- content -->
 </div>
 <?php $this->load->view('footer')?>

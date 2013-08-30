@@ -19,7 +19,7 @@
             <div class="wiki">
                 <div class="head clearfloat">
                     <h3>育儿百科 ( 专业名词的解释 , 即百科标签 )</h3>
-                    <a href="/wiki_dict/index/" class="more">更多百科</a>
+                    <a href="/wiki/dict/" class="more">更多百科</a>
                 </div>
                 <div class="note">按字母检索：</div>
                 <div class="letter" id="letter_nav">
@@ -46,55 +46,49 @@
                     <dt onclick="show_panel(this)" sort="5">1-3岁</dt>
                     <dt onclick="show_panel(this)" sort="6">3-6岁</dt>
                 </dl>
+                <?php foreach( $panelArr as $key=>$val ) { ?>
+                <div class="panel_1" id="panel_<?php echo $key?>" style="display:none;">
+                    <div class="art_list">
+                        <!-- loop start -->
+                        <?php foreach($val as $k=>$v) {?>
+                        <div class="item clearfloat">
+                            <div class="title1"><?php echo $k?></div>
+                            <div class="art clearfloat">
+                                <?php foreach($v as $art_k=>$art_v) {?>
+                                <div>
+                                    <a href="/mmxue_art_detail/index/<?php echo $art_v['id']?>/" class="pb_overflow"><?php echo $art_v['title']?></a>
+                                </div>
+                                <?php } ?>
+                            </div>
+                            <a href="/mmxue_art_list/index/?keyword=<?php echo $k?>" class="more">了解更多</a>
+                        </div>
+                        <?php } ?>
+                        <!-- loop end -->
+                    </div><!-- art_list -->
+                </div><!-- panel_<?php echo $key?> -->
+                <?php } ?>
                 <div class="panel_2" id="panel_2">
                     <div class="line clearfloat">
-                        <div class="part">
+                        <div class="part_1">
                             <span>孕早期(1-12周)</span>
                             <div class="dot"></div>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
+                            <?php foreach( range(1,12) as $v ) { ?> 
+                            <a href="/mmxue_art_list/index/?week=<?php echo $v?>"></a>
+                            <?php } ?>
                         </div>
-                        <div class="part">
-                            <span>孕中期(13-27周)</span>
+                        <div class="part_2">
+                            <span>孕早期(13-27周)</span>
                             <div class="dot"></div>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
+                            <?php foreach( range(13,27) as $v ) { ?> 
+                            <a href="/mmxue_art_list/index/?week=<?php echo $v?>"></a>
+                            <?php } ?>
                         </div>
-                        <div class="part">
-                            <span>孕晚期(28-40周)</span>
+                        <div class="part_3">
+                            <span>孕早期(28-40周)</span>
                             <div class="dot"></div>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
-                            <a href="#"></a>
+                            <?php foreach( range(28,40) as $v ) { ?> 
+                            <a href="/mmxue_art_list/index/?week=<?php echo $v?>"></a>
+                            <?php } ?>
                         </div>
                     </div>
                     <div class="art_list">
@@ -108,11 +102,11 @@
                                 <?php foreach( $val as $k=>$v ) { ?>
                                 <div class="clearfloat">
                                     <a href="/mmxue_art_detail/index/<?php echo $v['id']?>/" class="pb_overflow"><?php echo $v['title']?></a>
-                                    <span>[<a href="/mmxue_art_list/index/<?php echo $v['keyword']?>"><?php echo $v['keywordName']?></a>]</span>
+                                    <span>[<a href="/mmxue_art_list/index/?keyword=<?php echo $v['keywordName']?>"><?php echo $v['keywordName']?></a>]</span>
                                 </div>
                                 <?php } ?>
                             </div>
-                            <a href="/mmxue_art_list/index/<?php echo $key?>/" class="more">了解更多</a>
+                            <a href="/mmxue_art_list/index/?week=<?php echo $key?>" class="more">了解更多</a>
                         </div>
                         <?php } ?>
                     </div><!-- art_list -->
@@ -122,23 +116,7 @@
                     </div>
                     <?php } ?>
                 </div><!-- panel -->
-                <div class="panel_3" id="panel_3" style="display:none;">
-                    <div class="art_list">
-                        <!-- loop start -->
-                        <?php if( isset($panel[3]) ) foreach($panel[3] as $k=>$v) {?>
-                        <div class="item clearfloat">
-                            <div class="title1">产前心理</div>
-                            <div class="art clearfloat">
-                                <div>
-                                    <a href="#" class="pb_overflow">女性养生警惕：怀孕前4件事情不能做</a>
-                                </div>
-                            </div>
-                            <a href=#" class="more">了解更多</a>
-                        </div>
-                        <?php } ?>
-                        <!-- loop end -->
-                    </div><!-- art_list -->
-                </div><!-- panel_3 -->
+                
             </div><!-- time -->
             
             <div class="focus clearfloat">

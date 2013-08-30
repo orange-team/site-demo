@@ -31,7 +31,11 @@ class Wiki extends MY_Controller
                 );
         //要载入的css, js文件
         $this->data['file'] = array('js'=>'mmxue_art','css'=>'mmxue_art_detail');
-        $this->data['wikiArr'] = $this->wiki->getBy_id($id);
+        $wikiArr = $this->wiki->getBy_id($id);
+        $this->data['wikiArr'] = $wikiArr;
+        //得到推荐文章
+        $this->data['recommend'] = $this->get_recommend((int)$wikiArr['tag_id']);
+        unset($wikiArr);
 		$this->load->view('wiki_detail', $this->data);
 	}
 
@@ -47,6 +51,22 @@ class Wiki extends MY_Controller
     {
 		$this->db->select('id, wiki_key')->from($this->_table)->where('id >',$id)->limit(1);
 		return $this->db->get()->row_array();
+	}
+ 
+    //得到推荐文章,涉及两张表，故没放到model中
+	private function get_recommend($tag_id)
+    {
+        $arr = array();
+		$this->db->select('target_id')->from('a_relation_tag')->where('tag_id',$tag_id)->where('status',1)->where('target_type',1)->limit(6);
+		$resIds = $this->db->get()->result_array();
+        if( is_array($resIds) && 0 < count($resIds) )
+        {
+            $this->db->select('id, title')->from('a_article')->where_in('id >',$resIds)->limit(10);
+        } else {
+            $this->db->select('id, title')->from('a_article')->order_by('attention desc')->limit(10);
+        }
+        $arr = $this->db->get()->result_array();
+        return $arr;
 	}
  
     //关键词字典页
