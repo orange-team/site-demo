@@ -6,7 +6,8 @@ body { font-family: "微软雅黑",Arial, Helvetica, sans-serif; font-size:13px;
 img.block { display:block;}
 img { border:none; }
 a,a:visited { color:#333; text-decoration:none;}
-a:hover { color:#00839f; text-decoration:underline;}
+a:hover { color:#F6724A; text-decoration:underline; cursor:pointer; }
+.border_area { border:1px #d8d8d8 solid;}
 
 /* 定义超出隐藏 */
 .pb_overflow { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }

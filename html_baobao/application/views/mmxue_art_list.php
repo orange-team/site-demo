@@ -1,3 +1,4 @@
+<?php $this->load->view('header')?>
 <div id="wraper" class="clearfloat">
 	<div class="bread_nav">
         您的位置 : <?php echo $nav?>
@@ -5,18 +6,16 @@
     <div class="wraper_left">
         <div class="left">
             <div class="art_hot clearfloat">
+                <?php foreach($specpage as $k=>$v){ ?>
+                <?php if(0==$k){?>
                 <div class="item first">
-                    <img src="http://pic2.nipic.com/20090414/386228_104922058_2.jpg" title="图片名称"/>
-                    <a href="#" class="pb_overflow pb_opacity" title="显示整个标题">热门推荐文章热门推荐文章热门推荐文章热门推荐文章</a>
-                </div>
+                <?php }else{?>
                 <div class="item">
-                    <img src="http://pic2.nipic.com/20090414/386228_104922058_2.jpg" title="图片名称"/>
-                    <a href="#" class="pb_overflow pb_opacity" title="显示整个标题">热门推荐文章</a>
+                <?php }?>
+                    <img src="<?php echo $v['cover']?>" title="<?php echo $v['title']?>"/>
+                    <a href="/specpage/index/<?php echo $v['id'];?>/" class="pb_overflow pb_opacity" title="<?php echo $v['title'];?>"><?php echo $v['title']?></a>
                 </div>
-                <div class="item">
-                    <img src="http://pic2.nipic.com/20090414/386228_104922058_2.jpg" title="图片名称"/>
-                    <a href="#" class="pb_overflow pb_opacity">热门推荐文章热门推荐文章</a>
-                </div>
+                <?php }?>
             </div>
             <div class="art_list" id="art_list">
                 <!-- loop start -->
@@ -24,7 +23,7 @@
                 <div class="item" onmouseover="show_tag(this)" onmouseout="hide_tag(this)">
                     <div class="item_title clearfloat">
                         <a href="/mmxue_art_detail/index/<?php echo $row['id']?>" class="pb_overflow"><?php echo $row['title']?></a>
-                        <span>关注度：<em>78</em></span>
+                        <span>关注度：<em><?php echo $row['attention']?></em></span>
                     </div>
                     <div class="item_desc">
                         <?php 
@@ -34,14 +33,16 @@
                         <span>[ <a href="/mmxue_art_detail/index/<?php echo $row['id']?>">详情</a> ]</span>
                     </div>
                     <div class="item_tag pb_opacity" rel="tag">
-                        标签：<a href="#">宝宝</a> <a href="#">早教</a> <a href="#">睡觉</a>
+                        标签：<?php foreach($row['tags'] as $v){?>
+                                <a href="#"><?php echo $v['name']?></a>
+                              <?php } ?>
                     </div>
                 </div>
                 <?php }} ?>
                 <!-- loop end -->
             </div><!-- art_list -->
             <div class="page" >
-            <span class="num">共 <?php echo $total_rows;?> 篇<?php echo $section?></span>
+            <span class="num">共 <?php echo $total_rows;?> 篇</span>
                 <div class="page_list">
                 <form action='/mmxue_art_list/index/<?php echo $section;?>' method="post">
                     <?php echo (!empty($page)) ? $page : '';?>
@@ -59,4 +60,7 @@
 
         </div><!-- left -->
     </div><!-- wraper_left -->
+    <?php $this->load->view('mmxue_right')?>
+</div>
+<?php $this->load->view('footer')?>
 
