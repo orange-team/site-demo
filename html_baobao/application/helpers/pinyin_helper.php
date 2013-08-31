@@ -1,6 +1,6 @@
 ﻿<?php
 /*
- * desc  : 汉字转换成拼音
+ * desc  : 汉字转换成拼音，多音字会有问题，需分词才能解决，如：银行-->yinxing
  * param : $string是传入的汉字
  * return : 拼音
  */
