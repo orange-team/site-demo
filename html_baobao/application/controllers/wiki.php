@@ -30,7 +30,7 @@ class Wiki extends MY_Controller
                 'keywords'=>'百科知识,母婴知识,宝宝健康'
                 );
         //要载入的css, js文件
-        $this->data['file'] = array('js'=>'mmxue_art','css'=>'mmxue_art_detail');
+        $this->data['file'] = array('js'=>'mmxue_art','css'=>'wiki_detail');
         $wikiArr = $this->wiki->getBy_id($id);
         $this->data['wikiArr'] = $wikiArr;
         //得到推荐文章

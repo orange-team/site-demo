@@ -116,35 +116,10 @@ class Mmxue extends MY_Controller
         return $this->db->get()->row_array();
     }
 
-    private function get_sub_section($parent_id)
-    {
-        //limit 6 是因为页面上只有6个可显示
-		$this->db->select('id, name')->from($this->_table)->where('parent',1)->limit(6);
-		return $this->db->get()->result_array();
-    }
-
     //得到前6张专栏图片
 	private function get_cover()
     {
 		$this->db->select('id, title, cover')->from($this->_table)->where('cover !=','')->limit(6);
-		return $this->db->get()->result_array();
-	}
-
-    //响应ajax请求
-    public function get_ajax_article($section_id)
-    {
-        $articleArr = $this->get_section_article($section_id);
-        print_r($articleArr);
-        echo json_encode($articleArr);
-    }
-
-    //得到分娩等栏目的文章
-	private function get_section_article($section_id)
-    {
-        $sectionArr = array('分娩'=>4);
-		$this->db->select('id, title')->from('a_keyword')->where('section',4)->limit(6);
-		return $this->db->get()->result_array();
-		$this->db->select('id, name')->from('a_keyword')->where('section',4)->limit(6);
 		return $this->db->get()->result_array();
 	}
     
@@ -179,7 +154,9 @@ class Mmxue extends MY_Controller
     public function cut_wiki()
     {
         set_time_limit(0);
-		$this->db->select('id, wiki_content')->from('a_wiki')->where('wiki_content !=','')->limit(9999,2);
+		//$this->db->select('id, wiki_content')->from('a_wiki')->where('wiki_content !=','')->where('id',607)->limit(2);
+		$this->db->select('id, wiki_content')->from('a_wiki')->where('wiki_content !=','')->limit(3,0);
+		//$this->db->select('id, wiki_content')->from('a_wiki')->where('wiki_content !=','')->limit(9999,2);
         $wikiArr = $this->db->get()->result_array();
         //print_r($spellArr);
         foreach($wikiArr as $k=>$v)
@@ -188,9 +165,13 @@ class Mmxue extends MY_Controller
             //$pos = mb_strpos($v['wiki_content'], '<div class="askArea">',1);
             //var_dump($pos);exit;
             //$v['wiki_content'] = mb_substr($v['wiki_content'], 0, $pos);
-            $v['wiki_content'] = $v['wiki_content'].'</div>';
+            //$v['wiki_content'] = $v['wiki_content'].'</div>';
+            //http://www.yaolan.com/zhishi/buruqi/
+            //$v['wiki_content'] = str_replace('http://www.yaolan.com/zhishi/','/wiki/index/',$v['wiki_content']);
+            $v['wiki_content'] = preg_replace('#<div class="key_rrs">.*?</div>#is','',$v['wiki_content']);
+            //$v['wiki_content'] = preg_replace('#<h1 class="title yahei">.*?</h1>#is','',$v['wiki_content']);
             $data = array('wiki_content'=>$v['wiki_content']);
-            //$this->db->where('id', $v['id'])->update('a_wiki', $data);
+            $this->db->where('id', $v['id'])->update('a_wiki', $data);
             var_dump($v['id']);
             //var_dump($v['wiki_content']);
         }

@@ -4,11 +4,11 @@
         您的位置 : <a href="/mmxue/">妈妈学</a> &gt; <a href="/wiki/dict/">育儿百科</a> &gt; <?php echo $wikiArr['wiki_key'];?>
     </div>
     <div class="wraper_left">
-        <div class="w_left_top">
-            <h1><?php echo $wikiArr['wiki_key'];?></h1>
-        </div>    
         <div class="art_detail">
-            <?php echo $wikiArr['wiki_content'];?>
+            <div class="w_left_top">
+                <h1><?php echo $wikiArr['wiki_key'];?></h1>
+            </div>    
+           <?php echo $wikiArr['wiki_content'];?>
         </div>
         <?php
         $this->load->helper('tool');
