@@ -124,6 +124,8 @@ class mmxue_art_list extends MY_Controller
         //要载入的css, js文件
         $this->data['file'] = array('js'=>'mmxue_art','css'=>'mmxue_art_list');
 
+        //取得标签列表
+        $this->data['tagList'] = $this->get_tag(30);
 
 		$this->load->helper('url');
 		$this->load->view('mmxue_art_list',$this->data);
@@ -197,6 +199,13 @@ class mmxue_art_list extends MY_Controller
             $return = 'top';
         }
         return $return;
+    }
+    //获取标签列表
+    function get_tag($num)
+    {
+        $arr = array();
+	    $arr = $this->tag->getOrder_weight($num,0);
+        return $arr;
     }
 
 }
