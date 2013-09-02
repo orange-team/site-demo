@@ -6,7 +6,7 @@
 <meta name="keywords" content="<?php echo $seo['keywords']?>" />
 <link rel="shortcut icon" href="/img/favicon.ico" />
 <link href="/css/common.css" rel="stylesheet" type="text/css" />
-<link href="/css/<?php echo $file['css']?>.css" rel="stylesheet" type="text/css" />
+<link href="/css/<?php echo $file['css']?>.css?v=0.11" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="header">

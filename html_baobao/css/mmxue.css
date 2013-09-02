@@ -8,7 +8,7 @@
 .pic_hot { height:274px; border-right:1px #333 solid; border-bottom:1px #333 solid; }
 .pic_hot .item { height:136px; position:relative; float:left; border-left:1px #333 solid; border-top:1px #333 solid; }
 .pic_hot .pic1, .pic_hot .pic5 { width:336px; }
-.pic_height { height:136px; height:134px\9; }
+.pic_height { height:136px; height:136px\9; height:136px\0; }
 .pic_hot .cover { display:none; position:absolute; left:0; top:0; background:#222; width:100%; height:100%; height:137px\9; }
 .pic_hot .pic2, .pic_hot .pic3, .pic_hot .pic4, .pic_hot .pic6 { width:170px; }
 
