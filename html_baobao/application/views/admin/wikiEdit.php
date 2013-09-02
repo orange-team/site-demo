@@ -2,31 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
-<script type="text/javascript" src="/adminStatic/js/jquery.js" ></script>
-<script type="text/javascript" src="/adminStatic/js/common.js" ></script>
 <title>文章修改网站后台管理</title>
-<script type="text/javascript">
-function check_form()
-{
-    var tag_id = $("#tag_id").val();
-    var wiki_keyword = $("#wiki_keyword").val();
-    if(tag_id != '' && wiki_keyword != 0 &&  wiki_content != 0)
-    {
-        return true;
-    }else
-    {
-        if(0==tag_id)
-        {
-            $("#errorTag").html('所属标签不能为空!');
-        }else if(0==wiki_keyword)
-        {
-            $("#errorKeyword").html('关键词不能为空！');
-        }
-        return false;
-    }
-}
-</script>
+<link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
 </head>
 
 <body>
@@ -48,13 +25,13 @@ function check_form()
     	</tr>
     	<tr>
       		<td width="18%" class="left_title_2">百科关键词</td>
-            <td width="82%"><input class="text_style" type="text" name="wiki_keyword" id="wiki_keyword" value="<?php echo $wiki_keyword ?>" /> <span style="color:red;" id="errorKeyword"></span></td>
+            <td width="82%"><input class="text_style" type="text" name="wiki_key" id="wiki_key" value="<?php echo $wiki_key ?>" /> <span style="color:red;" id="errorKeyword"></span></td>
     	</tr>
     	<tr>
       		<td width="18%" class="left_title_1">百科图片</td>
             <td width="82%">
                 <?php if(empty($wiki_img)){ echo '还没有上传百科图片...';}else{ ?>
-                <img src="http://baobao.loc:8000/uploads/wiki/<?php echo $wiki_img;?>" border="0" />
+                <img src="/uploads/wiki/<?php echo $wiki_img;?>" border="0" />
                 <?php } ?>
                 <input  type="file" name="wiki_image" id="wiki_image" /> </td>
     	</tr>
@@ -75,4 +52,27 @@ function check_form()
     <br /><br />
 </div>
 </body>
+<script type="text/javascript" src="/adminStatic/js/jquery.js" ></script>
+<script type="text/javascript" src="/adminStatic/js/common.js" ></script>
+<script type="text/javascript">
+function check_form()
+{
+    var tag_id = $("#tag_id").val();
+    var wiki_key = $("#wiki_key").val();
+    if(tag_id != '' && wiki_key != 0 &&  wiki_wiki_content != 0)
+    {
+        return true;
+    }else
+    {
+        if(0==tag_id)
+        {
+            $("#errorTag").html('所属标签不能为空!');
+        }else if(0==wiki_key)
+        {
+            $("#errorKeyword").html('关键词不能为空！');
+        }
+        return false;
+    }
+}
+</script>
 </html>

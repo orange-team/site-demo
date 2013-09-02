@@ -1,0 +1,65 @@
+@charset "utf-8";
+/* CSS Document */
+/* 配色 #C7D9E9 */
+.w_left_top { width:auto; height:50px; border-bottom:1px #d8d8d8 solid; }
+.w_left_top h1 { width:auto; height:18px; padding-top:8px; font-size:18px; position:relative;}
+.w_left_top .title_b { position:relative; left:10px; bottom:-4px; cursor:pointer;} 
+.w_left_top #info { display:none; color:#929292; width:360px; height:25px; line-height:25px; padding:0 10px; overflow:hidden; background:#FFCC99; margin-top:15px; } 
+/*.art_detail { padding:10px; line-height:25px; border-bottom:1px #8c8c8c dashed; margin-bottom:10px; }*/
+.art_detail {background: none repeat scroll 0 0 #FFFFFF;  border: 1px solid #d8d8d8; padding: 5px 20px 15px; margin-bottom:10px; }
+.share { float:left; padding-left:10px; }
+.wraper_left .detail_page { float:right; padding-right:10px;  font:normal bold 14px Arial;}
+ h2 { display:block; font-size:14px; margin-top:10px; padding:10px 0 5px 15px;}
+.art_detail_list { padding:10px; border-top:3px #FFCC99 solid; border-bottom:1px #8c8c8c dashed;}
+.art_detail_list ul { list-style-type:none; width:325px;  padding:5px 0 10px 5px; float:left; }
+.art_detail_list ul li { position:relative; height:25px; } 
+.art_detail_list ul li span { position:absolute; top:0; left:0; display:block; width:320px; height:25px; line-height:25px; overflow:hidden;} 
+
+.title { border-bottom: 2px solid #d8d8d8; color: #000000; font-size: 24px; line-height: 48px; word-wrap: break-word; }
+p { display:block; }
+br {display:inline;line-height:26px;}
+.clear:after { content: ' '; display: block; height: 0; clear: both; }
+/*百科详细页左侧*/
+.key_rrs {width:255px; height:24px; position:absolute; top:17px; right:13px}
+.key_rrs p {float:left; display:inline; margin:0 10px; width:106px}
+.key_rrs .green_btn {background-position:0 -277px}
+.key_rrs .green_btn span {width:100px; background-position:right -301px}
+.key_rrs .green_btn:hover {color:#fff; background-position:0 -325px; text-decoration:none}
+.key_rrs .green_btn:hover span {background-position:right -349px}
+.contentWrap{position:relative; float:left; width:744px; overflow:hidden; background:#d7e7f5;}
+#key {background:#EBF6FF; padding-bottom: 0;}
+.sider {border-top: 8px solid #FFFFFF; float: right; overflow: hidden; width: 216px;}
+.content {overflow: hidden; width: 740px;}
+/*.area {background: none repeat scroll 0 0 #FFFFFF;  border: 1px solid #d8d8d8; padding: 5px 10px 15px;} */
+.title { border-bottom: 2px solid #d8d8d8;color: #000000; font-size: 24px; line-height: 48px; word-wrap: break-word;}
+.topPic{ float:right; padding:10px 10px 6px; text-align:center; border:1px solid #dedfe1;}
+.botPic img, .botPic span, .topPic span, .topPic img {display: block;}
+.directoryArea{padding:20px 0 0;}
+.directory{float:left; width:370px;padding:5px 20px 20px; border:1px solid #dedfe1;font-size:14px;}
+.directory_noimg{float:left; width:370px; padding:5px 20px 15px; border:1px solid #dedfe1;font-size:14px;}
+.directory p,.directory_noimg p{ line-height:30px; border-bottom:1px dashed #dddddd; margin-bottom:10px;}
+.direcList{overflow:hidden;zoom:1}
+.direcList li{height:22px;line-height:22px; overflow:hidden;zoom:1; }
+.subTitle{padding-top:25px; border-bottom:1px solid #d8d8d8;font-size:18px;}
+.explain{padding-top:10px;font-size:14px;}
+.askArea{padding:25px 0 15px;}
+.askHd{border-bottom:1px solid #ddd;}
+.askHd h3{float:left; font-size:18px;}
+/*.btnAsk{float:right; display:block; width:76px; height:21px; margin:5px 0 0 10px; text-align:center; color:#993300; background:url(../images/baikeUi.png) no-repeat 0 0;}*/
+.btnAsk:hover{color:#993300; text-decoration:none}
+.askMore{float:right; line-height: 32px;}
+.question,.answer{padding:8px 0; font-size:14px;}
+.question img{float:left; width:30px;}
+.questionText{float: right; width:655px; overflow:hidden; margin-top: -3px; line-height:24px;}
+.askUName{padding-right:5px; color:#7db2e7}
+.questionText cite,.answerText cite{ color:#999}
+.answer img{float:left; width:30px;}
+.answerText{float: right; width:655px; overflow:hidden; margin-top: -3px;line-height:24px;}
+.askList li{padding:10px 0; border-bottom:1px dashed #dddddd;} 
+.intervalBg{background:#f2f8fc}
+.askBd{padding:6px 0 0;}
+.areaHd{border-bottom:1px dashed #ddd;}
+.kPointBd{padding:10px 0 0;}
+.kPointBd li{display: inline; float: left; width: 100px;height: 22px;margin-left: 15px; overflow: hidden;}
+.kPointBd a{color:#333 }
+

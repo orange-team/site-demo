@@ -4,28 +4,15 @@
 <title>网站后台管理-百科列表</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="/adminStatic/css/common_new.css" rel="stylesheet" type="text/css" media="screen" />
-<script type="text/javascript" src="/adminStatic/js/jquery.js"></script>
-<script type="text/javascript" src="/adminStatic/js/common.js"></script>
-<script type=text/javascript>
-function toSearch(type)
-{
-    var tag_id = $("#tag_id").val();
-    var wiki_keyword = $("#keyword").val();
-    
-    if('' == wiki_keyword) wiki_keyword = 0;
-    if('' == tag_id) tag_id = 0;
-    window.location.href="/admin/wiki/showlist/"+wiki_keyword+"/"+tag_id+"/";
-}
-</script>
 </head>
 
 <body>
 <div id="man_zone">
-	<h2>文章列表</h2>
+	<h2>百科列表</h2>
     <table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style">
     	<tr>
             <td>
-            百科关键词：<input type="text" id="keyword" name="keyword" style="width:260px;" value="<?php echo $wiki_keyword?$wiki_keyword:'';?>"/> &nbsp;&nbsp;&nbsp;&nbsp;
+            百科关键词：<input type="text" id="keyword" name="keyword" style="width:260px;" value="<?php echo $wiki_key?$wiki_key:'';?>"/> &nbsp;&nbsp;&nbsp;&nbsp;
             所属标签：
       			<select name="tag_id" id="tag_id" onchange="toSearch()">
                 	<option value="0">请选择</option>
@@ -49,10 +36,10 @@ function toSearch(type)
         <tr <?php echo (0==$k%2) ? 'class="odd"':'';?>>
     		<td align="center" ><input type="checkbox" name="news_check" value="{$nl.id}"/></input></td>
             <td align="center" ><?php echo $k+$number;?></td>
-            <td><?php echo anchor(site_url('admin/article/editArt/'.$row['id']), $row['wiki_keyword']);?></td>
+            <td><?php echo anchor(site_url('admin/article/edit/'.$row['id']), $row['wiki_key']);?></td>
             <td class="action" align="center">
             <?php echo anchor(site_url(''),'查看&nbsp;&nbsp;','class="view" target="_blank"'), 
-            anchor(site_url('admin/wiki/editArt/'.$row['id']),'编辑&nbsp;','class="edit"')?>
+            anchor(site_url('admin/wiki/edit/'.$row['id']),'编辑&nbsp;','class="edit"')?>
             <a class="delete" href="javascript:if( confirm('确认要删除吗？') ) location.href='<?php echo site_url('admin/wiki/del/'.$row['id'])?>';">删除</a>
             </td>
         </tr>                        
@@ -71,4 +58,17 @@ function toSearch(type)
     </table>
 </div>
 </body>
+<script type="text/javascript" src="/adminStatic/js/jquery.js"></script>
+<script type="text/javascript" src="/adminStatic/js/common.js"></script>
+<script type=text/javascript>
+function toSearch(type)
+{
+    var tag_id = $("#tag_id").val();
+    var wiki_key = $("#keyword").val();
+    
+    if('' == wiki_key) wiki_key = 0;
+    if('' == tag_id) tag_id = 0;
+    window.location.href="/admin/wiki/showlist/"+wiki_key+"/"+tag_id+"/";
+}
+</script>
 </html>
