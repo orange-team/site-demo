@@ -31,14 +31,14 @@
       		<td width="18%" class="left_title_1">百科图片</td>
             <td width="82%">
                 <?php if(empty($wiki_img)){ echo '还没有上传百科图片...';}else{ ?>
-                <img src="/uploads/wiki/<?php echo $wiki_img;?>" border="0" />
+                <img src="/uploads/img/wiki/<?php echo $id?>/<?php echo $wiki_img;?>" border="0" />
                 <?php } ?>
-                <input  type="file" name="wiki_image" id="wiki_image" /> </td>
+                <input  type="file" name="upImg" id="wiki_image" />
+            </td>
     	</tr>
     	<tr>
       		<td class="left_title_2">百科内容</td>
       		<td> <?php echo $kindeditor;?> <span style="color:red;" id="errorContent"></span></td>
-
     	</tr>
         <tr>
       		<td class="left_title_2">&nbsp;</td>
@@ -49,7 +49,7 @@
   	</table>
     </form>
     <br />
-    <br /><br />
+    <br />
 </div>
 </body>
 <script type="text/javascript" src="/adminStatic/js/jquery.js" ></script>

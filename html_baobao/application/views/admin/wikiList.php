@@ -36,7 +36,7 @@
         <tr <?php echo (0==$k%2) ? 'class="odd"':'';?>>
     		<td align="center" ><input type="checkbox" name="news_check" value="{$nl.id}"/></input></td>
             <td align="center" ><?php echo $k+$number;?></td>
-            <td><?php echo anchor(site_url('admin/article/edit/'.$row['id']), $row['wiki_key']);?></td>
+            <td><?php echo anchor(site_url('admin/wiki/edit/'.$row['id']), $row['wiki_key']);?></td>
             <td class="action" align="center">
             <?php echo anchor(site_url(''),'查看&nbsp;&nbsp;','class="view" target="_blank"'), 
             anchor(site_url('admin/wiki/edit/'.$row['id']),'编辑&nbsp;','class="edit"')?>
