@@ -2,52 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
-<script type="text/javascript" src="/adminStatic/js/jquery.js" ></script>
-<script type="text/javascript" src="/adminStatic/js/common.js" ></script>
 <title>文章修改网站后台管理</title>
-<script type="text/javascript">
-function check_form()
-{
-    var one = $("#one").val();
-    var two = $("#two").val();
-    var three = $("#three").val();
-    var keyword = $("#keyword").val();
-    if(0!=three)
-    {
-        section = three;
-    }else if(0!=two)
-    {
-        section = two;
-    }else if(0!=one)
-    {
-        section = one;
-    }
-    $("#section").val(section);
-    var section = $("#section").val();
-    var title = $("#title").val();
-    if(title != '' && section != 0 &&  keyword != 0)
-    {
-        return true;
-    }else
-    {
-        if(0==section)
-        {
-            $("#errorSection").html('文章所属栏目不能为空！');
-        }else if(0==keyword)
-        {
-            $("#errorKeyword").html('关键词不能为空！');
-        }else
-        { 
-            $("#errorTitle").html('文章栏目不能为空！');
-        }
-        return false;
-    }
-
-}
-</script>
+<link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
 </head>
-
 <body>
 <div id="man_zone">
 	<h5>&nbsp;&nbsp;◆ 文章修改&nbsp;&raquo;&nbsp;<span style='color:red'><b>*</b></span> 代表必填项；</h5>
@@ -97,15 +54,17 @@ function check_form()
       		<td class="left_title_2">副标题</td>
             <td><input class="text_style" type="text" name="subtitle" value="<?php echo $subtitle;?>" /></td>
     	</tr>
-        <!--
-    	<tr>
-      		<td class="left_title_2">标题图片</td>
-      		<td><input type="file" name="titleimg" value="default" /></td>
-    	</tr>
-        -->
     	<tr>
     		<td class="left_title_1">文章来源</td>
             <td><input type="text" name="source"  value="<?php echo $source;?>" /></td>
+    	</tr>
+        <tr>
+    		<td class="left_title_2">相关标签</td>
+    		<td>
+                <div id="my_tag" class="my_tag clearfloat">
+                    <button onclick="show_div()" type="button">添加标签</button>
+                </div>
+            </td>
     	</tr>
     	<tr>
       		<td class="left_title_2">文章内容</td>
@@ -144,5 +103,84 @@ function check_form()
     <br />
     <br /><br />
 </div>
+<script type="text/javascript" src="/adminStatic/js/jquery.js" ></script>
+<script type="text/javascript" src="/adminStatic/js/common.js" ></script>
+<script type="text/javascript" src="/adminStatic/easydialog/easydialog.min.js" ></script>
+<script type="text/javascript" src="/adminStatic/js/relation_tag.js" ></script>
+<link rel="stylesheet" href="/adminStatic/easydialog/easydialog.css" type="text/css" />
+<style type="text/css">
+.my_tag button{margin-left:10px;}
+//标签选择器相关的样式
+//重写弹出层宽度
+.easyDialog_wrapper { width:400px; }
+.easydialog_tag {width:100%;margin-top:10px;}
+.easydialog_tag a { border-color:#3079ed;border-width:1px;border-style:solid; padding:2px 5px;margin:2px 4px; cursor: hand; cursor: pointer; display:block;height:20px;float:left; }
+/*清除浮动代码*/
+.clearfloat:after{display:block;clear:both;content:"";visibility:hidden;height:0}
+.notice {padding-left:15px;color:green;}
+</style>
+<script type="text/javascript">
+//初始化标签容器
+var tag_container = {
+        //查询的关键词
+        key : null,
+        //已经选择的标签
+        list : {},
+        //临时标签容器，存放从“标签选择器”中新选择的标签
+        tmp_list : {},
+        //文章本身id
+        art_id : '<?php echo $id?>',
+    };
+
+<?php //初始化“相关标签”
+if(!empty($tagNameArr))
+{
+    foreach($tagNameArr as $k=>$v)
+    {
+        echo 'tag_container.tmp_list[',$v['id'],']="',$v['name'],'";';
+    }
+    echo 'tag_yesFn("init");';
+}
+?>   
+
+function check_form()
+{
+    var one = $("#one").val();
+    var two = $("#two").val();
+    var three = $("#three").val();
+    var keyword = $("#keyword").val();
+    if(0!=three)
+    {
+        section = three;
+    }else if(0!=two)
+    {
+        section = two;
+    }else if(0!=one)
+    {
+        section = one;
+    }
+    $("#section").val(section);
+    var section = $("#section").val();
+    var title = $("#title").val();
+    if(title != '' && section != 0 &&  keyword != 0)
+    {
+        return true;
+    }else
+    {
+        if(0==section)
+        {
+            $("#errorSection").html('文章所属栏目不能为空！');
+        }else if(0==keyword)
+        {
+            $("#errorKeyword").html('关键词不能为空！');
+        }else
+        { 
+            $("#errorTitle").html('文章栏目不能为空！');
+        }
+        return false;
+    }
+
+}
+</script>
 </body>
 </html>

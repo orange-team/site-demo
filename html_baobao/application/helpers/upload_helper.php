@@ -13,7 +13,6 @@
  *          $id，上传目录的id，如：/uploads/img/article/$id/
  * @return : boolean/intager
  */
-
 function upload_img($upimg, $id, $img_type='article')
 {
     //未上传图片

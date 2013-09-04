@@ -19,6 +19,12 @@ class Tag_model extends CI_Model
 		return $this->db->get()->row_array();
     }
 
+    function getFieldBy_id($id, $field)
+	{
+		$this->db->select($field)->from($this->_table)->where('id', (int)$id);
+		return $this->db->get()->row_array();
+    }
+
 	function getBy_ids($ids)
 	{
 		$this->db->select('id,name')->from($this->_table)->where_in('id', $ids);
@@ -41,6 +47,7 @@ class Tag_model extends CI_Model
         if(isset($in_where)) $this->db->where_in('section',$in_where);
 		return $this->db->count_all_results($this->_table);
 	}
+
 	//列表页
 	function getList($limit=0, $offset=0, $where=array(1=>1))
     {
@@ -62,6 +69,7 @@ class Tag_model extends CI_Model
             $this->db->limit($limit, $offset);
 		return $this->db->get()->result_array();
 	}
+
 	function insertNew($data)
 	{
 		$this->db->insert($this->_table, $data); 

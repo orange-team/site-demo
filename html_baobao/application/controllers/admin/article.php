@@ -114,12 +114,13 @@ class Article extends MY_Controller
         //等级栏目
         $this->data['one_section'] = $this->section->getBy_parent(0);
 		//在线编辑器
-		$eddt = array('name' =>'content', 'id' =>'content', 'value' =>'');
-		$this->load->library('kindeditor',$eddt);
+		$edit = array('name' =>'content', 'id' =>'content', 'value' =>'');
+		$this->load->library('kindeditor',$edit);
         $this->data ['kindeditor'] = $this->kindeditor->getEditor();
 		$this->load->view('admin/articleAdd', $this->data);
 	}
-	//编辑文章
+
+	//编辑
 	function editArt($art_id)
 	{
 		$this->load->helper('form');
@@ -129,7 +130,6 @@ class Article extends MY_Controller
         $is_three = false;   //是否显示三级栏目
         $keyword_section = '';  //与关键词关联的栏目id
         $arr['one'] = $arr['two'] = '';//三个级栏目的selected标识
-
         //如果文章属于非顶级栏目
         if($section['parent'] != 0)
         {
@@ -164,8 +164,6 @@ class Article extends MY_Controller
         array_unshift($childs_id,$keyword_section);
         $where['section'] = $childs_id;
         $arr['keywords'] = $this->keyword->getList(0,0,$where);
-
-        
         //顶级栏目
         $arr['one_section'] = $this->section->getBy_parent(0);
         if( $is_two == true )
@@ -174,12 +172,23 @@ class Article extends MY_Controller
             $arr['two_section'] =  $this->section->getList(array('parent'=>$fid));
         }
         $arr['three_section'] = $is_three==true ? $this->section->getList(array('parent'=>$arr['two']['id'])) : '';
-
 		//在线编辑器
-		$eddt = array('name' =>'content', 'id' =>'content', 'value' =>$arr['content']);
-		$this->load->library('kindeditor',$eddt);
-        $arr['kindeditor'] = $this->kindeditor->getEditor( $eddt );
-		
+		$edit = array('name' =>'content', 'id' =>'content', 'value' =>$arr['content']);
+		$this->load->library('kindeditor',$edit);
+        $arr['kindeditor'] = $this->kindeditor->getEditor( $edit );
+        //相关标签
+		$this->load->model('admin/relation_tag_model','relation_tag');
+		$this->load->model('admin/tag_model','tag');
+        $whereData = array('target_id'=>$art_id,'target_type'=>1,'status'=>0);
+        $tagArr = $this->relation_tag->get($whereData);
+        $arrTagIds = $tagNameArr = array();
+        foreach($tagArr as $k=>$v)
+        {
+            $arrTagIds[] = $v['tag_id'];
+        }
+        unset($tagArr);
+        if(0<count($arrTagIds)) $tagNameArr = $this->tag->getBy_ids($arrTagIds);
+		$arr['tagNameArr'] = $tagNameArr;
 		$this->load->view('admin/articleEdit', $arr);
 	}
 
@@ -224,9 +233,9 @@ class Article extends MY_Controller
 		$this->data['article_id'] = '';
 		$this->data['content'] = '';
 		//在线编辑器
-		$eddt = array('name' =>'content', 'id' =>'content', 'value' =>$this->data['content']);
-		$this->load->library('kindeditor',$eddt);
-        $this->data ['kindeditor'] = $this->kindeditor->getEditor( $eddt );
+		$edit = array('name' =>'content', 'id' =>'content', 'value' =>$this->data['content']);
+		$this->load->library('kindeditor',$edit);
+        $this->data ['kindeditor'] = $this->kindeditor->getEditor( $edit );
 		
 		$this->load->view('admin/articleAddNew', $this->data);
 	}	

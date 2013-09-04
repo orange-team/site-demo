@@ -12,6 +12,8 @@ class wiki extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
+        //当前控制器名，用于view中复用
+        $this->data['_class'] = Strtolower(__CLASS__);
 		$this->load->model('wiki_model','wiki');
     }
 
@@ -23,7 +25,9 @@ class wiki extends MY_Controller
         $where = array();
         //搜内容segment(4)
         $wiki_key = urldecode(trim($this->uri->segment(4)));
+        $tag_name = urldecode(trim($this->uri->segment(5)));
         $this->data['wiki_key'] = 0;
+        $this->data['tag_name'] = 0;
         if($wiki_key)  
         {
             $this->data['wiki_key'] = $wiki_key;
@@ -31,26 +35,39 @@ class wiki extends MY_Controller
         }
 		//分页
 		$this->load->library('pagination');
-		$config['base_url'] = site_url('admin/wiki/showlist/'.$this->data['wiki_key'].'/');
+		$config['base_url'] = site_url('admin/wiki/showlist/'.$this->data['wiki_key'].'/'.$this->data['tag_name'].'/');
 		//每页
 		$config['per_page'] = $this->data['pagesize'] = 15 ; 
 		//总数
 		$config['total_rows'] = $this->wiki->getTotal($where);
-		$config['uri_segment'] = 5;
+		$config['uri_segment'] = 6;
 		$config['first_link'] = '首页';
 		$config['last_link'] = '尾页';
 		$config['next_link'] = '下一页';
 		$config['prev_link'] = '上一页';
 		$this->pagination->initialize($config); 
 		$this->data['page'] = $this->pagination->create_links();
-		$offset = $this->uri->segment(5);
+		$offset = $this->uri->segment($config['uri_segment']);
 		$arr = $this->wiki->getList($this->data['pagesize'], $offset, $where);
+        foreach($arr as $key=>$val)
+        {
+            $arr[$key]['tag_name'] = $this->get_tag_name($val['tag_id']);
+        }
 		$this->data['wikiArr'] = $arr;
         unset($arr);
         $this->data['number'] = $offset+1; 
 		$this->load->view('admin/wikiList', $this->data);
     }
 
+    //获得标签名称
+    public function get_tag_name($id)
+    {
+		$this->load->model('tag_model','tag');
+        $arr = $this->tag->getFieldBy_id($id, 'name');
+        return empty($arr['name'])?'':$arr['name'];
+    }
+
+    //添加
 	function add()
 	{
 		$this->load->helper('form');

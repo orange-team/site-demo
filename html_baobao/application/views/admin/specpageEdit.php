@@ -19,7 +19,7 @@
       		<td class="left_title_2">封面图片</td>
       		<td><input type="file" name="upImg" id="cover" value="上传图片"/>
 			<?php if( empty($cover) ) { echo '还未上传封面图片'; }else{?>
-            <img src="<?php echo $this->spec_path,$cover;?>" width="120" height="120"/>
+            <img src="<?php echo $this->specpage_path,$cover;?>" width="120" height="120"/>
             <?php } ?>
             </td>
     	</tr>

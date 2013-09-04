@@ -12,14 +12,15 @@ class Tag extends MY_Controller
 		parent::__construct();
 		$this->load->model('admin/tag_model','tag');
 	}
+
     //列表页
-	function showlist($section=0,$name='')
+	function showlist($name='')
 	{
         $this->load->helper('form'); 
         //搜索
         $where = array();
-        $this->data['section'] = 0;
         //搜内容segment(5)
+        $name = urldecode(trim($this->uri->segment(4)));
         $this->data['name'] = 0;
         if($name)  
         {
@@ -28,12 +29,11 @@ class Tag extends MY_Controller
         }
 		//分页
 		$this->load->library('pagination');
-		$config['base_url'] = site_url('admin/tag/showlist/'.$this->data['section'].'/'.$this->data['name'].'/');
+		$config['base_url'] = site_url('admin/tag/showlist/'.$this->data['name'].'/');
 		//每页
 		$config['per_page'] = $this->data['pagesize'] = 15 ; 
 		//总数
 		$config['total_rows'] = $this->tag->getTotal($where);
-		$this->data['section'] = (int)$section;
 		$config['uri_segment'] = 6;
 		$config['first_link'] = '首页';
 		$config['last_link'] = '尾页';
@@ -48,6 +48,7 @@ class Tag extends MY_Controller
         $this->data['number'] = $offset+1; 
 		$this->load->view('admin/tagList', $this->data);
 	}
+
 	//添加
 	function add()
 	{
@@ -66,8 +67,22 @@ class Tag extends MY_Controller
             $this->load->view('admin/tagAdd',$this->data);
         }
 	}
+
+    //保存新增结果
+	function saveAdd()
+	{
+        $data = array(
+				'name' => $this->input->post('name'),
+				'weight' => $this->input->post('weight'),
+				);
+		$id = $this->tag->insertNew($data);
+		$data['msg'] = ($id>0) ? '成功' : '图片路径更新失败';
+		$data['url'] = '/admin/tag/showlist/';
+		$this->load->view('admin/info', $data);
+	}
+
 	//编辑
-	function editTag($id)
+	function edit($id)
 	{
 		$this->load->helper('form');
 		$arr = $this->tag->getBy_id($id);
@@ -77,6 +92,7 @@ class Tag extends MY_Controller
 	function saveEdit($id)
 	{
 		if($this->input->post('name')) $data['name'] = trim(addslashes($this->input->post('name')));
+		if($this->input->post('weight')) $data['weight'] = trim(addslashes($this->input->post('weight')));
 		$affected_rows = $this->tag->update($id, $data);
 		$data['msg'] = ($affected_rows>0) ? '成功' : '失败';
 		$data['url'] = '/admin/tag/showList/';

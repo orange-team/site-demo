@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>文章修改网站后台管理</title>
+<title>百科修改网站后台管理</title>
 <link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
 </head>
 
