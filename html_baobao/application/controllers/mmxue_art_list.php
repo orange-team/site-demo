@@ -62,14 +62,14 @@ class mmxue_art_list extends MY_Controller
 		$this->load->library('pagination');
         $config['base_url'] = site_url('mmxue_art_list/index/'.$this->data['section'].'/');
 		//每页
-		$config['per_page'] = $this->data['pagesize'] = 1; 
+		$config['per_page'] = $this->data['pagesize'] = 10; 
 		//总数
         $config['total_rows'] = $this->data['total_rows'] = $this->art->getTotal($where);;
+        $this->data['countPage'] = $countPage = ceil($config['total_rows']/$config['per_page']);
 		//手动输入页码时的页数
 		if($this->input->post('go_page') && $this->input->post('go_page')>0)
 		{
             $this->data['go_page'] = intval($this->input->post('go_page'));
-			$countPage = ceil($config['total_rows']/$config['per_page']);
 			if($this->data['go_page'] <= $countPage)
 			{
 				$offset = ($this->data['go_page']-1)*$config['per_page'];

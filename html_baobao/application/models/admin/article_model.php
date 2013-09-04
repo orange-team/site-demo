@@ -19,6 +19,14 @@ class article_model extends CI_Model
 		return $this->db->get()->row_array();
 	}
 
+	function getByorder_id($where,$order='id ASC')
+	{
+		$this->db->select('id,title')->from($this->_table)->where($where);
+		$this->db->order_by($order);
+		return $this->db->get()->row_array();
+	}
+
+
 	function getTotal($where=array())
 	{
         if(isset($where['title'])) 

@@ -12,10 +12,12 @@ class mmxue_art_detail extends MY_Controller
 		parent::__construct();
 		$this->load->model('admin/article_model','art');
 		$this->load->model('admin/section_model','section');
+		$this->load->model('admin/keyword_model','keyword');
 		$this->load->model('tag_model','tag');
 	}
 	public function index($id)
 	{
+        //var $spec_path = '/uploads/specpage/8/';
         $id = intval($id);
         $row = $this->art->getBy_id($id);
         //关注度
@@ -40,16 +42,20 @@ class mmxue_art_detail extends MY_Controller
         {
             $section_parent = $this->section->get_one(array('id'=>$section['parent']));
             //$row['nav'] = "<a href='".base_url()."mmxue_art_list/index/".$section_parent['id']."'>".$section_parent['name']."</a> >";
-            $row['nav'] = "<a href='".base_url()."mmxue'>".$section_parent['name']."</a> >";
+            $row['nav'] = "<a href='".base_url()."mmxue'>".$section_parent['name']."</a> > ";
             $row['nav'] .= "<a href='".base_url()."mmxue_art_list/index/".$section['id']."'>".$section['name']."</a>";
         }
         $row['nav'] .= " > ".$row['title'];
         //组合面包屑导航
 
         //上一篇
-        $row['pre'] = $id-1==0 ? 1 : $id-1;
+        $pre = $this->art->getByorder_id('id < '.$id.' AND section = '.$row['section'],'id DESC');
+        $row['pre'] = empty($pre) ? '' : $pre;
+
         //下一篇
-        $row['next'] = $id+1;
+        $next = $this->art->getByorder_id('id > '.$id.' AND section = '.$row['section'],'id ASC');
+        $row['next'] = empty($next) ? '' : $next;
+        unset($pre,$next);
         $row['seo'] = array('title'=>'妈妈学文章内容页',
                 'description'=>'妈妈学文章内容页的描述页面信息',
                 'keywords'=>'妈妈学,母婴知识,宝宝健康'
@@ -62,8 +68,6 @@ class mmxue_art_detail extends MY_Controller
         $row['artList_1'] = array_slice($artList,0,5);
         $row['artList_2'] = array_slice($artList,5,5);
 
-        //取得标签列表
-        $row['tagList'] = $this->get_tag(30);
 
 		$this->load->helper('url');
 		$this->load->view('mmxue_art_detail',$row);
@@ -95,12 +99,6 @@ class mmxue_art_detail extends MY_Controller
         return $arr;
     }
 
-    //获取标签列表
-    function get_tag($num)
-    {
-        $arr = array();
-	    $arr = $this->tag->getOrder_weight($num,0);
-        return $arr;
-    }
+
 
 }

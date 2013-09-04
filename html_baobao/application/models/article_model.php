@@ -19,9 +19,17 @@ class article_model extends CI_Model
 		return $this->db->get()->row_array();
 	}
 
+	function getByorder_id($where,$order='id ASC')
+	{
+		$this->db->select('id,title')->from($this->_table)->where($where);
+		$this->db->order_by($order);
+		return $this->db->get()->row_array();
+	}
+
+
 	function getTotal($where=array())
 	{
-        if($where['title']) 
+        if(isset($where['title'])) 
         {
             $this->db->like('title',$where['title']);
             unset($where['title']);
@@ -39,13 +47,14 @@ class article_model extends CI_Model
 	//列表页
 	function getList($limit, $offset, $where=array())
     {
-        if($where['title']) 
+        $in_where = '';
+        if(isset($where['title'])) 
         {
             $this->db->like('title',$where['title']);
             unset($where['title']);
         } 
-		$this->db->select('id, title, section, add_time, keyword ')->from($this->_table);
-        if($where['section'])
+		$this->db->select('id, title, content, section, add_time, keyword,attention ')->from($this->_table);
+        if(isset($where['section']))
         {
             $in_where = $where['section'];
             unset($where['section']);

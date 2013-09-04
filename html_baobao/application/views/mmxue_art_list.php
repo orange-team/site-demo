@@ -49,7 +49,7 @@
                     <!--<span>跳转<input type="text" name="go_page" value="<?php echo $go_page;?>"  onblur="search_go(this.value)"/></span>-->
                     &nbsp;&nbsp;<span>跳至第
                         <select name="go_page" onchange="search_go(this.value)" style="cursor: pointer;">
-                            <?php for($i=1; $i<=$total_rows; $i++){?>
+                            <?php for($i=1; $i<=$countPage; $i++){?>
                             <option value="<?php echo $i;?>" <?php echo $go_page==$i? 'selected' : '' ?> style="cursor: pointer;"><?php echo $i;?></option>
                             <?php }?>
                         </select>
@@ -60,7 +60,7 @@
 
         </div><!-- left -->
     </div><!-- wraper_left -->
-    <?php $this->load->view('mmxue_right')?>
+    <?php $this->load->view('mmxue_static_right');?>
 </div>
 <?php $this->load->view('footer')?>
 
