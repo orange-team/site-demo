@@ -24,6 +24,14 @@
             </td>
     	</tr>
         <tr>
+    		<td class="left_title_2">相关标签</td>
+    		<td>
+                <div id="my_tag" class="my_tag clearfloat">
+                    <button onclick="show_div()" type="button">添加标签</button>
+                </div>
+            </td>
+    	</tr>
+        <tr>
       		<td class="left_title_1">专栏内容</td>
       		<td> <?php echo $kindeditor;?></td>
     	</tr>
@@ -44,6 +52,10 @@
 </div>
 <script type="text/javascript" src="/adminStatic/js/jquery.js" ></script>
 <script type="text/javascript" src="/adminStatic/js/common.js" ></script>
+<?php
+$this->load->helper('admin');
+relation_tag($id, 2, $tagNameArr);
+?>
 <script type="text/javascript">
 function check_form()
 {

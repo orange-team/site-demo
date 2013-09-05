@@ -53,13 +53,10 @@ function tag_yesFn(type)
 //点击checkbox判断
 function do_checkbox(tag_id)
 {
-    //var chk_type = $('#box_tag_'+tag_id).attr('checked');
     var chk_type = $('#box_tag_'+tag_id).is(':checked')
-    //alert(chk_type);
     if( true==chk_type )
     {
         do_ajax_relation_tag(tag_id,'add');
-        //$('#box_tag_'+tag_id).removeAttr('checked');
     }else
     {
         do_ajax_relation_tag(tag_id,'del');
@@ -69,12 +66,12 @@ function do_checkbox(tag_id)
 //ajax增加标签和文章的关联
 function do_ajax_relation_tag(tag_id,type)
 {
-    if(null==tag_container.art_id || ''==tag_container.art_id)
+    if(null==tag_container.target_id || ''==tag_container.target_id)
     {
-        alert('func do_ajax_relation_tag 未获得art_id');
+        alert('func do_ajax_relation_tag 未获得target_id');
         return ;
     }
-    $.get('/admin/relation_tag/'+type, {'tag_id':tag_id,'target_id':tag_container.art_id}, function(data) {
+    $.get('/admin/relation_tag/oprate', {'oprate_type':type,'tag_id':tag_id,'target_id':tag_container.target_id,'target_type':tag_container.target_type}, function(data) {
         if(-1==data) alert('参数传递失败');
         if(-2==data) alert('数据插入失败');
     });

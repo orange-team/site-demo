@@ -56,35 +56,30 @@ class Relation_tag extends MY_Controller
 	}
 
 	//添加
-	function add()
+	function oprate()
 	{
 		$this->load->model('admin/relation_tag_model','relation_tag');
         $tag_id = trim(addslashes($this->input->get('tag_id')));
         $target_id = trim(addslashes($this->input->get('target_id')));
-        if ( empty($tag_id) || empty($target_id) )
+        $target_type = trim(addslashes($this->input->get('target_type')));
+        if ( empty($tag_id) || empty($target_id) || empty($target_type) )
         {
-            exit -1;
+            exit(-1);
         }
-        $data = array('tag_id'=>$tag_id, 'target_id'=>$target_id, 'target_type'=>1);
-        $affected_rows = $this->relation_tag->insertNew($data);
+        $data = array('tag_id'=>$tag_id, 'target_id'=>$target_id, 'target_type'=>$target_type);
+        //判断是添加还是删除
+        $oprate_type = trim(addslashes($this->input->get('oprate_type')));
+        switch($oprate_type)
+        {
+            case 'add' : $affected_rows = $this->relation_tag->insertNew($data);
+                         break;
+            case 'del' : $affected_rows = $this->relation_tag->del($data);
+                         break;
+            default : exit(-1);
+        }
         unset($data);
         echo ($affected_rows>0) ? '1' : '-2';
     }    
-
-    //删除	
-	function del()
-	{
-		$this->load->model('admin/relation_tag_model','relation_tag');
-		$tag_id = trim(addslashes($this->input->get('tag_id')));
-        $target_id = trim(addslashes($this->input->get('target_id')));
-        if ( empty($tag_id) || empty($target_id) )
-        {
-            exit -1;
-        }
-        $data = array('tag_id'=>$tag_id, 'target_id'=>$target_id, 'target_type'=>1);
-        $affected_rows = $this->relation_tag->del($data);
-		echo ($affected_rows>0) ? '1' : '-2';
-	}
 
     //ajax获取标签
     function ajax_get($key)

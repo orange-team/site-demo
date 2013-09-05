@@ -8,7 +8,7 @@
 class specpage extends MY_Controller
 {
     //封面图片路径
-    var $specpage_path = '/';
+    var $specpage_path = '/uploads/img/specpage/';
 	function __construct()
 	{
 		parent::__construct();
@@ -73,6 +73,7 @@ class specpage extends MY_Controller
 				'author' => $this->input->post('author'),
 				);
 		$specpage_id = $this->specpage->insertNew($data);
+        $data['msg'] = ($specpage_id>0) ? '文章发布成功' : '文章发布失败';
         //上传图片,并做缩略
         $this->load->helper('upload');
 		$uploadData = upload_img('upImg', $specpage_id,'specpage');
@@ -87,9 +88,9 @@ class specpage extends MY_Controller
             $addImg['cover'] = $uploadData['file_name'];
             //保存图片数据
             $affected_rows = $this->specpage->update_cover((int)$specpage_id, $addImg);
+            $data['msg'] = ($affected_rows>0) ? '图片路径更新成功' : '图片路径更新失败';
         }
         unset($uploadData);
-		$data['msg'] = ($affected_rows>0) ? '成功' : '图片路径更新失败';
 		$data['url'] = '/admin/specpage/showlist/';
 		$this->load->view('admin/info', $data);
 	}
@@ -99,10 +100,24 @@ class specpage extends MY_Controller
 	{
 		$this->load->helper('form');
 		$arr = $this->specpage->getBy_id($specpage_id);
+        $this->specpage_path .= $specpage_id.'/';
         //在线编辑器
 		$eddt = array('name' =>'content', 'id' =>'content', 'value' =>$arr['content']);
 		$this->load->library('kindeditor',$eddt);
         $arr['kindeditor'] = $this->kindeditor->getEditor( $eddt );
+        //相关标签
+		$this->load->model('admin/relation_tag_model','relation_tag');
+		$this->load->model('admin/tag_model','tag');
+        $whereData = array('target_id'=>$specpage_id,'target_type'=>2,'status'=>0);
+        $tagArr = $this->relation_tag->get($whereData);
+        $arrTagIds = $tagNameArr = array();
+        foreach($tagArr as $k=>$v)
+        {
+            $arrTagIds[] = $v['tag_id'];
+        }
+        unset($tagArr);
+        if(0<count($arrTagIds)) $tagNameArr = $this->tag->getBy_ids($arrTagIds);
+		$arr['tagNameArr'] = $tagNameArr;
 		$this->load->view('admin/specpageEdit', $arr);
 	}
 

@@ -105,44 +105,11 @@
 </div>
 <script type="text/javascript" src="/adminStatic/js/jquery.js" ></script>
 <script type="text/javascript" src="/adminStatic/js/common.js" ></script>
-<script type="text/javascript" src="/adminStatic/easydialog/easydialog.min.js" ></script>
-<script type="text/javascript" src="/adminStatic/js/relation_tag.js" ></script>
-<link rel="stylesheet" href="/adminStatic/easydialog/easydialog.css" type="text/css" />
-<style type="text/css">
-.my_tag button{margin-left:10px;}
-//标签选择器相关的样式
-//重写弹出层宽度
-.easyDialog_wrapper { width:400px; }
-.easydialog_tag {width:100%;margin-top:10px;}
-.easydialog_tag a { border-color:#3079ed;border-width:1px;border-style:solid; padding:2px 5px;margin:2px 4px; cursor: hand; cursor: pointer; display:block;height:20px;float:left; }
-/*清除浮动代码*/
-.clearfloat:after{display:block;clear:both;content:"";visibility:hidden;height:0}
-.notice {padding-left:15px;color:green;}
-</style>
+<?php
+$this->load->helper('admin');
+relation_tag($id, 1, $tagNameArr);
+?>
 <script type="text/javascript">
-//初始化标签容器
-var tag_container = {
-        //查询的关键词
-        key : null,
-        //已经选择的标签
-        list : {},
-        //临时标签容器，存放从“标签选择器”中新选择的标签
-        tmp_list : {},
-        //文章本身id
-        art_id : '<?php echo $id?>',
-    };
-
-<?php //初始化“相关标签”
-if(!empty($tagNameArr))
-{
-    foreach($tagNameArr as $k=>$v)
-    {
-        echo 'tag_container.tmp_list[',$v['id'],']="',$v['name'],'";';
-    }
-    echo 'tag_yesFn("init");';
-}
-?>   
-
 function check_form()
 {
     var one = $("#one").val();

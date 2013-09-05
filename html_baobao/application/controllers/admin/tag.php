@@ -34,14 +34,14 @@ class Tag extends MY_Controller
 		$config['per_page'] = $this->data['pagesize'] = 15 ; 
 		//总数
 		$config['total_rows'] = $this->tag->getTotal($where);
-		$config['uri_segment'] = 6;
+		$config['uri_segment'] = 5;
 		$config['first_link'] = '首页';
 		$config['last_link'] = '尾页';
 		$config['next_link'] = '下一页';
 		$config['prev_link'] = '上一页';
 		$this->pagination->initialize($config); 
 		$this->data['page'] = $this->pagination->create_links();
-		$offset = $this->uri->segment(6);
+		$offset = $this->uri->segment($config['uri_segment']);
 		$arr = $this->tag->getList($this->data['pagesize'], $offset, $where);
 		$this->data['tagArr'] = $arr;
         unset($arr);
