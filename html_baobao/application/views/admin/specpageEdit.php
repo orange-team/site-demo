@@ -11,6 +11,42 @@
 	<h5>&nbsp;&nbsp;◆ 专栏修改&nbsp;&raquo;&nbsp;<span style='color:red'><b>*</b></span> 代表必填项；</h5>
 	<?php echo form_open_multipart(site_url('admin/specpage/saveEdit/'.$id), array('class'=>"jnice",'onsubmit'=>'return check_form();'));?>
   	<table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style">
+        <tr>
+      		<td class="left_title_1"><span style='color:red'>*</span>&nbsp;所属栏目</td>
+      		<td>
+      			<select name="one" id="one" onchange="changeOn('one',this.value,1)">
+                	<option value="0">-- 请选择 --</option>
+                    <?php if(!empty($one_section)) {foreach($one_section as $k=>$v) {?>
+                    <option value="<?php echo $v['id']?>" <?php if($one != '' && $one['id'] == $v['id']){ echo 'selected';}?> style="background-color:#FFC;"><?php echo $v['name']?></option>
+                    <?php }} ?>
+                </select>
+                <select style="display:inline;" name="two" id="two" onchange="changeOn('two',this.value,1)">
+                    <option value='0'>-- 请选择 --</option>
+                    <?php if($two_section != ''){ foreach($two_section as $k=>$v){ ?>
+                    <option value="<?php echo $v['id']; ?>" <?php if($v['id'] == $two['id']) echo 'selected'; ?>><?php echo $v['name'];?></option>
+                    <?php }} ?>
+                </select>
+                <select style="display:inline;" name="three" id="three" onchange="changeOn('three',this.value),1">
+                    <option value='0'>-- 请选择 --</option>
+                    <?php if($three_section != ''){ foreach($three_section as $k=>$v){ ?>
+                    <option value="<?php echo $v['id']; ?>" <?php if($v['id'] == $section) echo 'selected'; ?>><?php echo $v['name'];?></option>
+                    <?php }} ?>
+                </select>
+                <span style="color:red;" id="errorSection"></span>
+            </td>
+    	</tr>
+        <tr>
+      		<td class="left_title_2"><span style='color:red'>*</span>&nbsp;所属关键词</td>
+      		<td>
+      			<select name="keyword" id="keyword">
+                	<option value="0">-- 选择关键词 --</option>
+                    <?php if(!empty($keywords)) {foreach($keywords as $k=>$v) {?>
+                    <option value="<?php echo $v['id']?>" <?php if($v['id'] == $keyword) echo 'selected' ;?>><?php echo $v['name'];?></option>
+                    <?php }} ?>
+                </select>
+                <span style="color:red;" id="errorKeyword"></span>
+      		</td>
+    	</tr>
     	<tr>
       		<td width="18%" class="left_title_1"><span style='color:red'>*</span>&nbsp;名称</td>
             <td width="82%"><input class="text_style" type="text" name="title" id="name" value="<?php echo $title;?>" /> <span style="color:red;" id="errorTitle"></span></td>
@@ -57,22 +93,46 @@ $this->load->helper('admin');
 relation_tag($id, 2, $tagNameArr);
 ?>
 <script type="text/javascript">
+<!--
 function check_form()
 {
+    var one = $("#one").val();
+    var two = $("#two").val();
+    var three = $("#three").val();
+    var keyword = $("#keyword").val();
+    if(0!=three)
+    {
+        section = three;
+    }else if(0!=two)
+    {
+        section = two;
+    }else if(0!=one)
+    {
+        section = one;
+    }
+    $("#section").val(section);
+    var section = $("#section").val();
     var name = $("#name").val();
-    if(name != '')
+    if(name != '' && section != 0 &&  keyword != 0)
     {
         return true;
     }else
     {
-        if(0==name)
+        if(0==section)
         {
-            $("#errorTitle").html('专栏名称不能为空！');
+            $("#errorSection").html('专栏所属栏目不能为空！');
+        }else if(0==keyword)
+        {
+            $("#errorKeyword").html('关键词不能为空！');
+        }else
+        { 
+            $("#errorTitle").html('专栏栏目不能为空！');
         }
         return false;
     }
 
 }
+//-->
 </script>
 </body>
 </html>

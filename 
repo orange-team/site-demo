@@ -1,0 +1,2270 @@
+commit 35631da3a1288bef1b5d3eba110ecf0034c9058c
+Author: altmivip <altmivip@163.com>
+Date:   Wed Sep 4 16:38:38 2013 +0800
+
+    add relation_tag
+
+diff --git a/html_baobao/adminStatic/css/common_new.css b/html_baobao/adminStatic/css/common_new.css
+index fd2689f..2ff1441 100755
+--- a/html_baobao/adminStatic/css/common_new.css
++++ b/html_baobao/adminStatic/css/common_new.css
+@@ -106,7 +106,7 @@ div{ margin:0; padding:0;}
+ 	padding: 5px 0 0 0;
+ }
+ 
+-#man_zone { height: 550px; width: 99%; border: 1px solid #B4C9C6; margin: 6px 0 0 0; background-color:#FFFFFF; padding: 5px 0 5px 0; overflow: auto;}
++#man_zone { /*height: 550px;*/ width: 99%; border: 1px solid #B4C9C6; margin: 6px 0 0 0; background-color:#FFFFFF; padding: 5px 0 5px 0; overflow: auto;}
+ #man_zone h2 { font-size:14px; padding:5px 10px; margin-bottom:0;}
+ #man_zone table{
+     background-color:#DBE6E3;
+diff --git a/html_baobao/adminStatic/easydialog/easydialog.css b/html_baobao/adminStatic/easydialog/easydialog.css
+new file mode 100644
+index 0000000..2dbb1f1
+--- /dev/null
++++ b/html_baobao/adminStatic/easydialog/easydialog.css
+@@ -0,0 +1,24 @@
++button::-moz-focus-inner{ border:0; padding:0; margin:0; }
++
++.easyDialog_wrapper{ width:400px; color:#444; border:3px solid rgba(0,0,0,0); -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; -webkit-box-shadow:0 0 10px rgba(0,0,0,0.4); -moz-box-shadow:0 0 10px rgba(0,0,0,0.4); box-shadow:0 0 10px rgba(0,0,0,0.4); display:none; font-family:"Microsoft yahei", Arial; }
++
++.easyDialog_wrapper .easyDialog_content{ -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px; background:#fff; border:1px solid #e5e5e5; }
++
++.easyDialog_wrapper .easyDialog_title{ height:30px; line-height:30px; overflow:hidden; color:#666; padding:0 10px; font-size:14px; border-bottom:1px solid #e5e5e5; background:#f7f7f7; border-radius:4px 4px 0 0; }
++
++.easyDialog_wrapper .close_btn{ font-family:arial; font-size:18px; _font-size:12px; font-weight:700; color:#999; text-decoration:none; float:right; }
++
++.easyDialog_wrapper .close_btn:hover{ color:#333; }
++
++.easyDialog_wrapper .easyDialog_text{ padding:2px 10px; font-size:13px; line-height:22px; }
++
++.easyDialog_wrapper .easyDialog_footer{ padding:0 10px; *zoom:1; }
++
++.easyDialog_wrapper .easyDialog_footer:after{ content:''; display:block; height:0; overflow:hidden; visibility:hidden; clear:both; }
++
++.easyDialog_wrapper .btn_highlight,
++.easyDialog_wrapper .btn_normal{ border:1px solid; border-radius:2px; cursor:pointer; font-family:"Microsoft yahei", Arial; float:right; font-size:12px; padding:0 12px; height:24px; line-height:24px; margin-bottom:10px; }
++
++.easyDialog_wrapper .btn_highlight{ background:#4787ed; background:-webkit-gradient(linear,center bottom,center top,from(#4787ed),to(#4d90fe)); background:-moz-linear-gradient(90deg, #4787ed, #4d90fe); border-color:#3079ed; color:#fff; }
++
++.easyDialog_wrapper .btn_normal{ margin-left:10px; border-color:#c3c3c3; background:#ececec; color:#333; background:-webkit-gradient(linear,center bottom,center top,from(#ececec),to(#f4f4f4)); background:-moz-linear-gradient(90deg,#ececec,#f4f4f4); }
+diff --git a/html_baobao/adminStatic/easydialog/easydialog.js b/html_baobao/adminStatic/easydialog/easydialog.js
+new file mode 100644
+index 0000000..6a697ab
+--- /dev/null
++++ b/html_baobao/adminStatic/easydialog/easydialog.js
+@@ -0,0 +1,821 @@
++/** 
++ * easyDialog v2.2
++ * Url : http://stylechen.com/easydialog-v2.0.html
++ * Author : chenmnkken@gmail.com
++ * Date : 2012-04-22
++ */
++(function( win, undefined ){
++
++var	doc = win.document,
++	docElem = doc.documentElement;
++
++var easyDialog = function(){
++
++var	body = doc.body,
++	isIE = !-[1,],	// 判断IE6/7/8 不能判断IE9
++	isIE6 = isIE && /msie 6/.test( navigator.userAgent.toLowerCase() ), // 判断IE6
++	uuid = 1,
++	expando = 'cache' + ( +new Date() + "" ).slice( -8 ),  // 生成随机数
++	cacheData = {
++	/**
++	 *	1 : {
++	 *		eclick : [ handler1, handler2, handler3 ]; 
++	 *		clickHandler : function(){ //... }; 
++	 *	} 
++	 */	
++	};
++
++var	Dialog = function(){};
++
++Dialog.prototype = {
++	// 参数设置
++	getOptions : function( arg ){
++		var i,
++			options = {},
++			// 默认参数
++			defaults = {
++				container:   null,			// string / object   弹处层内容的id或内容模板
++				overlay:     true,			// boolean  		 是否添加遮罩层
++				drag:	     true,			// boolean  		 是否绑定拖拽事件
++				fixed: 	     true,			// boolean  		 是否静止定位
++				follow:      null,			// string / object   是否跟随自定义元素来定位
++				followX:     0,				// number   		 相对于自定义元素的X坐标的偏移
++				followY:     0,				// number  		     相对于自定义元素的Y坐标的偏移
++				autoClose:   0,				// number            自动关闭弹出层的时间
++				lock:        false,			// boolean           是否允许ESC键来关闭弹出层
++				callback:    null			// function          关闭弹出层后执行的回调函数
++				/** 
++				 *  container为object时的参数格式
++				 *	container : {
++				 *		header : '弹出层标题',
++				 *		content : '弹出层内容',
++				 *		yesFn : function(){},	    // 确定按钮的回调函数
++				 *		noFn : function(){} / true,	// 取消按钮的回调函数
++				 *		yesText : '确定',		    // 确定按钮的文本，默认为‘确定’
++				 *		noText : '取消' 		    // 取消按钮的文本，默认为‘取消’		
++				 *	}		
++				 */
++			};
++		
++		for( i in defaults ){
++			options[i] = arg[i] !== undefined ? arg[i] : defaults[i];
++		}
++		Dialog.data( 'options', options );
++		return options;
++	},
++		
++	// 防止IE6模拟fixed时出现抖动
++	setBodyBg : function(){
++		if( body.currentStyle.backgroundAttachment !== 'fixed' ){
++			body.style.backgroundImage = 'url(about:blank)';
++			body.style.backgroundAttachment = 'fixed';
++		}
++	},
++	
++	// 防止IE6的select穿透
++	appendIframe : function(elem){
++		elem.innerHTML = '<iframe style="position:absolute;left:0;top:0;width:100%;height:100%;z-index:-1;border:0 none;filter:alpha(opacity=0)"></iframe>';
++	},
++	
++	/**
++	 * 设置元素跟随定位
++	 * @param { Object } 跟随的DOM元素
++	 * @param { String / Object } 被跟随的DOM元素
++	 * @param { Number } 相对于被跟随元素的X轴的偏移
++	 * @param { Number } 相对于被跟随元素的Y轴的偏移
++	 */
++	setFollow : function( elem, follow, x, y ){
++		follow = typeof follow === 'string' ? doc.getElementById( follow ) : follow;
++		var style = elem.style;
++		style.position = 'absolute';			
++		style.left = Dialog.getOffset( follow, 'left') + x + 'px';
++		style.top = Dialog.getOffset( follow, 'top' ) + y + 'px';
++	},
++	
++	/**
++	 * 设置元素固定(fixed) / 绝对(absolute)定位
++	 * @param { Object } DOM元素
++	 * @param { Boolean } true : fixed, fasle : absolute
++	 */
++	setPosition : function( elem, fixed ){
++		var style = elem.style;
++		style.position = isIE6 ? 'absolute' : fixed ? 'fixed' : 'absolute';
++		if( fixed ){
++			if( isIE6 ){
++				style.setExpression( 'top','fuckIE6=document.documentElement.scrollTop+document.documentElement.clientHeight/2+"px"' );
++			}
++			else{
++				style.top = '50%';
++			}
++			style.left = '50%';
++		}
++		else{
++			if( isIE6 ){
++				style.removeExpression( 'top' );
++			}
++			style.top = docElem.clientHeight/2 + Dialog.getScroll( 'top' ) + 'px';
++			style.left = docElem.clientWidth/2 + Dialog.getScroll( 'left' ) + 'px';
++		}
++	},
++	
++	/**
++	 * 创建遮罩层
++	 * @return { Object } 遮罩层 
++	 */
++	createOverlay : function(){
++		var overlay = doc.createElement('div'),
++			style = overlay.style;
++			
++		style.cssText = 'margin:0;padding:0;border:none;width:100%;height:100%;background:#333;opacity:0.6;filter:alpha(opacity=60);z-index:9999;position:fixed;top:0;left:0;';
++		
++		// IE6模拟fixed
++		if(isIE6){
++			body.style.height = '100%';
++			style.position = 'absolute';
++			style.setExpression('top','fuckIE6=document.documentElement.scrollTop+"px"');
++		}
++		
++		overlay.id = 'overlay';
++		return overlay;
++	},
++	
++	/**
++	 * 创建弹出层
++	 * @return { Object } 弹出层 
++	 */
++	createDialogBox : function(){
++		var dialogBox = doc.createElement('div');		
++		dialogBox.style.cssText = 'margin:0;padding:0;border:none;z-index:10000;';
++		dialogBox.id = 'easyDialogBox';		
++		return dialogBox;
++	},
++
++	/**
++	 * 创建默认的弹出层内容模板
++	 * @param { Object } 模板参数
++	 * @return { Object } 弹出层内容模板
++	 */
++	createDialogWrap : function( tmpl ){
++		// 弹出层标题
++		var header = tmpl.header ? 
++			'<h4 class="easyDialog_title" id="easyDialogTitle"><a href="javascript:void(0)" title="关闭窗口" class="close_btn" id="closeBtn">&times;</a>' + tmpl.header + '</h4>' :
++			'',
++			// 确定按钮
++			yesBtn = typeof tmpl.yesFn === 'function' ? 
++				'<button class="btn_highlight" id="easyDialogYesBtn">' + ( typeof tmpl.yesText === 'string' ? tmpl.yesText : '确定' ) + '</button>' :
++				'',
++			// 取消按钮	
++			noBtn = typeof tmpl.noFn === 'function' || tmpl.noFn === true ? 
++				'<button class="btn_normal" id="easyDialogNoBtn">' + ( typeof tmpl.noText === 'string' ? tmpl.noText : '取消' ) + '</button>' :
++				'',			
++			// footer
++			footer = yesBtn === '' && noBtn === '' ? '' :
++				'<div class="easyDialog_footer">' + noBtn + yesBtn + '</div>',
++			
++			dialogTmpl = [
++			'<div class="easyDialog_content">',
++				header,
++				'<div class="easyDialog_text">' + tmpl.content + '</div>',
++				footer,
++			'</div>'
++			].join(''),
++
++			dialogWrap = doc.getElementById( 'easyDialogWrapper' ),
++			rScript = /<[\/]*script[\s\S]*?>/ig;
++			
++		if( !dialogWrap ){
++			dialogWrap = doc.createElement( 'div' );
++			dialogWrap.id = 'easyDialogWrapper';
++			dialogWrap.className = 'easyDialog_wrapper';
++		}
++		dialogWrap.innerHTML = dialogTmpl.replace( rScript, '' );		
++		return dialogWrap;
++	}		
++};
++	
++/**
++ * 设置并返回缓存的数据 关于缓存系统详见：http://stylechen.com/cachedata.html
++ * @param { String / Object } 任意字符串或DOM元素
++ * @param { String } 缓存属性名
++ * @param { Anything } 缓存属性值
++ * @return { Object } 
++ */
++Dialog.data = function( elem, val, data ){
++    if( typeof elem === 'string' ){
++        if( val !== undefined ){
++			cacheData[elem] = val;
++	    }
++		return cacheData[elem];
++	}
++	else if( typeof elem === 'object' ){
++		// 如果是window、document将不添加自定义属性
++		// window的索引是0 document索引为1
++		var index = elem === win ? 0 : 
++				elem.nodeType === 9 ? 1 : 
++				elem[expando] ? elem[expando] : 
++				(elem[expando] = ++uuid),
++			
++			thisCache = cacheData[index] ? cacheData[index] : ( cacheData[index] = {} );
++				
++		if( data !== undefined ){
++			// 将数据存入缓存中
++			thisCache[val] = data;
++		}
++		// 返回DOM元素存储的数据
++		return thisCache[val];
++	}
++};
++
++/**
++ * 删除缓存
++ * @param { String / Object } 任意字符串或DOM元素
++ * @param { String } 要删除的缓存属性名
++ */
++Dialog.removeData = function( elem, val ){
++	if( typeof elem === 'string' ){
++		delete cacheData[elem];
++	}
++	else if( typeof elem === 'object' ){
++		var index = elem === win ? 0 :
++				elem.nodeType === 9 ? 1 :
++				elem[expando];
++			
++		if( index === undefined ) return;		
++		// 检测对象是否为空
++		var isEmptyObject = function( obj ) {
++				var name;
++				for ( name in obj ) {
++					return false;
++				}
++				return true;
++			},
++			// 删除DOM元素所有的缓存数据
++			delteProp = function(){
++				delete cacheData[index];
++				if( index <= 1 ) return;
++				try{
++					// IE8及标准浏览器可以直接使用delete来删除属性
++					delete elem[expando];
++				}
++				catch ( e ) {
++					// IE6/IE7使用removeAttribute方法来删除属性(document会报错)
++					elem.removeAttribute( expando );
++				}
++			};
++
++		if( val ){
++			// 只删除指定的数据
++			delete cacheData[index][val];
++			if( isEmptyObject( cacheData[index] ) ){
++				delteProp();
++			}
++		}
++		else{
++			delteProp();
++		}
++	}
++};
++
++// 事件处理系统
++Dialog.event = {
++	
++	bind : function( elem, type, handler ){
++		var events = Dialog.data( elem, 'e' + type ) || Dialog.data( elem, 'e' + type, [] );
++		// 将事件函数添加到缓存中
++		events.push( handler );
++		// 同一事件类型只注册一次事件，防止重复注册
++		if( events.length === 1 ){
++			var eventHandler = this.eventHandler( elem );
++			Dialog.data( elem, type + 'Handler', eventHandler );
++			if( elem.addEventListener ){
++				elem.addEventListener( type, eventHandler, false );
++			}
++			else if( elem.attachEvent ){
++				elem.attachEvent( 'on' + type, eventHandler );
++			}
++		}
++	},
++		
++	unbind : function( elem, type, handler ){
++		var events = Dialog.data( elem, 'e' + type );
++		if( !events ) return;
++			
++		// 如果没有传入要删除的事件处理函数则删除该事件类型的缓存
++		if( !handler ){
++			events = undefined;		
++		}
++		// 如果有具体的事件处理函数则只删除一个
++		else{
++			for( var i = events.length - 1, fn = events[i]; i >= 0; i-- ){
++				if( fn === handler ){
++					events.splice( i, 1 );
++				}				
++			}
++		}		
++		// 删除事件和缓存
++		if( !events || !events.length ){
++			var eventHandler = Dialog.data( elem, type + 'Handler' );			
++			if( elem.addEventListener ){
++				elem.removeEventListener( type, eventHandler, false );
++			}
++			else if( elem.attachEvent ){
++				elem.detachEvent( 'on' + type, eventHandler );
++			}		
++			Dialog.removeData( elem, type + 'Handler' );
++			Dialog.removeData( elem, 'e' + type );
++		}
++	},
++		
++	// 依次执行事件绑定的函数
++	eventHandler : function( elem ){
++		return function( event ){
++			event = Dialog.event.fixEvent( event || win.event );
++			var type = event.type,
++				events = Dialog.data( elem, 'e' + type );
++				
++			for( var i = 0, handler; handler = events[i++]; ){
++				if( handler.call(elem, event) === false ){
++					event.preventDefault();
++					event.stopPropagation();
++				}
++			}
++		}
++	},
++	
++	// 修复IE浏览器支持常见的标准事件的API
++	fixEvent : function( e ){
++		// 支持DOM 2级标准事件的浏览器无需做修复
++		if ( e.target ) return e; 
++		var event = {}, name;
++		event.target = e.srcElement || document;
++		event.preventDefault = function(){
++			e.returnValue = false;
++		};		
++		event.stopPropagation = function(){
++			e.cancelBubble = true;
++		};
++		// IE6/7/8在原生的window.event中直接写入自定义属性
++		// 会导致内存泄漏，所以采用复制的方式
++		for( name in e ){
++			event[name] = e[name];
++		}				
++		return event;
++	}
++};
++
++/**
++ * 首字母大写转换
++ * @param { String } 要转换的字符串
++ * @return { String } 转换后的字符串 top => Top
++ */
++Dialog.capitalize = function( str ){
++	var firstStr = str.charAt(0);
++	return firstStr.toUpperCase() + str.replace( firstStr, '' );
++};
++
++/**
++ * 获取滚动条的位置
++ * @param { String } 'top' & 'left'
++ * @return { Number } 
++ */	
++Dialog.getScroll = function( type ){
++	var upType = this.capitalize( type );		
++	return docElem['scroll' + upType] || body['scroll' + upType];	
++};
++
++/**
++ * 获取元素在页面中的位置
++ * @param { Object } DOM元素
++ * @param { String } 'top' & 'left'
++ * @return { Number } 
++ */		
++Dialog.getOffset = function( elem, type ){
++	var upType = this.capitalize( type ),
++		client  = docElem['client' + upType]  || body['client' + upType]  || 0,
++		scroll  = this.getScroll( type ),
++		box = elem.getBoundingClientRect();
++		
++	return Math.round( box[type] ) + scroll - client;
++};
++
++/**
++ * 拖拽效果
++ * @param { Object } 触发拖拽的DOM元素
++ * @param { Object } 要进行拖拽的DOM元素
++ */
++Dialog.drag = function( target, moveElem ){
++	// 清除文本选择
++	var	clearSelect = 'getSelection' in win ? function(){
++		win.getSelection().removeAllRanges();
++		} : function(){
++			try{
++				doc.selection.empty();
++			}
++			catch( e ){};
++		},
++		
++		self = this,
++		event = self.event,
++		isDown = false,
++		newElem = isIE ? target : doc,
++		fixed = moveElem.style.position === 'fixed',
++		_fixed = Dialog.data( 'options' ).fixed;
++	
++	// mousedown
++	var down = function( e ){
++		isDown = true;
++		var scrollTop = self.getScroll( 'top' ),
++			scrollLeft = self.getScroll( 'left' ),
++			edgeLeft = fixed ? 0 : scrollLeft,
++			edgeTop = fixed ? 0 : scrollTop;
++		
++		Dialog.data( 'dragData', {
++			x : e.clientX - self.getOffset( moveElem, 'left' ) + ( fixed ? scrollLeft : 0 ),	
++			y : e.clientY - self.getOffset( moveElem, 'top' ) + ( fixed ? scrollTop : 0 ),			
++			// 设置上下左右4个临界点的位置
++			// 固定定位的临界点 = 当前屏的宽、高(下、右要减去元素本身的宽度或高度)
++			// 绝对定位的临界点 = 当前屏的宽、高 + 滚动条卷起部分(下、右要减去元素本身的宽度或高度)
++			el : edgeLeft,	// 左临界点
++			et : edgeTop,  // 上临界点
++			er : edgeLeft + docElem.clientWidth - moveElem.offsetWidth,  // 右临界点
++			eb : edgeTop + docElem.clientHeight - moveElem.offsetHeight  // 下临界点
++		});
++		
++		if( isIE ){
++			// IE6如果是模拟fixed在mousedown的时候先删除模拟，节省性能
++			if( isIE6 && _fixed ){
++				moveElem.style.removeExpression( 'top' );
++			}
++			target.setCapture();
++		}
++		
++		event.bind( newElem, 'mousemove', move );
++		event.bind( newElem, 'mouseup', up );
++		
++		if( isIE ){
++			event.bind( target, 'losecapture', up );
++		}
++		
++		e.stopPropagation();
++		e.preventDefault();
++		
++	};
++	
++	event.bind( target, 'mousedown', down );
++	
++	// mousemove
++	var move = function( e ){
++		if( !isDown ) return;
++		clearSelect();
++		var dragData = Dialog.data( 'dragData' ),
++			left = e.clientX - dragData.x,
++			top = e.clientY - dragData.y,
++			et = dragData.et,
++			er = dragData.er,
++			eb = dragData.eb,
++			el = dragData.el,
++			style = moveElem.style;
++		
++		// 设置上下左右的临界点以防止元素溢出当前屏
++		style.marginLeft = style.marginTop = '0px';
++		style.left = ( left <= el ? el : (left >= er ? er : left) ) + 'px';
++		style.top = ( top <= et ? et : (top >= eb ? eb : top) ) + 'px';
++		e.stopPropagation();
++	};
++	
++	// mouseup
++	var up = function( e ){
++		isDown = false;
++		if( isIE ){
++			event.unbind( target, 'losecapture', arguments.callee );
++		}
++		event.unbind( newElem, 'mousemove', move );
++		event.unbind( newElem, 'mouseup', arguments.callee );		
++		if( isIE ){
++			target.releaseCapture();
++			// IE6如果是模拟fixed在mouseup的时候要重新设置模拟
++			if( isIE6 && _fixed ){
++				var top = parseInt( moveElem.style.top ) - self.getScroll( 'top' );
++				moveElem.style.setExpression('top',"fuckIE6=document.documentElement.scrollTop+" + top + '+"px"');
++			}
++		}
++		e.stopPropagation();
++	};
++};
++
++var	timer,	// 定时器
++	// ESC键关闭弹出层
++	escClose = function( e ){
++		if( e.keyCode === 27 ){
++			extend.close();
++		}
++	},	
++	// 清除定时器
++	clearTimer = function(){
++		if( timer ){
++			clearTimeout( timer );
++			timer = undefined;
++		}
++	};
++	
++var extend = {
++	open : function(){
++		var $ = new Dialog(),
++			options = $.getOptions( arguments[0] || {} ),	// 获取参数
++			event = Dialog.event,
++			docWidth = docElem.clientWidth,
++			docHeight = docElem.clientHeight,
++			self = this,
++			overlay,
++			dialogBox,
++			dialogWrap,
++			boxChild;
++			
++		clearTimer();
++		
++		// ------------------------------------------------------
++		// ---------------------插入遮罩层-----------------------
++		// ------------------------------------------------------
++		
++		// 如果页面中已经缓存遮罩层，直接显示
++		if( options.overlay ){
++			overlay = doc.getElementById( 'overlay' );			
++			if( !overlay ){
++				overlay = $.createOverlay();
++				body.appendChild( overlay );
++				if( isIE6 ){
++					$.appendIframe( overlay );
++				}
++			}
++			overlay.style.display = 'block';
++		}
++		
++		if(isIE6){
++			$.setBodyBg();
++		}
++		
++		// ------------------------------------------------------
++		// ---------------------插入弹出层-----------------------
++		// ------------------------------------------------------
++		
++		// 如果页面中已经缓存弹出层，直接显示
++		dialogBox = doc.getElementById( 'easyDialogBox' );
++		if( !dialogBox ){
++			dialogBox = $.createDialogBox();
++			body.appendChild( dialogBox );
++		}
++		
++		if( options.follow ){
++			var follow = function(){
++				$.setFollow( dialogBox, options.follow, options.followX, options.followY );
++			};
++			
++			follow();
++			event.bind( win, 'resize', follow );
++			Dialog.data( 'follow', follow );
++			if( overlay ){
++				overlay.style.display = 'none';
++			}
++			options.fixed = false;
++		}
++		else{
++			$.setPosition( dialogBox, options.fixed );
++		}
++		dialogBox.style.display = 'block';
++				
++		// ------------------------------------------------------
++		// -------------------插入弹出层内容---------------------
++		// ------------------------------------------------------
++		
++		// 判断弹出层内容是否已经缓存过
++		dialogWrap = typeof options.container === 'string' ? 
++			doc.getElementById( options.container ) : 
++			$.createDialogWrap( options.container );
++		
++		boxChild = dialogBox.getElementsByTagName('*')[0];
++		
++		if( !boxChild ){
++			dialogBox.appendChild( dialogWrap );
++		}
++		else if( boxChild && dialogWrap !== boxChild ){
++			boxChild.style.display = 'none';
++			body.appendChild( boxChild );
++			dialogBox.appendChild( dialogWrap );
++		}
++		
++		dialogWrap.style.display = 'block';
++		
++		var eWidth = dialogWrap.offsetWidth,
++			eHeight = dialogWrap.offsetHeight,
++			widthOverflow = eWidth > docWidth,
++			heigthOverflow = eHeight > docHeight;
++			
++		// 强制去掉自定义弹出层内容的margin	
++		dialogWrap.style.marginTop = dialogWrap.style.marginRight = dialogWrap.style.marginBottom = dialogWrap.style.marginLeft = '0px';	
++		
++		// 居中定位
++		if( !options.follow ){			
++			dialogBox.style.marginLeft = '-' + (widthOverflow ? docWidth/2 : eWidth/2) + 'px';
++			dialogBox.style.marginTop = '-' + (heigthOverflow ? docHeight/2 : eHeight/2) + 'px';			
++		}
++		else{
++			dialogBox.style.marginLeft = dialogBox.style.marginTop = '0px';
++		}
++				
++		// 防止select穿透固定宽度和高度
++		if( isIE6 && !options.overlay ){
++			dialogBox.style.width = eWidth + 'px';
++			dialogBox.style.height = eHeight + 'px';
++		}
++		
++		// ------------------------------------------------------
++		// --------------------绑定相关事件----------------------
++		// ------------------------------------------------------
++		var closeBtn = doc.getElementById( 'closeBtn' ),
++			dialogTitle = doc.getElementById( 'easyDialogTitle' ),
++			dialogYesBtn = doc.getElementById('easyDialogYesBtn'),
++			dialogNoBtn = doc.getElementById('easyDialogNoBtn');		
++
++		// 绑定确定按钮的回调函数
++		if( dialogYesBtn ){
++			event.bind( dialogYesBtn, 'click', function( event ){
++				if( options.container.yesFn.call(self, event) !== false ){
++					self.close();
++				}
++			});
++		}
++		
++		// 绑定取消按钮的回调函数
++		if( dialogNoBtn ){
++			var noCallback = function( event ){
++				if( options.container.noFn === true || options.container.noFn.call(self, event) !== false ){
++					self.close();
++				}
++			};
++			event.bind( dialogNoBtn, 'click', noCallback );
++			// 如果取消按钮有回调函数 关闭按钮也绑定同样的回调函数
++			if( closeBtn ){
++				event.bind( closeBtn, 'click', noCallback );
++			}
++		}			
++		// 关闭按钮绑定事件	
++		else if( closeBtn ){
++			event.bind( closeBtn, 'click', self.close );
++		}
++		
++		// ESC键关闭弹出层
++		if( !options.lock ){
++			event.bind( doc, 'keyup', escClose );
++		}
++		// 自动关闭弹出层
++		if( options.autoClose && typeof options.autoClose === 'number' ){
++			timer = setTimeout( self.close, options.autoClose );
++		}		
++		// 绑定拖拽(如果弹出层内容的宽度或高度溢出将不绑定拖拽)
++		if( options.drag && dialogTitle && !widthOverflow && !heigthOverflow ){
++			dialogTitle.style.cursor = 'move';
++			Dialog.drag( dialogTitle, dialogBox );
++		}
++		
++		// 确保弹出层绝对定位时放大缩小窗口也可以垂直居中显示
++		
++		if( !options.follow && !options.fixed ){
++			var resize = function(){
++				$.setPosition( dialogBox, false );
++			};
++			// 如果弹出层内容的宽度或高度溢出将不绑定resize事件
++			if( !widthOverflow && !heigthOverflow ){
++				event.bind( win, 'resize', resize );
++			}
++			Dialog.data( 'resize', resize );
++		}
++		
++		// 缓存相关元素以便关闭弹出层的时候进行操作
++		Dialog.data( 'dialogElements', {
++			overlay : overlay,
++			dialogBox : dialogBox,
++			closeBtn : closeBtn,
++			dialogTitle : dialogTitle,
++			dialogYesBtn : dialogYesBtn,
++			dialogNoBtn : dialogNoBtn			
++		});
++	},
++	
++	close : function(){
++		var options = Dialog.data( 'options' ),
++			elements = Dialog.data( 'dialogElements' ),
++			event = Dialog.event;
++			
++		clearTimer();
++		//	隐藏遮罩层
++		if( options.overlay && elements.overlay ){
++			elements.overlay.style.display = 'none';
++		}
++		// 隐藏弹出层
++		elements.dialogBox.style.display = 'none';
++		// IE6清除CSS表达式
++		if( isIE6 ){
++			elements.dialogBox.style.removeExpression( 'top' );
++		}
++		
++		// ------------------------------------------------------
++		// --------------------删除相关事件----------------------
++		// ------------------------------------------------------
++		if( elements.closeBtn ){
++			event.unbind( elements.closeBtn, 'click' );
++		}
++
++		if( elements.dialogTitle ){
++			event.unbind( elements.dialogTitle, 'mousedown' );
++		}
++		
++		if( elements.dialogYesBtn ){
++			event.unbind( elements.dialogYesBtn, 'click' );
++		}
++		
++		if( elements.dialogNoBtn ){
++			event.unbind( elements.dialogNoBtn, 'click' );
++		}
++		
++		if( !options.follow && !options.fixed ){
++			event.unbind( win, 'resize', Dialog.data('resize') );
++			Dialog.removeData( 'resize' );
++		}
++		
++		if( options.follow ){
++			event.unbind( win, 'resize', Dialog.data('follow') );
++			Dialog.removeData( 'follow' );
++		}
++		
++		if( !options.lock ){
++			event.unbind( doc, 'keyup', escClose );
++		}
++		// 执行callback
++		if(typeof options.callback === 'function'){
++			options.callback.call( extend );
++		}
++		// 清除缓存
++		Dialog.removeData( 'options' );
++		Dialog.removeData( 'dialogElements' );
++	}
++};
++
++return extend;
++
++};
++
++// ------------------------------------------------------
++// ---------------------DOM加载模块----------------------
++// ------------------------------------------------------
++var loaded = function(){
++		win.easyDialog = easyDialog();
++	},
++	
++	doScrollCheck = function(){
++		if ( doc.body ) return;
++
++		try {
++			docElem.doScroll("left");
++		} catch(e) {
++			setTimeout( doScrollCheck, 1 );
++			return;
++		}
++		loaded();
++	};
++
++(function(){
++	if( doc.body ){
++		loaded();
++	}
++	else{
++		if( doc.addEventListener ){
++			doc.addEventListener( 'DOMContentLoaded', function(){
++				doc.removeEventListener( 'DOMContentLoaded', arguments.callee, false );
++				loaded();
++			}, false );
++			win.addEventListener( 'load', loaded, false );
++		}
++		else if( doc.attachEvent ){
++			doc.attachEvent( 'onreadystatechange', function(){
++				if( doc.readyState === 'complete' ){
++					doc.detachEvent( 'onreadystatechange', arguments.callee );
++					loaded();
++				}
++			});
++			win.attachEvent( 'onload', loaded );			
++			var toplevel = false;
++			try {
++				toplevel = win.frameElement == null;
++			} catch(e) {}
++
++			if ( docElem.doScroll && toplevel ) {
++				doScrollCheck();
++			}
++		}
++	}
++})();
++
++})( window, undefined );
++
++// 2012-04-12 修复跟随定位缩放浏览器时无法继续跟随的BUG
++// 2012-04-22 修复弹出层内容的尺寸大于浏览器当前屏尺寸的BUG
+\ No newline at end of file
+diff --git a/html_baobao/adminStatic/easydialog/easydialog.min.js b/html_baobao/adminStatic/easydialog/easydialog.min.js
+new file mode 100644
+index 0000000..6629a09
+--- /dev/null
++++ b/html_baobao/adminStatic/easydialog/easydialog.min.js
+@@ -0,0 +1,24 @@
++/** 
++ * easyDialog v2.2
++ * Url : http://stylechen.com/easydialog-v2.0.html
++ * Author : chenmnkken@gmail.com
++ * Date : 2012-04-22
++ */
++(function(o,v){var g=o.document,q=g.documentElement,J=function(){var p=g.body,w=!-[1,],r=w&&/msie 6/.test(navigator.userAgent.toLowerCase()),I=1,y="cache"+(+new Date+"").slice(-8),u={},d=function(){};d.prototype={getOptions:function(a){var b,c={},e={container:null,overlay:true,drag:true,fixed:true,follow:null,followX:0,followY:0,autoClose:0,lock:false,callback:null};for(b in e)c[b]=a[b]!==v?a[b]:e[b];d.data("options",c);return c},setBodyBg:function(){if(p.currentStyle.backgroundAttachment!=="fixed"){p.style.backgroundImage=
++"url(about:blank)";p.style.backgroundAttachment="fixed"}},appendIframe:function(a){a.innerHTML='<iframe style="position:absolute;left:0;top:0;width:100%;height:100%;z-index:-1;border:0 none;filter:alpha(opacity=0)"></iframe>'},setFollow:function(a,b,c,e){b=typeof b==="string"?g.getElementById(b):b;a=a.style;a.position="absolute";a.left=d.getOffset(b,"left")+c+"px";a.top=d.getOffset(b,"top")+e+"px"},setPosition:function(a,b){var c=a.style;c.position=r?"absolute":b?"fixed":"absolute";if(b){if(r)c.setExpression("top",
++'fuckIE6=document.documentElement.scrollTop+document.documentElement.clientHeight/2+"px"');else c.top="50%";c.left="50%"}else{r&&c.removeExpression("top");c.top=q.clientHeight/2+d.getScroll("top")+"px";c.left=q.clientWidth/2+d.getScroll("left")+"px"}},createOverlay:function(){var a=g.createElement("div"),b=a.style;b.cssText="margin:0;padding:0;border:none;width:100%;height:100%;background:#333;opacity:0.6;filter:alpha(opacity=60);z-index:9999;position:fixed;top:0;left:0;";if(r){p.style.height="100%";
++b.position="absolute";b.setExpression("top",'fuckIE6=document.documentElement.scrollTop+"px"')}a.id="overlay";return a},createDialogBox:function(){var a=g.createElement("div");a.style.cssText="margin:0;padding:0;border:none;z-index:10000;";a.id="easyDialogBox";return a},createDialogWrap:function(a){var b=typeof a.yesFn==="function"?'<button class="btn_highlight" id="easyDialogYesBtn">'+(typeof a.yesText==="string"?a.yesText:"\u786e\u5b9a")+"</button>":"",c=typeof a.noFn==="function"||a.noFn===true?
++'<button class="btn_normal" id="easyDialogNoBtn">'+(typeof a.noText==="string"?a.noText:"\u53d6\u6d88")+"</button>":"";a=['<div class="easyDialog_content">',a.header?'<h4 class="easyDialog_title" id="easyDialogTitle"><a href="javascript:void(0)" title="\u5173\u95ed\u7a97\u53e3" class="close_btn" id="closeBtn">&times;</a>'+a.header+"</h4>":"",'<div class="easyDialog_text">'+a.content+"</div>",b===""&&c===""?"":'<div class="easyDialog_footer">'+c+b+"</div>","</div>"].join("");b=g.getElementById("easyDialogWrapper");
++if(!b){b=g.createElement("div");b.id="easyDialogWrapper";b.className="easyDialog_wrapper"}b.innerHTML=a.replace(/<[\/]*script[\s\S]*?>/ig,"");return b}};d.data=function(a,b,c){if(typeof a==="string"){if(b!==v)u[a]=b;return u[a]}else if(typeof a==="object"){a=a===o?0:a.nodeType===9?1:a[y]?a[y]:a[y]=++I;a=u[a]?u[a]:u[a]={};if(c!==v)a[b]=c;return a[b]}};d.removeData=function(a,b){if(typeof a==="string")delete u[a];else if(typeof a==="object"){var c=a===o?0:a.nodeType===9?1:a[y];if(c!==v){var e=function(m){for(var n in m)return false;
++return true},f=function(){delete u[c];if(!(c<=1))try{delete a[y]}catch(m){a.removeAttribute(y)}};if(b){delete u[c][b];e(u[c])&&f()}else f()}}};d.event={bind:function(a,b,c){var e=d.data(a,"e"+b)||d.data(a,"e"+b,[]);e.push(c);if(e.length===1){c=this.eventHandler(a);d.data(a,b+"Handler",c);if(a.addEventListener)a.addEventListener(b,c,false);else a.attachEvent&&a.attachEvent("on"+b,c)}},unbind:function(a,b,c){var e=d.data(a,"e"+b);if(e){if(c)for(var f=e.length-1,m=e[f];f>=0;f--)m===c&&e.splice(f,1);
++else e=v;if(!e||!e.length){c=d.data(a,b+"Handler");if(a.addEventListener)a.removeEventListener(b,c,false);else a.attachEvent&&a.detachEvent("on"+b,c);d.removeData(a,b+"Handler");d.removeData(a,"e"+b)}}},eventHandler:function(a){return function(b){b=d.event.fixEvent(b||o.event);for(var c=d.data(a,"e"+b.type),e=0,f;f=c[e++];)if(f.call(a,b)===false){b.preventDefault();b.stopPropagation()}}},fixEvent:function(a){if(a.target)return a;var b={},c;b.target=a.srcElement||document;b.preventDefault=function(){a.returnValue=
++false};b.stopPropagation=function(){a.cancelBubble=true};for(c in a)b[c]=a[c];return b}};d.capitalize=function(a){var b=a.charAt(0);return b.toUpperCase()+a.replace(b,"")};d.getScroll=function(a){a=this.capitalize(a);return q["scroll"+a]||p["scroll"+a]};d.getOffset=function(a,b){var c=this.capitalize(b);c=q["client"+c]||p["client"+c]||0;var e=this.getScroll(b),f=a.getBoundingClientRect();return Math.round(f[b])+e-c};d.drag=function(a,b){var c="getSelection"in o?function(){o.getSelection().removeAllRanges()}:
++function(){try{g.selection.empty()}catch(i){}},e=this,f=e.event,m=false,n=w?a:g,h=b.style.position==="fixed",j=d.data("options").fixed;f.bind(a,"mousedown",function(i){m=true;var k=e.getScroll("top"),s=e.getScroll("left"),z=h?0:s,B=h?0:k;d.data("dragData",{x:i.clientX-e.getOffset(b,"left")+(h?s:0),y:i.clientY-e.getOffset(b,"top")+(h?k:0),el:z,et:B,er:z+q.clientWidth-b.offsetWidth,eb:B+q.clientHeight-b.offsetHeight});if(w){r&&j&&b.style.removeExpression("top");a.setCapture()}f.bind(n,"mousemove",l);
++f.bind(n,"mouseup",t);w&&f.bind(a,"losecapture",t);i.stopPropagation();i.preventDefault()});var l=function(i){if(m){c();var k=d.data("dragData"),s=i.clientX-k.x,z=i.clientY-k.y,B=k.et,E=k.er,F=k.eb;k=k.el;var C=b.style;C.marginLeft=C.marginTop="0px";C.left=(s<=k?k:s>=E?E:s)+"px";C.top=(z<=B?B:z>=F?F:z)+"px";i.stopPropagation()}},t=function(i){m=false;w&&f.unbind(a,"losecapture",arguments.callee);f.unbind(n,"mousemove",l);f.unbind(n,"mouseup",arguments.callee);if(w){a.releaseCapture();if(r&&j){var k=
++parseInt(b.style.top)-e.getScroll("top");b.style.setExpression("top","fuckIE6=document.documentElement.scrollTop+"+k+'+"px"')}}i.stopPropagation()}};var x,G=function(a){a.keyCode===27&&D.close()},D={open:function(a){var b=new d,c=b.getOptions(a||{});a=d.event;var e=q.clientWidth,f=q.clientHeight,m=this,n,h,j,l;if(x){clearTimeout(x);x=v}if(c.overlay){n=g.getElementById("overlay");if(!n){n=b.createOverlay();p.appendChild(n);r&&b.appendIframe(n)}n.style.display="block"}r&&b.setBodyBg();h=g.getElementById("easyDialogBox");
++if(!h){h=b.createDialogBox();p.appendChild(h)}if(c.follow){l=function(){b.setFollow(h,c.follow,c.followX,c.followY)};l();a.bind(o,"resize",l);d.data("follow",l);if(n)n.style.display="none";c.fixed=false}else b.setPosition(h,c.fixed);h.style.display="block";j=typeof c.container==="string"?g.getElementById(c.container):b.createDialogWrap(c.container);if(l=h.getElementsByTagName("*")[0]){if(l&&j!==l){l.style.display="none";p.appendChild(l);h.appendChild(j)}}else h.appendChild(j);j.style.display="block";
++var t=j.offsetWidth,i=j.offsetHeight;l=t>e;var k=i>f;j.style.marginTop=j.style.marginRight=j.style.marginBottom=j.style.marginLeft="0px";if(c.follow)h.style.marginLeft=h.style.marginTop="0px";else{h.style.marginLeft="-"+(l?e/2:t/2)+"px";h.style.marginTop="-"+(k?f/2:i/2)+"px"}if(r&&!c.overlay){h.style.width=t+"px";h.style.height=i+"px"}e=g.getElementById("closeBtn");f=g.getElementById("easyDialogTitle");j=g.getElementById("easyDialogYesBtn");t=g.getElementById("easyDialogNoBtn");j&&a.bind(j,"click",
++function(s){c.container.yesFn.call(m,s)!==false&&m.close()});if(t){i=function(s){if(c.container.noFn===true||c.container.noFn.call(m,s)!==false)m.close()};a.bind(t,"click",i);e&&a.bind(e,"click",i)}else e&&a.bind(e,"click",m.close);c.lock||a.bind(g,"keyup",G);if(c.autoClose&&typeof c.autoClose==="number")x=setTimeout(m.close,c.autoClose);if(c.drag&&f&&!l&&!k){f.style.cursor="move";d.drag(f,h)}if(!c.follow&&!c.fixed){i=function(){b.setPosition(h,false)};!l&&!k&&a.bind(o,"resize",i);d.data("resize",
++i)}d.data("dialogElements",{overlay:n,dialogBox:h,closeBtn:e,dialogTitle:f,dialogYesBtn:j,dialogNoBtn:t})},close:function(){var a=d.data("options"),b=d.data("dialogElements"),c=d.event;if(x){clearTimeout(x);x=v}if(a.overlay&&b.overlay)b.overlay.style.display="none";b.dialogBox.style.display="none";r&&b.dialogBox.style.removeExpression("top");b.closeBtn&&c.unbind(b.closeBtn,"click");b.dialogTitle&&c.unbind(b.dialogTitle,"mousedown");b.dialogYesBtn&&c.unbind(b.dialogYesBtn,"click");b.dialogNoBtn&&c.unbind(b.dialogNoBtn,
++"click");if(!a.follow&&!a.fixed){c.unbind(o,"resize",d.data("resize"));d.removeData("resize")}if(a.follow){c.unbind(o,"resize",d.data("follow"));d.removeData("follow")}a.lock||c.unbind(g,"keyup",G);typeof a.callback==="function"&&a.callback.call(D);d.removeData("options");d.removeData("dialogElements")}};return D},A=function(){o.easyDialog=J()},H=function(){if(!g.body){try{q.doScroll("left")}catch(p){setTimeout(H,1);return}A()}};(function(){if(g.body)A();else if(g.addEventListener){g.addEventListener("DOMContentLoaded",
++function(){g.removeEventListener("DOMContentLoaded",arguments.callee,false);A()},false);o.addEventListener("load",A,false)}else if(g.attachEvent){g.attachEvent("onreadystatechange",function(){if(g.readyState==="complete"){g.detachEvent("onreadystatechange",arguments.callee);A()}});o.attachEvent("onload",A);var p=false;try{p=o.frameElement==null}catch(w){}q.doScroll&&p&&H()}})()})(window,undefined);
+diff --git a/html_baobao/adminStatic/js/nav.js b/html_baobao/adminStatic/js/nav.js
+index 2d1950c..7fb3afb 100755
+--- a/html_baobao/adminStatic/js/nav.js
++++ b/html_baobao/adminStatic/js/nav.js
+@@ -5,22 +5,6 @@ t=outlookbar.addtitle('后台管理','系统设置',1)
+ outlookbar.additem('添加管理员',t,'/admin/user/add')
+ outlookbar.additem('管理员列表',t,'/admin/user/adminlist')
+ 
+-/*
+-t=outlookbar.addtitle('网站设置','系统设置',1)
+-outlookbar.additem('站点配置',t,'siteconfig.php')
+-outlookbar.additem('点击退出登录',t,'loginout.php')
+-outlookbar.additem('展商信息同步',t,'../Corpsync/ ')
+-
+-
+-
+-outlookbar.additem('开通新企业',t,'../Corp/add')
+-outlookbar.additem('管理企业基本信息',t,'../Corp/corplist')
+-outlookbar.additem('开通个人会员',t,'../Personal/add')
+-outlookbar.additem('个人会员管理',t,'../Personal/personalList')
+-outlookbar.additem('企业会员管理',t,'../Corp/memberlist')
+-outlookbar.additem('匹配类别管理',t,'../Index/category')
+-*/
+-
+ t=outlookbar.addtitle('栏目管理','妈妈学习',1)
+ outlookbar.additem('栏目管理',t,'/admin/section/showlist/')
+ 
+@@ -40,26 +24,7 @@ t=outlookbar.addtitle('专栏管理','妈妈学习',1)
+ outlookbar.additem('专栏管理',t,'/admin/specpage/showlist/')
+ outlookbar.additem('添加专栏',t,'/admin/specpage/add/')
+ 
++t=outlookbar.addtitle('标签管理','妈妈学习',1)
++outlookbar.additem('标签管理',t,'/admin/tag/showlist/')
++outlookbar.additem('添加标签',t,'/admin/tag/add/')
+ 
+-/*
+-
+-t=outlookbar.addtitle('线下展会服务','妈妈学习',1)
+-outlookbar.additem('开通线下展商',t,'../Offlineex/addready')
+-outlookbar.additem('参展企业名录',t,'../Offlineex/manage')
+-outlookbar.additem('展会管理',t,'../Exproject/manage')
+-outlookbar.additem('员工管理',t,'../Employee/manage')
+-
+-
+-t=outlookbar.addtitle('妈妈说说','妈妈学习',1)
+-outlookbar.additem('添加观众',t,'un_pass.php')
+-outlookbar.additem('审核/管理观众',t,'al_pass.php')
+-outlookbar.additem('VIP邀请数据管理',t,'../Vipvisitor/manage')
+-outlookbar.additem('在线咨询管理',t,'../Consulting/manage')
+-
+-
+-t=outlookbar.addtitle('资讯管理','其他设置',1)
+-outlookbar.additem('妈妈学习',t,'../news/categorylist')
+-outlookbar.additem('资讯发布',t,'../news/artadd')
+-outlookbar.additem('资讯妈妈学习',t,'../news/artlist')
+-t=outlookbar.addtitle('妈妈说说','妈妈说说',1)
+-*/
+diff --git a/html_baobao/adminStatic/js/relation_tag.js b/html_baobao/adminStatic/js/relation_tag.js
+new file mode 100755
+index 0000000..0c8b0be
+--- /dev/null
++++ b/html_baobao/adminStatic/js/relation_tag.js
+@@ -0,0 +1,155 @@
++
++//显示弹出层
++function show_div()
++{
++    var html = '<input type="text" id="relation_tag" onkeydown="enterIn(event);"/>'
++        +'<input type="button" value="查询" onclick="do_ajax_search()"/>'
++        +'<i id="notice_search_tag" class="notice"></i><br/>'
++        +'<div id="easydialog_tag" class="easydialog_tag clearfloat"></div>'
++        +'<br/>'
++        ;
++    easyDialog.open({
++        container : {
++            header : '标签选择器',
++            yesFn : tag_yesFn,
++            noFn : tag_noFn,
++            yesText : true,
++            noText : true,
++            content : html
++        },
++        lock : true, //不开启Esc关闭
++        overlay : true,
++        //callback : show_checked_tag,
++    });
++    $("#relation_tag").focus();
++    showNotice('notice_search_tag','请输入要查询的标签');
++}
++
++//点击“确定”按钮的回调函数
++function tag_yesFn(type)
++{
++    var items = [];
++    for ( var i in tag_container.tmp_list )
++    {
++        if( tag_container.tmp_list[i] != null )
++        {
++            items.push('<input type="checkbox" checked name="tag_list" value="" id="box_tag_'
++                    + i + '" onclick="do_checkbox(\''+i+'\')" my_type="1">'
++                    + '<label for="box_tag_' + i + '">'
++                    + tag_container.tmp_list[i] + '</label></input>');
++            tag_container.list[i] = tag_container.tmp_list[i];
++            //ajax增加标签和文章的关联
++            if(type!='init') do_ajax_relation_tag(i,'add');
++        }
++    }
++    $("#my_tag button").before(items.join(''));
++    //$("#my_tag").append(items.join(''));
++    //清空临时容器
++    tag_container.tmp_list = {};
++    tag_container.key = null;
++    return true;
++}
++
++//点击checkbox判断
++function do_checkbox(tag_id)
++{
++    //var chk_type = $('#box_tag_'+tag_id).attr('checked');
++    var chk_type = $('#box_tag_'+tag_id).is(':checked')
++    //alert(chk_type);
++    if( true==chk_type )
++    {
++        do_ajax_relation_tag(tag_id,'add');
++        //$('#box_tag_'+tag_id).removeAttr('checked');
++    }else
++    {
++        do_ajax_relation_tag(tag_id,'del');
++    }
++}
++
++//ajax增加标签和文章的关联
++function do_ajax_relation_tag(tag_id,type)
++{
++    if(null==tag_container.art_id || ''==tag_container.art_id)
++    {
++        alert('func do_ajax_relation_tag 未获得art_id');
++        return ;
++    }
++    $.get('/admin/relation_tag/'+type, {'tag_id':tag_id,'target_id':tag_container.art_id}, function(data) {
++        if(-1==data) alert('参数传递失败');
++        if(-2==data) alert('数据插入失败');
++    });
++}
++
++//点击“取消”按钮的回调函数
++function tag_noFn()
++{
++    //清空临时容器
++    tag_container.tmp_list = {};
++    tag_container.key = null;
++    return true;
++}
++
++//ajax获取标签
++function do_ajax_search()
++{
++    var txt = $("#relation_tag").val();
++    if(''==txt)
++    {
++        showNotice('notice_search_tag','请输入要查询的标签');
++        return $("#relation_tag").focus();
++    }else if(tag_container.key==txt){
++        //不再重复查询，减少不必要的http请求
++        return ;
++    }
++    tag_container.key = txt;
++    var not_in_str = '';
++    for (var i in tag_container.list) {
++        not_in_str += '-'+i;
++    }
++    $.getJSON('/admin/tag/ajax_get/'+txt+'/'+not_in_str.substr(1), function(data) {
++        var items = [], sum=0;
++        $.each(data, function(key, val) {
++            //if( key=='len' ) return;//在each中用return代替continue
++            if( key=='len' ) {
++                return sum = parseInt(val);
++            }
++            items.push('<a id="tag_' + key + '" onclick="do_chk(\''+key+'\')" type="0">' + val + '</a>');
++        });
++        $("#easydialog_tag").html(items.join(''));
++        showNotice('notice_search_tag','总计：'+sum);
++    });
++}
++
++//选择一个标签
++function do_chk(id)
++{
++    var tag = $("#tag_"+id);
++    if( tag.attr('type')==0 )
++    {
++        tag.css({'background':'#3079ed','color':'#fff'}).attr('type',1);
++        //增加已选中的标签
++        tag_container.tmp_list[id] = tag.text();
++    }else{
++        tag.css({'background':'#fff','color':'#555'}).attr('type',0);
++        //减少已选中的标签
++        tag_container.tmp_list[id] = null;
++    }
++}
++
++//显示提示信息
++function showNotice(id,notice)
++{
++    $("#"+id).text(notice);
++}
++
++//回车提交查询
++function enterIn(evt)
++{
++    var evt=evt?evt:(window.event?window.event:null);//兼容IE和FF
++    if (evt.keyCode==13)
++    {
++        return do_ajax_search();
++    }
++}
++
++
+diff --git a/html_baobao/application/controllers/admin/article.php b/html_baobao/application/controllers/admin/article.php
+index 9fde0e5..2474571 100755
+--- a/html_baobao/application/controllers/admin/article.php
++++ b/html_baobao/application/controllers/admin/article.php
+@@ -114,12 +114,13 @@ class Article extends MY_Controller
+         //等级栏目
+         $this->data['one_section'] = $this->section->getBy_parent(0);
+ 		//在线编辑器
+-		$eddt = array('name' =>'content', 'id' =>'content', 'value' =>'');
+-		$this->load->library('kindeditor',$eddt);
++		$edit = array('name' =>'content', 'id' =>'content', 'value' =>'');
++		$this->load->library('kindeditor',$edit);
+         $this->data ['kindeditor'] = $this->kindeditor->getEditor();
+ 		$this->load->view('admin/articleAdd', $this->data);
+ 	}
+-	//编辑文章
++
++	//编辑
+ 	function editArt($art_id)
+ 	{
+ 		$this->load->helper('form');
+@@ -129,7 +130,6 @@ class Article extends MY_Controller
+         $is_three = false;   //是否显示三级栏目
+         $keyword_section = '';  //与关键词关联的栏目id
+         $arr['one'] = $arr['two'] = '';//三个级栏目的selected标识
+-
+         //如果文章属于非顶级栏目
+         if($section['parent'] != 0)
+         {
+@@ -164,8 +164,6 @@ class Article extends MY_Controller
+         array_unshift($childs_id,$keyword_section);
+         $where['section'] = $childs_id;
+         $arr['keywords'] = $this->keyword->getList(0,0,$where);
+-
+-        
+         //顶级栏目
+         $arr['one_section'] = $this->section->getBy_parent(0);
+         if( $is_two == true )
+@@ -174,12 +172,23 @@ class Article extends MY_Controller
+             $arr['two_section'] =  $this->section->getList(array('parent'=>$fid));
+         }
+         $arr['three_section'] = $is_three==true ? $this->section->getList(array('parent'=>$arr['two']['id'])) : '';
+-
+ 		//在线编辑器
+-		$eddt = array('name' =>'content', 'id' =>'content', 'value' =>$arr['content']);
+-		$this->load->library('kindeditor',$eddt);
+-        $arr['kindeditor'] = $this->kindeditor->getEditor( $eddt );
+-		
++		$edit = array('name' =>'content', 'id' =>'content', 'value' =>$arr['content']);
++		$this->load->library('kindeditor',$edit);
++        $arr['kindeditor'] = $this->kindeditor->getEditor( $edit );
++        //相关标签
++		$this->load->model('admin/relation_tag_model','relation_tag');
++		$this->load->model('admin/tag_model','tag');
++        $whereData = array('target_id'=>$art_id,'target_type'=>1,'status'=>0);
++        $tagArr = $this->relation_tag->get($whereData);
++        $arrTagIds = $tagNameArr = array();
++        foreach($tagArr as $k=>$v)
++        {
++            $arrTagIds[] = $v['tag_id'];
++        }
++        unset($tagArr);
++        if(0<count($arrTagIds)) $tagNameArr = $this->tag->getBy_ids($arrTagIds);
++		$arr['tagNameArr'] = $tagNameArr;
+ 		$this->load->view('admin/articleEdit', $arr);
+ 	}
+ 
+@@ -224,9 +233,9 @@ class Article extends MY_Controller
+ 		$this->data['article_id'] = '';
+ 		$this->data['content'] = '';
+ 		//在线编辑器
+-		$eddt = array('name' =>'content', 'id' =>'content', 'value' =>$this->data['content']);
+-		$this->load->library('kindeditor',$eddt);
+-        $this->data ['kindeditor'] = $this->kindeditor->getEditor( $eddt );
++		$edit = array('name' =>'content', 'id' =>'content', 'value' =>$this->data['content']);
++		$this->load->library('kindeditor',$edit);
++        $this->data ['kindeditor'] = $this->kindeditor->getEditor( $edit );
+ 		
+ 		$this->load->view('admin/articleAddNew', $this->data);
+ 	}	
+diff --git a/html_baobao/application/controllers/admin/relation_tag.php b/html_baobao/application/controllers/admin/relation_tag.php
+index 697eb1d..5c49b4b 100755
+--- a/html_baobao/application/controllers/admin/relation_tag.php
++++ b/html_baobao/application/controllers/admin/relation_tag.php
+@@ -1,6 +1,6 @@
+ <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+ /**
+-* description: 后台--标签关系管理
++* description: 后台--标签管理
+ * author: zg
+ * date: 2013-07-07
+ */
+@@ -10,11 +10,55 @@ class Relation_tag extends MY_Controller
+ 	function __construct()
+ 	{
+ 		parent::__construct();
+-		$this->load->model('admin/relation_tag_model','relation_tag');
++        //初始化父类成员变量
++        //当前控制器名，用于view中复用
++        $this->data['_class'] = Strtolower(__CLASS__);
++		$this->load->model('admin/tag_model','tag');
++	}
++
++    //列表页
++	//function showlist($obj_type='wiki',$obj_id=0)
++	function showlist($name='')
++	{
++        $this->data['type'] = trim(addslashes($this->input->get('type')));
++        $this->data['id'] = trim(addslashes($this->input->get('id')));
++        $this->load->helper('form'); 
++        //搜索
++        $where = array();
++        //搜内容segment(5)
++        $name = urldecode(trim($this->uri->segment(4)));
++        $this->data['name'] = 0;
++        if($name)  
++        {
++            $this->data['name'] = urldecode(trim(addslashes($name))); 
++            $where['name'] = $this->data['name']; 
++        }
++		//分页
++		$this->load->library('pagination');
++		$config['base_url'] = site_url('admin/tag/showlist/'.$this->data['name'].'/');
++		//每页
++		$config['per_page'] = $this->data['pagesize'] = 15 ; 
++		//总数
++		$config['total_rows'] = $this->tag->getTotal($where);
++		$config['uri_segment'] = 6;
++		$config['first_link'] = '首页';
++		$config['last_link'] = '尾页';
++		$config['next_link'] = '下一页';
++		$config['prev_link'] = '上一页';
++		$this->pagination->initialize($config); 
++		$this->data['page'] = $this->pagination->create_links();
++		$offset = $this->uri->segment(6);
++		$arr = $this->tag->getList($this->data['pagesize'], $offset, $where);
++		$this->data['tagArr'] = $arr;
++        unset($arr);
++        $this->data['number'] = $offset+1; 
++		$this->load->view('admin/relation_tagList', $this->data);
+ 	}
++
+ 	//添加
+ 	function add()
+ 	{
++		$this->load->model('admin/relation_tag_model','relation_tag');
+         $tag_id = trim(addslashes($this->input->get('tag_id')));
+         $target_id = trim(addslashes($this->input->get('target_id')));
+         if ( empty($tag_id) || empty($target_id) )
+@@ -25,10 +69,12 @@ class Relation_tag extends MY_Controller
+         $affected_rows = $this->relation_tag->insertNew($data);
+         unset($data);
+         echo ($affected_rows>0) ? '1' : '-2';
+-    }
++    }    
++
+     //删除	
+ 	function del()
+ 	{
++		$this->load->model('admin/relation_tag_model','relation_tag');
+ 		$tag_id = trim(addslashes($this->input->get('tag_id')));
+         $target_id = trim(addslashes($this->input->get('target_id')));
+         if ( empty($tag_id) || empty($target_id) )
+@@ -39,24 +85,27 @@ class Relation_tag extends MY_Controller
+         $affected_rows = $this->relation_tag->del($data);
+ 		echo ($affected_rows>0) ? '1' : '-2';
+ 	}
+-    //ajax获取标签关系
++
++    //ajax获取标签
+     function ajax_get($key)
+     {
+         header('Content-Type: text/html; charset=utf-8');
+-        $arr = $arrRelation_tag = array();
++        //用于调试sql等
++        $arr = $arrTag = array();
+         if(!empty($key))
+         {
+             $key = urldecode($key);
+-            //模糊查询$key相关的标签关系
+-            $arr = $this->tag->getBy_name($key);
++            $not_in_ids = explode('-',$this->uri->segment(5));
++            //模糊查询$key相关的标签
++            $arr = $this->tag->getBy_name($key,$not_in_ids);
+             foreach($arr as $v)
+             {
+-                $arrRelation_tag[$v['id']] = $v['name'];
++                $arrTag[$v['id']] = $v['name'];
+             }
+             unset($arr);
+         }
+-        $arrRelation_tag['len'] = count($arrRelation_tag);
+-        echo json_encode($arrRelation_tag);
++        $arrTag['len'] = count($arrTag);
++        echo json_encode($arrTag);
+     }
+     
+ 
+diff --git a/html_baobao/application/controllers/admin/specpage.php b/html_baobao/application/controllers/admin/specpage.php
+index d72cb4d..7e1aaa0 100755
+--- a/html_baobao/application/controllers/admin/specpage.php
++++ b/html_baobao/application/controllers/admin/specpage.php
+@@ -8,11 +8,13 @@
+ class specpage extends MY_Controller
+ {
+     //封面图片路径
+-    var $spec_path = '/';
++    var $specpage_path = '/';
+ 	function __construct()
+ 	{
+ 		parent::__construct();
+-		$this->load->model('specpage_model','spec');
++        //当前控制器名，用于view中复用
++        $this->data['_class'] = Strtolower(__CLASS__);
++		$this->load->model('specpage_model','specpage');
+     }
+ 
+ 	//专栏列表
+@@ -35,7 +37,7 @@ class specpage extends MY_Controller
+ 		//每页
+ 		$config['per_page'] = $this->data['pagesize'] = 15 ; 
+ 		//总数
+-		$config['total_rows'] = $this->spec->getTotal($where);
++		$config['total_rows'] = $this->specpage->getTotal($where);
+ 		$config['uri_segment'] = 5;
+ 		$config['first_link'] = '首页';
+ 		$config['last_link'] = '尾页';
+@@ -44,8 +46,8 @@ class specpage extends MY_Controller
+ 		$this->pagination->initialize($config); 
+ 		$this->data['page'] = $this->pagination->create_links();
+ 		$offset = $this->uri->segment(5);
+-		$arr = $this->spec->getList($this->data['pagesize'], $offset, $where);
+-		$this->data['specArr'] = $arr;
++		$arr = $this->specpage->getList($this->data['pagesize'], $offset, $where);
++		$this->data['specpageArr'] = $arr;
+         unset($arr);
+         $this->data['number'] = $offset+1; 
+ 		$this->load->view('admin/specpageList', $this->data);
+@@ -70,9 +72,10 @@ class specpage extends MY_Controller
+ 				'add_time' => date('Y-m-d H:i:s',$_SERVER['REQUEST_TIME']),
+ 				'author' => $this->input->post('author'),
+ 				);
+-		$spec_id = $this->spec->insertNew($data);
++		$specpage_id = $this->specpage->insertNew($data);
+         //上传图片,并做缩略
+-		$uploadData = $this->doupload('upImg', $spec_id);
++        $this->load->helper('upload');
++		$uploadData = upload_img('upImg', $specpage_id,'specpage');
+         if (-1 == $uploadData ) 
+         {
+ 			$data['msg'] = '图片上传失败';
+@@ -81,23 +84,21 @@ class specpage extends MY_Controller
+         }
+         if ( 1 != $uploadData )
+         {
+-            $full_path = str_replace($_SERVER['DOCUMENT_ROOT'],'', $uploadData['full_path']);
+-            unset($uploadData);
+-            $addImg['cover'] = $full_path;
++            $addImg['cover'] = $uploadData['file_name'];
+             //保存图片数据
+-            $affected_rows = $this->spec->update_cover((int)$spec_id, $addImg);
++            $affected_rows = $this->specpage->update_cover((int)$specpage_id, $addImg);
+         }
++        unset($uploadData);
+ 		$data['msg'] = ($affected_rows>0) ? '成功' : '图片路径更新失败';
+ 		$data['url'] = '/admin/specpage/showlist/';
+-		//$data['history'] = '1';
+ 		$this->load->view('admin/info', $data);
+ 	}
+ 
+ 	//编辑专栏
+-	function edit($spec_id)
++	function edit($specpage_id)
+ 	{
+ 		$this->load->helper('form');
+-		$arr = $this->spec->getBy_id($spec_id);
++		$arr = $this->specpage->getBy_id($specpage_id);
+         //在线编辑器
+ 		$eddt = array('name' =>'content', 'id' =>'content', 'value' =>$arr['content']);
+ 		$this->load->library('kindeditor',$eddt);
+@@ -106,15 +107,16 @@ class specpage extends MY_Controller
+ 	}
+ 
+     //保存编辑结果
+-	function saveEdit($spec_id)
++	function saveEdit($specpage_id)
+ 	{
+ 		if($this->input->post('title')) $data['title'] = trim(addslashes($this->input->post('title')));
+ 		if($this->input->post('content')) $data['content'] = addslashes($this->input->post('content'));
+ 		if($this->input->post('author')) $data['author'] = addslashes($this->input->post('author'));
+-		$affected_rows = $this->spec->update($spec_id, $data);
++		$affected_rows = $this->specpage->update($specpage_id, $data);
+         unset($data);
+         //上传图片,并做缩略
+-		$uploadData = $this->doupload('upImg', $spec_id);
++        $this->load->helper('upload');
++		$uploadData = upload_img('upImg', $specpage_id,'specpage');
+         if (-1 == $uploadData ) 
+         {
+ 			$data['msg'] = '图片上传失败';
+@@ -123,12 +125,11 @@ class specpage extends MY_Controller
+         }
+         if ( 1 != $uploadData )
+         {
+-            $full_path = str_replace($_SERVER['DOCUMENT_ROOT'],'', $uploadData['full_path']);
+-            unset($uploadData);
+-            $addImg['cover'] = $full_path;
++            $addImg['cover'] = $uploadData['file_name'];
+             //保存图片数据
+-            $affected_rows = $this->spec->update_cover((int)$spec_id, $addImg);
++            $affected_rows = $this->specpage->update_cover((int)$specpage_id, $addImg);
+         }
++        unset($uploadData);
+ 		$data['msg'] = ($affected_rows) ? '成功' : '失败';
+ 		$data['url'] = '/admin/specpage/showList/';
+ 		$this->load->view('admin/info', $data);
+@@ -136,57 +137,11 @@ class specpage extends MY_Controller
+ 
+ 	function del($id)
+ 	{
+-		$affected_rows = $this->spec->del($id);
++		$affected_rows = $this->specpage->del($id);
+ 		$data['msg'] = ($affected_rows>0) ? '成功' : '失败';
+ 		$data['history'] = '1';
+ 		$data['url'] = '/admin/specpage/showlist/';
+ 		$this->load->view('admin/info', $data);
+ 	}
+ 
+-    //上传图片, $spec_id用于生成散列目录
+-	private function doupload($upimg, $spec_id)
+-	{
+-        //未上传图片
+-		if( empty($_FILES[$upimg]['name']) ) return 1;
+-		//重命名图片, 防止了.php.jpg
+-		$img_ext = substr($_FILES[$upimg]['name'],0, strpos($_FILES[$upimg]['name'],'.'));
+-		$myImg = date('YmdHis').'_'.rand(10000,99999);
+-		$config['file_name'] = $myImg.$img_ext;
+-		$config['upload_path'] = './uploads/specpage/'.(int)$spec_id;
+-		//生成散列目录
+-		if( !is_dir($config['upload_path']) ) mkdir($config['upload_path']);
+-		$config['allowed_types'] = 'gif|jpg|png|jpeg';
+-		$config['max_size'] = '93600';
+-		$config['max_width']  = '3000';
+-		$config['max_height']  = '3000';
+-		//载入文件上传类，加入配置
+-		$this->load->library('upload', $config);
+-        $up_success = $this->upload->do_upload($upimg);
+-		if ( true!=$up_success )//上传失败
+-		{
+-            return -1;
+-		}
+-		unset($config);
+-		$uploadData = $this->upload->data();
+-		//生成缩略图
+-		$this->load->library('image_lib');
+-		$config['source_image'] = $uploadData['full_path'];
+-		$config['width'] = 120;
+-		$config['height'] = 120;
+-		$config['quality'] = 90;
+-		$new_image = $myImg.$img_ext.'_s'.$uploadData['file_ext'];
+-		$config['new_image'] = $new_image;
+-		$this->image_lib->initialize($config);
+-		if (!$this->image_lib->resize()) 
+-		{     
+-			$data['msg'] = '缩略图生成失败';
+-			$data['url'] = '/admin/specpage/showlist/';
+-			$this->load->view('admin/info', $data);
+-			return -2;
+-		}
+-		unset($config);
+-		$this->image_lib->clear();
+-		return $this->upload->data();
+-	}
+-
+ }
+diff --git a/html_baobao/application/controllers/admin/tag.php b/html_baobao/application/controllers/admin/tag.php
+index e1feb36..a4196d1 100755
+--- a/html_baobao/application/controllers/admin/tag.php
++++ b/html_baobao/application/controllers/admin/tag.php
+@@ -12,14 +12,15 @@ class Tag extends MY_Controller
+ 		parent::__construct();
+ 		$this->load->model('admin/tag_model','tag');
+ 	}
++
+     //列表页
+-	function showlist($section=0,$name='')
++	function showlist($name='')
+ 	{
+         $this->load->helper('form'); 
+         //搜索
+         $where = array();
+-        $this->data['section'] = 0;
+         //搜内容segment(5)
++        $name = urldecode(trim($this->uri->segment(4)));
+         $this->data['name'] = 0;
+         if($name)  
+         {
+@@ -28,12 +29,11 @@ class Tag extends MY_Controller
+         }
+ 		//分页
+ 		$this->load->library('pagination');
+-		$config['base_url'] = site_url('admin/tag/showlist/'.$this->data['section'].'/'.$this->data['name'].'/');
++		$config['base_url'] = site_url('admin/tag/showlist/'.$this->data['name'].'/');
+ 		//每页
+ 		$config['per_page'] = $this->data['pagesize'] = 15 ; 
+ 		//总数
+ 		$config['total_rows'] = $this->tag->getTotal($where);
+-		$this->data['section'] = (int)$section;
+ 		$config['uri_segment'] = 6;
+ 		$config['first_link'] = '首页';
+ 		$config['last_link'] = '尾页';
+@@ -48,6 +48,7 @@ class Tag extends MY_Controller
+         $this->data['number'] = $offset+1; 
+ 		$this->load->view('admin/tagList', $this->data);
+ 	}
++
+ 	//添加
+ 	function add()
+ 	{
+@@ -66,8 +67,22 @@ class Tag extends MY_Controller
+             $this->load->view('admin/tagAdd',$this->data);
+         }
+ 	}
++
++    //保存新增结果
++	function saveAdd()
++	{
++        $data = array(
++				'name' => $this->input->post('name'),
++				'weight' => $this->input->post('weight'),
++				);
++		$id = $this->tag->insertNew($data);
++		$data['msg'] = ($id>0) ? '成功' : '图片路径更新失败';
++		$data['url'] = '/admin/tag/showlist/';
++		$this->load->view('admin/info', $data);
++	}
++
+ 	//编辑
+-	function editTag($id)
++	function edit($id)
+ 	{
+ 		$this->load->helper('form');
+ 		$arr = $this->tag->getBy_id($id);
+@@ -77,6 +92,7 @@ class Tag extends MY_Controller
+ 	function saveEdit($id)
+ 	{
+ 		if($this->input->post('name')) $data['name'] = trim(addslashes($this->input->post('name')));
++		if($this->input->post('weight')) $data['weight'] = trim(addslashes($this->input->post('weight')));
+ 		$affected_rows = $this->tag->update($id, $data);
+ 		$data['msg'] = ($affected_rows>0) ? '成功' : '失败';
+ 		$data['url'] = '/admin/tag/showList/';
+diff --git a/html_baobao/application/controllers/admin/wiki.php b/html_baobao/application/controllers/admin/wiki.php
+index 2abb5d8..1d9e9fa 100755
+--- a/html_baobao/application/controllers/admin/wiki.php
++++ b/html_baobao/application/controllers/admin/wiki.php
+@@ -12,6 +12,8 @@ class wiki extends MY_Controller
+ 	function __construct()
+ 	{
+ 		parent::__construct();
++        //当前控制器名，用于view中复用
++        $this->data['_class'] = Strtolower(__CLASS__);
+ 		$this->load->model('wiki_model','wiki');
+     }
+ 
+@@ -23,7 +25,9 @@ class wiki extends MY_Controller
+         $where = array();
+         //搜内容segment(4)
+         $wiki_key = urldecode(trim($this->uri->segment(4)));
++        $tag_name = urldecode(trim($this->uri->segment(5)));
+         $this->data['wiki_key'] = 0;
++        $this->data['tag_name'] = 0;
+         if($wiki_key)  
+         {
+             $this->data['wiki_key'] = $wiki_key;
+@@ -31,26 +35,39 @@ class wiki extends MY_Controller
+         }
+ 		//分页
+ 		$this->load->library('pagination');
+-		$config['base_url'] = site_url('admin/wiki/showlist/'.$this->data['wiki_key'].'/');
++		$config['base_url'] = site_url('admin/wiki/showlist/'.$this->data['wiki_key'].'/'.$this->data['tag_name'].'/');
+ 		//每页
+ 		$config['per_page'] = $this->data['pagesize'] = 15 ; 
+ 		//总数
+ 		$config['total_rows'] = $this->wiki->getTotal($where);
+-		$config['uri_segment'] = 5;
++		$config['uri_segment'] = 6;
+ 		$config['first_link'] = '首页';
+ 		$config['last_link'] = '尾页';
+ 		$config['next_link'] = '下一页';
+ 		$config['prev_link'] = '上一页';
+ 		$this->pagination->initialize($config); 
+ 		$this->data['page'] = $this->pagination->create_links();
+-		$offset = $this->uri->segment(5);
++		$offset = $this->uri->segment($config['uri_segment']);
+ 		$arr = $this->wiki->getList($this->data['pagesize'], $offset, $where);
++        foreach($arr as $key=>$val)
++        {
++            $arr[$key]['tag_name'] = $this->get_tag_name($val['tag_id']);
++        }
+ 		$this->data['wikiArr'] = $arr;
+         unset($arr);
+         $this->data['number'] = $offset+1; 
+ 		$this->load->view('admin/wikiList', $this->data);
+     }
+ 
++    //获得标签名称
++    public function get_tag_name($id)
++    {
++		$this->load->model('tag_model','tag');
++        $arr = $this->tag->getFieldBy_id($id, 'name');
++        return empty($arr['name'])?'':$arr['name'];
++    }
++
++    //添加
+ 	function add()
+ 	{
+ 		$this->load->helper('form');
+diff --git a/html_baobao/application/core/MY_Controller.php b/html_baobao/application/core/MY_Controller.php
+index 2d0e920..57d622d 100755
+--- a/html_baobao/application/core/MY_Controller.php
++++ b/html_baobao/application/core/MY_Controller.php
+@@ -3,6 +3,8 @@
+ class MY_Controller extends CI_Controller
+ {
+ 	protected $data=array();
++    //当前控制器名，用于view中复用
++    protected $_class = '';
+ 
+     public function __construct()
+     {
+diff --git a/html_baobao/application/helpers/upload_helper.php b/html_baobao/application/helpers/upload_helper.php
+index cee68ad..a939ce0 100755
+--- a/html_baobao/application/helpers/upload_helper.php
++++ b/html_baobao/application/helpers/upload_helper.php
+@@ -13,7 +13,6 @@
+  *          $id，上传目录的id，如：/uploads/img/article/$id/
+  * @return : boolean/intager
+  */
+-
+ function upload_img($upimg, $id, $img_type='article')
+ {
+     //未上传图片
+diff --git a/html_baobao/application/models/tag_model.php b/html_baobao/application/models/tag_model.php
+index f9def40..daeacbd 100755
+--- a/html_baobao/application/models/tag_model.php
++++ b/html_baobao/application/models/tag_model.php
+@@ -19,6 +19,12 @@ class Tag_model extends CI_Model
+ 		return $this->db->get()->row_array();
+     }
+ 
++    function getFieldBy_id($id, $field)
++	{
++		$this->db->select($field)->from($this->_table)->where('id', (int)$id);
++		return $this->db->get()->row_array();
++    }
++
+ 	function getBy_ids($ids)
+ 	{
+ 		$this->db->select('id,name')->from($this->_table)->where_in('id', $ids);
+@@ -41,6 +47,7 @@ class Tag_model extends CI_Model
+         if(isset($in_where)) $this->db->where_in('section',$in_where);
+ 		return $this->db->count_all_results($this->_table);
+ 	}
++
+ 	//列表页
+ 	function getList($limit=0, $offset=0, $where=array(1=>1))
+     {
+@@ -62,6 +69,7 @@ class Tag_model extends CI_Model
+             $this->db->limit($limit, $offset);
+ 		return $this->db->get()->result_array();
+ 	}
++
+ 	function insertNew($data)
+ 	{
+ 		$this->db->insert($this->_table, $data); 
+diff --git a/html_baobao/application/views/admin/articleEdit.php b/html_baobao/application/views/admin/articleEdit.php
+index 5deea5f..f294460 100755
+--- a/html_baobao/application/views/admin/articleEdit.php
++++ b/html_baobao/application/views/admin/articleEdit.php
+@@ -2,52 +2,9 @@
+ <html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+-<link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
+-<script type="text/javascript" src="/adminStatic/js/jquery.js" ></script>
+-<script type="text/javascript" src="/adminStatic/js/common.js" ></script>
+ <title>文章修改网站后台管理</title>
+-<script type="text/javascript">
+-function check_form()
+-{
+-    var one = $("#one").val();
+-    var two = $("#two").val();
+-    var three = $("#three").val();
+-    var keyword = $("#keyword").val();
+-    if(0!=three)
+-    {
+-        section = three;
+-    }else if(0!=two)
+-    {
+-        section = two;
+-    }else if(0!=one)
+-    {
+-        section = one;
+-    }
+-    $("#section").val(section);
+-    var section = $("#section").val();
+-    var title = $("#title").val();
+-    if(title != '' && section != 0 &&  keyword != 0)
+-    {
+-        return true;
+-    }else
+-    {
+-        if(0==section)
+-        {
+-            $("#errorSection").html('文章所属栏目不能为空！');
+-        }else if(0==keyword)
+-        {
+-            $("#errorKeyword").html('关键词不能为空！');
+-        }else
+-        { 
+-            $("#errorTitle").html('文章栏目不能为空！');
+-        }
+-        return false;
+-    }
+-
+-}
+-</script>
++<link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
+ </head>
+-
+ <body>
+ <div id="man_zone">
+ 	<h5>&nbsp;&nbsp;◆ 文章修改&nbsp;&raquo;&nbsp;<span style='color:red'><b>*</b></span> 代表必填项；</h5>
+@@ -97,16 +54,18 @@ function check_form()
+       		<td class="left_title_2">副标题</td>
+             <td><input class="text_style" type="text" name="subtitle" value="<?php echo $subtitle;?>" /></td>
+     	</tr>
+-        <!--
+-    	<tr>
+-      		<td class="left_title_2">标题图片</td>
+-      		<td><input type="file" name="titleimg" value="default" /></td>
+-    	</tr>
+-        -->
+     	<tr>
+     		<td class="left_title_1">文章来源</td>
+             <td><input type="text" name="source"  value="<?php echo $source;?>" /></td>
+     	</tr>
++        <tr>
++    		<td class="left_title_2">相关标签</td>
++    		<td>
++                <div id="my_tag" class="my_tag clearfloat">
++                    <button onclick="show_div()" type="button">添加标签</button>
++                </div>
++            </td>
++    	</tr>
+     	<tr>
+       		<td class="left_title_2">文章内容</td>
+       		<td> <?php echo $kindeditor;?></td>
+@@ -144,5 +103,84 @@ function check_form()
+     <br />
+     <br /><br />
+ </div>
++<script type="text/javascript" src="/adminStatic/js/jquery.js" ></script>
++<script type="text/javascript" src="/adminStatic/js/common.js" ></script>
++<script type="text/javascript" src="/adminStatic/easydialog/easydialog.min.js" ></script>
++<script type="text/javascript" src="/adminStatic/js/relation_tag.js" ></script>
++<link rel="stylesheet" href="/adminStatic/easydialog/easydialog.css" type="text/css" />
++<style type="text/css">
++.my_tag button{margin-left:10px;}
++//标签选择器相关的样式
++//重写弹出层宽度
++.easyDialog_wrapper { width:400px; }
++.easydialog_tag {width:100%;margin-top:10px;}
++.easydialog_tag a { border-color:#3079ed;border-width:1px;border-style:solid; padding:2px 5px;margin:2px 4px; cursor: hand; cursor: pointer; display:block;height:20px;float:left; }
++/*清除浮动代码*/
++.clearfloat:after{display:block;clear:both;content:"";visibility:hidden;height:0}
++.notice {padding-left:15px;color:green;}
++</style>
++<script type="text/javascript">
++//初始化标签容器
++var tag_container = {
++        //查询的关键词
++        key : null,
++        //已经选择的标签
++        list : {},
++        //临时标签容器，存放从“标签选择器”中新选择的标签
++        tmp_list : {},
++        //文章本身id
++        art_id : '<?php echo $id?>',
++    };
++
++<?php //初始化“相关标签”
++if(!empty($tagNameArr))
++{
++    foreach($tagNameArr as $k=>$v)
++    {
++        echo 'tag_container.tmp_list[',$v['id'],']="',$v['name'],'";';
++    }
++    echo 'tag_yesFn("init");';
++}
++?>   
++
++function check_form()
++{
++    var one = $("#one").val();
++    var two = $("#two").val();
++    var three = $("#three").val();
++    var keyword = $("#keyword").val();
++    if(0!=three)
++    {
++        section = three;
++    }else if(0!=two)
++    {
++        section = two;
++    }else if(0!=one)
++    {
++        section = one;
++    }
++    $("#section").val(section);
++    var section = $("#section").val();
++    var title = $("#title").val();
++    if(title != '' && section != 0 &&  keyword != 0)
++    {
++        return true;
++    }else
++    {
++        if(0==section)
++        {
++            $("#errorSection").html('文章所属栏目不能为空！');
++        }else if(0==keyword)
++        {
++            $("#errorKeyword").html('关键词不能为空！');
++        }else
++        { 
++            $("#errorTitle").html('文章栏目不能为空！');
++        }
++        return false;
++    }
++
++}
++</script>
+ </body>
+ </html>
+diff --git a/html_baobao/application/views/admin/index/bottomframe.html b/html_baobao/application/views/admin/index/bottomframe.html
+index 6c8911d..926b0cd 100755
+--- a/html_baobao/application/views/admin/index/bottomframe.html
++++ b/html_baobao/application/views/admin/index/bottomframe.html
+@@ -5,10 +5,9 @@
+ <link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
+ <title>通用后台管理系统底部</title>
+ </head>
+-
+ <body>
+-<div class="footer_content" style="text-align:center; padding:15px;">
+-	&copy; cippe.com.cn 版权所有
++<div class="footer_content" style="text-align:center; padding:12px;">
++	Orange-Team工作室 · 版权所有 &copy; 2013-2016
+ </div>
+ </body>
+ </html>
+diff --git a/html_baobao/application/views/admin/relation_tagList.php b/html_baobao/application/views/admin/relation_tagList.php
+new file mode 100644
+index 0000000..3e75a80
+--- /dev/null
++++ b/html_baobao/application/views/admin/relation_tagList.php
+@@ -0,0 +1,70 @@
++<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
++<html xmlns="http://www.w3.org/1999/xhtml">
++<head>
++<title>网站后台管理-关联标签列表</title>
++<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
++<link href="/adminStatic/css/common_new.css" rel="stylesheet" type="text/css" media="screen" />
++</head>
++<body>
++<div id="man_">
++	<h2>关联标签列表</h2>
++    <table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style">
++    	<tr>
++            <td>
++            关联标签名称：<input type="text" id="name" name="name" style="width:260px;" value="<?php echo $name?$name:'';?>"/> &nbsp;&nbsp;&nbsp;&nbsp;
++                  <input type="submit" name="submit" id='submit' onclick='toSearch()' value=" 搜索 " />
++                  <input type="button" name="button" onclick='showAll()' value="显示全部" />
++                  &nbsp;&nbsp;<?php echo anchor(site_url('admin/wiki/showList/'), '返回');?></td>
++            </td>
++        </tr>
++    </table>
++  	<table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style" style="margin-top:10px; margin-bottom:10px;">
++    	<tr>
++    		<th width="5%"></th>	
++      		<th width="5%">编号</th>
++            <th width="35%">关联标签名称</th>
++            <th width="5%">关联标签权重</th>
++            <th width="10%"> 操作 </th>
++    	</tr>
++        <?php if( !empty($tagArr) ) {foreach($tagArr as $k=>$row) { ?>
++        <tr <?php echo (0==$k%2) ? 'class="odd"':'';?>>
++    		<td align="center" ><input type="checkbox" name="news_check" value="{$nl.id}"/></input></td>
++            <td align="center" ><?php echo $k+$number;?></td>
++            <td><?php echo anchor(site_url('admin/'.$_class.'/edit/'.$row['id']), $row['name']);?></td>
++            <td align="center"><?php echo $row['weight'];?></td>
++            <td class="action" align="center">
++            <?php echo anchor(site_url('admin/'.$_class.'/add/'.$row['id'].'/?type='.$type.'&id='.$id),'关联&nbsp;','class="edit"')?>
++            </td>
++        </tr>                        
++        <?php }} ?>
++  	</table>
++  	<table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style">
++    	<tr>
++        	<td>
++            	<div style="float:left;">
++                <input id="button1" type="button" value="全选" onclick="selectBox('1','news_check')" />
++				<input id="button2" type="button" value="反选" onclick="selectBox('0','news_check')" />
++                </div>
++				<div style="float:right;"><?php echo (!empty($page)) ? $page : '';?></div>
++            </td>
++        </tr>
++    </table>
++</div>
++</body>
++<script type="text/javascript" src="/adminStatic/js/jquery.js"></script>
++<script type="text/javascript" src="/adminStatic/js/common.js"></script>
++<script type=text/javascript>
++//当前控制器名，用于view中复用
++var _class = '<?php $_class?>';
++function toSearch(type)
++{
++    var name = $("#name").val();
++    if('' == name) name = 0;
++    window.location.href="/admin/"+_class+"/showlist/"+name+"/";
++}
++function showAll()
++{
++    window.location.href="/admin/"+_class+"/showlist/";
++}
++</script>
++</html>
+diff --git a/html_baobao/application/views/admin/specpageEdit.php b/html_baobao/application/views/admin/specpageEdit.php
+index 1474fcd..2acc401 100755
+--- a/html_baobao/application/views/admin/specpageEdit.php
++++ b/html_baobao/application/views/admin/specpageEdit.php
+@@ -19,7 +19,7 @@
+       		<td class="left_title_2">封面图片</td>
+       		<td><input type="file" name="upImg" id="cover" value="上传图片"/>
+ 			<?php if( empty($cover) ) { echo '还未上传封面图片'; }else{?>
+-            <img src="<?php echo $this->spec_path,$cover;?>" width="120" height="120"/>
++            <img src="<?php echo $this->specpage_path,$cover;?>" width="120" height="120"/>
+             <?php } ?>
+             </td>
+     	</tr>
+diff --git a/html_baobao/application/views/admin/specpageList.php b/html_baobao/application/views/admin/specpageList.php
+index 1d24a3f..809a6aa 100755
+--- a/html_baobao/application/views/admin/specpageList.php
++++ b/html_baobao/application/views/admin/specpageList.php
+@@ -27,7 +27,7 @@
+             <th width="5%">作者</th>
+             <th width="10%">操作</th>
+     	</tr>
+-        <?php if( !empty($specArr) ) {foreach($specArr as $k=>$row) { ?>
++        <?php if( !empty($specpageArr) ) {foreach($specpageArr as $k=>$row) { ?>
+         <tr <?php echo (0==$k%2) ? 'class="odd"':'';?>>
+     		<td align="center" ><input type="checkbox" name="news_check" value="{$nl.id}"/></input></td>
+             <td align="center" ><?php echo $k+$number;?></td>
+diff --git a/html_baobao/application/views/admin/tagAdd.php b/html_baobao/application/views/admin/tagAdd.php
+new file mode 100644
+index 0000000..4d5ef47
+--- /dev/null
++++ b/html_baobao/application/views/admin/tagAdd.php
+@@ -0,0 +1,54 @@
++<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
++<html xmlns="http://www.w3.org/1999/xhtml">
++<head>
++<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
++<title>网站后台管理-新增标签</title>
++<link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
++</head>
++<body>
++<div id="man_zone">
++	<h5>&nbsp;&nbsp;◆ 新增标签&nbsp;&raquo;&nbsp;<span style='color:red'><b>*</b></span> 代表必填项；</h5>
++	<?php echo form_open(site_url('admin/tag/saveAdd'), array('class'=>"jnice","onsubmit"=>"return check_form()"));?>
++  	<table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style">
++    	<tr>
++      		<td width="18%" class="left_title_1">标签名称</td>
++            <td width="82%"><input class="text_style" type="text" name="name" id="name" value="" />
++            <span style="color:red;" id="errorKeyword"></span>
++            </td>
++    	</tr>
++        <tr>
++      		<td class="left_title_2">标签权重</td>
++      		<td><input type="text" class="text_style" name="weight" value="0" /></td>
++    	</tr>
++        <tr>
++      		<td class="left_title_1">&nbsp;</td>
++      		<td><input type="submit" name="submit" value=" 提交 " />&nbsp;&nbsp;
++            <input type="reset" name="reset" value=" 重置 " />
++            </td>
++    	</tr>
++  	</table>
++    </form>
++    <br />
++    <br /><br />
++</div>
++</body>
++<script type="text/javascript" src="/adminStatic/js/jquery.js" ></script>
++<script type="text/javascript" src="/adminStatic/js/common.js" ></script>
++<script type="text/javascript">
++function check_form()
++{
++    var name = $("#name").val();
++    if(name != 0)
++    {
++        return true;
++    }else
++    {
++        if(0==name)
++        {
++            $("#errorKeyword").html('标签名称不能为空！');
++        }
++        return false;
++    }
++}
++</script>
++</html>
+diff --git a/html_baobao/application/views/admin/tagEdit.php b/html_baobao/application/views/admin/tagEdit.php
+new file mode 100644
+index 0000000..2079bd2
+--- /dev/null
++++ b/html_baobao/application/views/admin/tagEdit.php
+@@ -0,0 +1,53 @@
++<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
++<html xmlns="http://www.w3.org/1999/xhtml">
++<head>
++<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
++<title>标签修改网站后台管理</title>
++<link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
++</head>
++
++<body>
++<div id="man_zone">
++	<h5>&nbsp;&nbsp;◆ 标签修改&nbsp;&raquo;&nbsp;<span style='color:red'><b>*</b></span> 代表必填项；</h5>
++    <?php echo form_open(site_url('admin/tag/saveEdit/'.$id), array('class'=>"jnice","onsubmit"=>"return check_form()"));?>
++  	<table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style">
++    	<tr>
++      		<td width="18%" class="left_title_1">标签名称</td>
++            <td width="82%"><input class="text_style" type="text" name="name" id="name" value="<?php echo $name?>" /> <span style="color:red;" id="errorKeyword"></span></td>
++    	</tr>
++        <tr>
++      		<td class="left_title_2">标签权重</td>
++      		<td><input type="text" class="text_style" name="weight" value="<?php echo $weight?>" /></td>
++    	</tr>
++        <tr>
++      		<td class="left_title_2">&nbsp;</td>
++      		<td><input type="submit" name="submit" value=" 提交 " />&nbsp;&nbsp;
++            <input type="reset" name="reset" value=" 重置 " />
++            </td>
++    	</tr>
++  	</table>
++    </form>
++    <br />
++    <br />
++</div>
++</body>
++<script type="text/javascript" src="/adminStatic/js/jquery.js" ></script>
++<script type="text/javascript" src="/adminStatic/js/common.js" ></script>
++<script type="text/javascript">
++function check_form()
++{
++    var name = $("#name").val();
++    if(name != 0)
++    {
++        return true;
++    }else
++    {
++        if(0==name)
++        {
++            $("#errorKeyword").html('标签名称不能为空！');
++        }
++        return false;
++    }
++}
++</script>
++</html>
+diff --git a/html_baobao/application/views/admin/tagList.php b/html_baobao/application/views/admin/tagList.php
+new file mode 100644
+index 0000000..513e001
+--- /dev/null
++++ b/html_baobao/application/views/admin/tagList.php
+@@ -0,0 +1,70 @@
++<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
++<html xmlns="http://www.w3.org/1999/xhtml">
++<head>
++<title>网站后台管理-标签列表</title>
++<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
++<link href="/adminStatic/css/common_new.css" rel="stylesheet" type="text/css" media="screen" />
++</head>
++
++<body>
++<div id="man_zone">
++	<h2>标签列表</h2>
++    <table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style">
++    	<tr>
++            <td>
++            标签名称：<input type="text" id="name" name="name" style="width:260px;" value="<?php echo $name?$name:'';?>"/> &nbsp;&nbsp;&nbsp;&nbsp;
++                  <input type="submit" name="submit" id='submit' onclick='toSearch()' value=" 搜索 " />
++                  <input type="button" name="button" onclick='showAll()' value="显示全部" />
++            </td>
++        </tr>
++    </table>
++  	<table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style" style="margin-top:10px; margin-bottom:10px;">
++    	<tr>
++    		<th width="5%"></th>	
++      		<th width="5%">编号</th>
++            <th width="35%">标签名称</th>
++            <th width="5%">标签权重</th>
++            <th width="10%"> 操作 </th>
++    	</tr>
++        <?php if( !empty($tagArr) ) {foreach($tagArr as $k=>$row) { ?>
++        <tr <?php echo (0==$k%2) ? 'class="odd"':'';?>>
++    		<td align="center" ><input type="checkbox" name="news_check" value="{$nl.id}"/></input></td>
++            <td align="center" ><?php echo $k+$number;?></td>
++            <td><?php echo anchor(site_url('admin/tag/edit/'.$row['id']), $row['name']);?></td>
++            <td align="center"><?php echo $row['weight'];?></td>
++            <td class="action" align="center">
++            <?php echo anchor(site_url(''),'查看&nbsp;&nbsp;','class="view" target="_blank"'), 
++            anchor(site_url('admin/tag/edit/'.$row['id']),'编辑&nbsp;','class="edit"')?>
++            <a class="delete" href="javascript:if( confirm('确认要删除吗？') ) location.href='<?php echo site_url('admin/tag/del/'.$row['id'])?>';">删除</a>
++            </td>
++        </tr>                        
++        <?php }} ?>
++  	</table>
++  	<table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style">
++    	<tr>
++        	<td>
++            	<div style="float:left;">
++                <input id="button1" type="button" value="全选" onclick="selectBox('1','news_check')" />
++				<input id="button2" type="button" value="反选" onclick="selectBox('0','news_check')" />
++                </div>
++				<div style="float:right;"><?php echo (!empty($page)) ? $page : '';?></div>
++            </td>
++        </tr>
++    </table>
++</div>
++</body>
++<script type="text/javascript" src="/adminStatic/js/jquery.js"></script>
++<script type="text/javascript" src="/adminStatic/js/common.js"></script>
++<script type=text/javascript>
++function toSearch(type)
++{
++    var name = $("#name").val();
++    if('' == name) name = 0;
++    window.location.href="/admin/tag/showlist/"+name+"/";
++}
++function showAll()
++{
++    window.location.href="/admin/tag/showlist/";
++}
++</script>
++</html>
+diff --git a/html_baobao/application/views/admin/wikiEdit.php b/html_baobao/application/views/admin/wikiEdit.php
+index 9e56ee9..c5f0b1c 100644
+--- a/html_baobao/application/views/admin/wikiEdit.php
++++ b/html_baobao/application/views/admin/wikiEdit.php
+@@ -2,7 +2,7 @@
+ <html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+-<title>文章修改网站后台管理</title>
++<title>百科修改网站后台管理</title>
+ <link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
+ </head>
+ 
+diff --git a/html_baobao/application/views/admin/wikiList.php b/html_baobao/application/views/admin/wikiList.php
+index 37f9f13..9056c23 100644
+--- a/html_baobao/application/views/admin/wikiList.php
++++ b/html_baobao/application/views/admin/wikiList.php
+@@ -12,16 +12,10 @@
+     <table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style">
+     	<tr>
+             <td>
+-            百科关键词：<input type="text" id="keyword" name="keyword" style="width:260px;" value="<?php echo $wiki_key?$wiki_key:'';?>"/> &nbsp;&nbsp;&nbsp;&nbsp;
+-            所属标签：
+-      			<select name="tag_id" id="tag_id" onchange="toSearch()">
+-                	<option value="0">请选择</option>
+-                    <?php if(!empty($tags)) {foreach($tags as $k=>$v) {?>
+-                    <option value="<?php echo $v['id']?>" <?php if($v['id'] == $tag_id) echo 'selected';?> style="background-color:#FFC;"><?php echo $v['name']?></option>
+-                    <?php }} ?>
+-                </select>
+-                  <input type="submit" name="submit" id='submit' onclick='toSearch()' value=" 搜索 " />
+-
++            百科关键词：<input type="text" id="keyword" name="keyword" style="width:160px;" value="<?php echo $wiki_key?$wiki_key:'';?>"/> &nbsp;&nbsp;&nbsp;&nbsp;
++            所属标签：<input type="text" id="tag_name" name="tag_name" style="width:160px;" value="<?php echo $tag_name?$tag_name:'';?>"/> &nbsp;&nbsp;&nbsp;&nbsp;
++            <input type="submit" name="submit" id='submit' onclick='toSearch()' value=" 搜索 " />
++            <input type="button" name="button" onclick='showAll()' value="显示全部" />
+             </td>
+         </tr>
+     </table>
+@@ -29,18 +23,22 @@
+     	<tr>
+     		<th width="5%"></th>	
+       		<th width="5%">编号</th>
+-            <th width="40%">百科关键词</th>
+-            <th width="10%">  操作       </th>
++            <th width="30%">百科关键词</th>
++            <th width="10%">标签</th>
++            <th width="10%"> 操作 </th>
+     	</tr>
+         <?php if( !empty($wikiArr) ) {foreach($wikiArr as $k=>$row) { ?>
+         <tr <?php echo (0==$k%2) ? 'class="odd"':'';?>>
+     		<td align="center" ><input type="checkbox" name="news_check" value="{$nl.id}"/></input></td>
+             <td align="center" ><?php echo $k+$number;?></td>
+-            <td><?php echo anchor(site_url('admin/wiki/edit/'.$row['id']), $row['wiki_key']);?></td>
++            <td><?php echo anchor(site_url('admin/'.$_class.'/edit/'.$row['id']), $row['wiki_key']);?></td>
++            <!--<td><?php echo empty($row['tag_name'])?'':anchor(site_url('admin/'.$_class.'/del/'.$row['id']), $row['tag_name']), '&nbsp;', anchor(site_url('admin/relation_tag/showList/?type=wiki&id='.$row['id']),'添加','class="view"')?></td>
++            -->
++            <td><?php echo $row['tag_name'], '&nbsp;', anchor(site_url('admin/relation_tag/showList/?type=wiki&id='.$row['id']),'添加','class="view"')?></td>
+             <td class="action" align="center">
+             <?php echo anchor(site_url(''),'查看&nbsp;&nbsp;','class="view" target="_blank"'), 
+-            anchor(site_url('admin/wiki/edit/'.$row['id']),'编辑&nbsp;','class="edit"')?>
+-            <a class="delete" href="javascript:if( confirm('确认要删除吗？') ) location.href='<?php echo site_url('admin/wiki/del/'.$row['id'])?>';">删除</a>
++            anchor(site_url('admin/'.$_class.'/edit/'.$row['id']),'编辑&nbsp;','class="edit"')?>
++            <a class="delete" href="javascript:if( confirm('确认要删除吗？') ) location.href='<?php echo site_url('admin/'.$_class.'/del/'.$row['id'])?>';">删除</a>
+             </td>
+         </tr>                        
+         <?php }} ?>
+@@ -61,6 +59,8 @@
+ <script type="text/javascript" src="/adminStatic/js/jquery.js"></script>
+ <script type="text/javascript" src="/adminStatic/js/common.js"></script>
+ <script type=text/javascript>
++//当前控制器名，用于view中复用
++var _class = '<?php $_class?>';
+ function toSearch(type)
+ {
+     var tag_id = $("#tag_id").val();
+@@ -68,7 +68,11 @@ function toSearch(type)
+     
+     if('' == wiki_key) wiki_key = 0;
+     if('' == tag_id) tag_id = 0;
+-    window.location.href="/admin/wiki/showlist/"+wiki_key+"/"+tag_id+"/";
++    window.location.href="/admin/"+_class+"/showlist/"+wiki_key+"/"+tag_id+"/";
++}
++function showAll()
++{
++    window.location.href="/admin/"+_class+"/showlist/";
+ }
+ </script>
+ </html>

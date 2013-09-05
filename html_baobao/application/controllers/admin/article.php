@@ -164,7 +164,6 @@ class Article extends MY_Controller
         array_unshift($childs_id,$keyword_section);
         $where['section'] = $childs_id;
         $arr['keywords'] = $this->keyword->getList(0,0,$where);
-
         
         //顶级栏目
         $arr['one_section'] = $this->section->getBy_parent(0);
@@ -180,6 +179,23 @@ class Article extends MY_Controller
 		$this->load->library('kindeditor',$eddt);
         $arr['kindeditor'] = $this->kindeditor->getEditor( $eddt );
 		
+
+        $edit = array('name' =>'content', 'id' =>'content', 'value' =>$arr['content']);
+        $this->load->library('kindeditor',$edit);
+        $arr['kindeditor'] = $this->kindeditor->getEditor( $edit );
+        //相关标签
+               $this->load->model('admin/relation_tag_model','relation_tag');
+               $this->load->model('admin/tag_model','tag');
+        $whereData = array('target_id'=>$art_id,'target_type'=>1,'status'=>0);
+        $tagArr = $this->relation_tag->get($whereData);
+        $arrTagIds = $tagNameArr = array();
+        foreach($tagArr as $k=>$v)
+        {
+            $arrTagIds[] = $v['tag_id'];
+        }
+        unset($tagArr);
+        if(0<count($arrTagIds)) $tagNameArr = $this->tag->getBy_ids($arrTagIds);
+        $arr['tagNameArr'] = $tagNameArr;
 		$this->load->view('admin/articleEdit', $arr);
 	}
 

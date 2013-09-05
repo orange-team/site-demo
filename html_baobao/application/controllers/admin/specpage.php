@@ -15,6 +15,9 @@ class specpage extends MY_Controller
         //当前控制器名，用于view中复用
         $this->data['_class'] = Strtolower(__CLASS__);
 		$this->load->model('specpage_model','specpage');
+		$this->load->model('admin/section_model','section');
+		$this->load->model('admin/keyword_model','keyword');
+        error_reporting(E_ALL ^ E_NOTICE);
     }
 
 	//专栏列表
@@ -56,6 +59,8 @@ class specpage extends MY_Controller
 	function add()
 	{
 		$this->load->helper('form');
+        //等级栏目
+        $this->data['one_section'] = $this->section->getBy_parent(0);
 		//在线编辑器
 		$eddt = array('name' =>'content', 'id' =>'content', 'value' =>'');
 		$this->load->library('kindeditor',$eddt);
@@ -67,13 +72,16 @@ class specpage extends MY_Controller
 	function saveAdd()
 	{
         $data = array(
-				'title' => $this->input->post('title'),
-				'content' => $this->input->post('content'),
+                'section' => $this->input->post('section'),
+                'keyword' => $this->input->post('keyword'),
+				'title' => trim(addslashes($this->input->post('title'))),
+				'content' => addslashes($this->input->post('content')),
 				'add_time' => date('Y-m-d H:i:s',$_SERVER['REQUEST_TIME']),
 				'author' => $this->input->post('author'),
+                'edit_time' => date('Y-m-d H:i:s',$_SERVER['REQUEST_TIME']),
 				);
 		$specpage_id = $this->specpage->insertNew($data);
-        $data['msg'] = ($specpage_id>0) ? '文章发布成功' : '文章发布失败';
+        $data['msg'] = ($specpage_id>0) ? '发布成功' : '发布失败';
         //上传图片,并做缩略
         $this->load->helper('upload');
 		$uploadData = upload_img('upImg', $specpage_id,'specpage');
@@ -98,9 +106,55 @@ class specpage extends MY_Controller
 	//编辑专栏
 	function edit($specpage_id)
 	{
+        //封面图片路径
+        $this->specpage_path .= $specpage_id.'/';
 		$this->load->helper('form');
 		$arr = $this->specpage->getBy_id($specpage_id);
-        $this->specpage_path .= $specpage_id.'/';
+        $section = $this->section->get_one(array('id'=>$arr['section']));
+        $is_two = false;     //是否显示二级栏目
+        $is_three = false;   //是否显示三级栏目
+        $keyword_section = '';  //与关键词关联的栏目id
+        $arr['one'] = $arr['two'] = '';//三个级栏目的selected标识
+        //如果文章属于非顶级栏目
+        if(isset($section['parent']) && $section['parent'] != 0)
+        {
+            $section_up = $this->get_parent($section['parent']);
+            //如果文章属于三级栏目下
+            $is_two = true;
+            $arr['one'] = $section_up[0] ? $section_up[0] : '';
+            $arr['two'] = $section_up[1] ? $section_up[1] : '';
+            if('' != $arr['one'] && '' != $arr['two'])
+            {
+                $is_three = true;
+                $keyword_section = $section['id'];
+            }
+            //如果文章属于二级栏目下
+            if($arr['one'] == '')
+            {
+                $arr['one'] = $arr['two']; unset($arr['two']);
+                $arr['two'] = $section;
+                $keyword_section = $arr['two']['id'];
+            } 
+        }else//属于顶级栏目
+        {
+            $arr['one'] = $section;
+            $keyword_section = isset($arr['one']['id']) ? $arr['one']['id'] : 0;
+        }
+        //查询所选栏目对应的关键词
+        $list = $this->get_child($keyword_section);
+        $list[1] = $list[1] ? $list[1] : array();
+        $childs_id = array_keys($list[1]);//当前栏目下所有子栏目id
+        array_unshift($childs_id,$keyword_section);
+        $where['section'] = $childs_id;
+        $arr['keywords'] = $this->keyword->getList(0,0,$where);
+        //顶级栏目
+        $arr['one_section'] = $this->section->getBy_parent(0);
+        if( $is_two == true )
+        {
+            $fid = '' != $arr['one'] ? $arr['one']['id'] : $arr['two']['id'];
+            $arr['two_section'] =  $this->section->getList(array('parent'=>$fid));
+        }
+        $arr['three_section'] = $is_three==true ? $this->section->getList(array('parent'=>$arr['two']['id'])) : '';
         //在线编辑器
 		$eddt = array('name' =>'content', 'id' =>'content', 'value' =>$arr['content']);
 		$this->load->library('kindeditor',$eddt);
@@ -124,9 +178,12 @@ class specpage extends MY_Controller
     //保存编辑结果
 	function saveEdit($specpage_id)
 	{
+        if($this->input->post('section')) $data['section'] = trim(addslashes($this->input->post('section')));
+		if($this->input->post('keyword')) $data['keyword'] = trim(addslashes($this->input->post('keyword')));
 		if($this->input->post('title')) $data['title'] = trim(addslashes($this->input->post('title')));
 		if($this->input->post('content')) $data['content'] = addslashes($this->input->post('content'));
 		if($this->input->post('author')) $data['author'] = addslashes($this->input->post('author'));
+		$data['edit_time'] = date('Y-m-d H:i:s',$_SERVER['REQUEST_TIME']);
 		$affected_rows = $this->specpage->update($specpage_id, $data);
         unset($data);
         //上传图片,并做缩略
@@ -158,5 +215,41 @@ class specpage extends MY_Controller
 		$data['url'] = '/admin/specpage/showlist/';
 		$this->load->view('admin/info', $data);
 	}
+ 
+    //递归获取子分类信息
+    function get_child($id=0,$type=true)
+    {
+        if($type == true)//获取该栏目下所有子栏目,定义全局变量
+            global $all_list;
+        $childs = $this->section->getBy_parent($id);//只获取子栏目信息，非子孙栏目
+        foreach($childs as $k=>$v)
+        {
+            if($id)
+            {
+               $this->get_child($v['id']);
+               $all_list[$v['id']] = $v['name'];//组合本栏目下所有子孙栏目id与name为一唯数组
+            }
+        }
+        return array($childs,$all_list);
+    }
+
+    //获取父及栏目内容
+    function get_parent($id)
+    {
+        if($id != 0)
+        {
+            $parents = $this->section->get_one(array('id'=>$id));
+            $parent_top = array();
+            if($parents['parent'] != 0 )
+            {
+                $parent_top =  $this->section->get_one(array('id'=>$parents['parent']));
+            }
+            $return = array($parent_top,$parents);
+        }else
+        {
+            $return = 'top';
+        }
+        return $return;
+    }
 
 }
