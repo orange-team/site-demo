@@ -34,7 +34,7 @@ div{ margin:0; padding:0;}
 .left_back_onclick{ background-image: url(../img/manage_r6_c2.jpg); background-repeat: no-repeat; color:#333333;}
 #left_main_nav a{ color:#0099CC;}
 
-#right_main_nav { width: 173px; border:1px #B4C9C6 solid; border-left:0; float: right; background-color: #FFFFFF; height: 560px; text-align: left;}
+#right_main_nav { width: 173px; border:1px #B4C9C6 solid; border-left:0; float: right; background-color: #FFFFFF; height: 1000px; text-align: left;}
 .list_tilte {
 	background-image: url(../img/list_title.gif);
 	background-repeat: no-repeat;
