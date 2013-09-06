@@ -28,3 +28,7 @@ t=outlookbar.addtitle('标签管理','妈妈学习',1)
 outlookbar.additem('标签管理',t,'/admin/tag/showlist/')
 outlookbar.additem('添加标签',t,'/admin/tag/add/')
 
+t=outlookbar.addtitle('其他','妈妈学习',1)
+outlookbar.additem('生成右侧公用',t,'/admin/create_html/create_right/')
+
+

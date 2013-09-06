@@ -25,6 +25,15 @@ class Tag_model extends CI_Model
 		return $this->db->get()->row_array();
     }
 
+    function getOrder_weight($limit,$offset)
+    {
+        $this->db->select('id,name')->from($this->_table)->order_by("weight DESC");
+        $this->db->limit($limit, $offset);
+        return $this->db->get()->result_array();
+
+    }
+
+
 	function getBy_ids($ids)
 	{
 		$this->db->select('id,name')->from($this->_table)->where_in('id', $ids);

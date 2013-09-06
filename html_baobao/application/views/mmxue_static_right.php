@@ -1,12 +1,12 @@
     <div class="wraper_right">
         <div class="border_area r_img">
-            <a href="#"><img src="<?php echo base_url();?>img/art_detail_right.png" width="298" height="198" border="0"></a>
+            <a href="#"><img src="http://baobao.loc:8000/img/art_detail_right.png" width="298" height="198" border="0"></a>
         </div>
         <h3>阶段选择</h3>
         <div class="border_area r_height">
             <div class="text_list">
                 <span class="font_1">备怀孕</span>
-                <img id="img_1" src="<?php echo base_url();?>img/top.jpg" onclick="showHide(1)">
+                <img id="img_1" src="http://baobao.loc:8000/img/top.jpg" onclick="showHide(1)">
                 <div id="show_1">
                     <p>[&nbsp;<a>饮食</a>&nbsp;]&nbsp;&nbsp;&nbsp; [&nbsp;<a>保健</a>&nbsp;]&nbsp;&nbsp;&nbsp; 
                     [&nbsp;<a>好运</a>&nbsp;]&nbsp;&nbsp;&nbsp;<span class="right">[&nbsp;<a>遗传优生</a>&nbsp;]</span>
@@ -16,7 +16,7 @@
             </div>
             <div class="text_list">
                 <span class="font_1">怀孕期</span>
-                <img id="img_2" src="<?php echo base_url();?>img/top.jpg" onclick="showHide(2)">
+                <img id="img_2" src="http://baobao.loc:8000/img/top.jpg" onclick="showHide(2)">
                 <div id="show_2">
                     <span class="font_2"><a>孕早期</a></span>
                     <p>
@@ -43,7 +43,7 @@
             </div>
             <div class="text_list">
                 <span class="font_1">分娩期</span>
-                <img id="img_3" src="<?php echo base_url();?>img/top.jpg" onclick="showHide(3)">
+                <img id="img_3" src="http://baobao.loc:8000/img/top.jpg" onclick="showHide(3)">
                 <div id="show_3">
                     <p>
                         [&nbsp;<a>产前心理</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>临盆待产</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>分娩时刻</a>&nbsp;]</span>
@@ -53,7 +53,7 @@
             </div>
             <div class="text_list">
                 <span class="font_1">0-1岁</span>
-                <img id="img_4" src="<?php echo base_url();?>img/top.jpg" onclick="showHide(4)">
+                <img id="img_4" src="http://baobao.loc:8000/img/top.jpg" onclick="showHide(4)">
                 <div id="show_4">
                     <span class="font_2"><a>0-3个月</a></span>
                     <p>
@@ -70,7 +70,7 @@
             </div>
             <div class="text_list">
                 <span class="font_1">1-3岁</span>
-                <img id="img_5" src="<?php echo base_url();?>img/top.jpg" onclick="showHide(5)">
+                <img id="img_5" src="http://baobao.loc:8000/img/top.jpg" onclick="showHide(5)">
                 <div id="show_5">
                     <span class="font_2"><a>幼早期</a></span>
                     <p>
@@ -90,7 +90,7 @@
             </div>
             <div class="text_list no_border">
                 <span class="font_1">3-6岁</span>
-                <img id="img_6" src="<?php echo base_url();?>img/top.jpg" onclick="showHide(6)">
+                <img id="img_6" src="http://baobao.loc:8000/img/top.jpg" onclick="showHide(6)">
                 <div id="show_6">
                     <p>
                         [&nbsp;<a>幼儿喂养</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;<a>宝宝食谱</a>&nbsp;]&nbsp;&nbsp;<span class="right">[&nbsp;<a>生长发育</a>&nbsp;]</span>
@@ -106,10 +106,14 @@
         <div class="border_area r_height">
             <div class="text_list no_border">
                 <p>
-                    <?php foreach($tagList as $v){?>
-                    <a href=""><?php echo $v['name']?></a>&nbsp;&nbsp;
-                    <?php }?>
-                </p>
+                                        <a href="">月子护理03</a>&nbsp;&nbsp;
+                                        <a href="">儿童心理</a>&nbsp;&nbsp;
+                                        <a href="">月子护理02</a>&nbsp;&nbsp;
+                                        <a href="">儿童心理02</a>&nbsp;&nbsp;
+                                        <a href="">月子护理01</a>&nbsp;&nbsp;
+                                        <a href="">儿童心理01</a>&nbsp;&nbsp;
+                                        <a href="">月子护理</a>&nbsp;&nbsp;
+                                    </p>
             </div>
         </div>
     </div>
