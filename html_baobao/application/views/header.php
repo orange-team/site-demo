@@ -20,12 +20,12 @@
             <a><img src="/img/qq.png" width="25" height="25" /> QQ登录</a> 
         </div>
         <div class="search">
-            <form action="" method="">
+            <form action="/mmxue_art_list/index/search/" method="get">
                 <select name="type" class="input_select">
                     <option value="全部">全部</option>
                 <select>
-                <input type="text" name="search_name"  class="input_type"/>
-                <input type="submit" name="search_submit" value class="input_submit" />
+                <input type="text"  name="search_name" value="<?php if(isset($search_name) && !empty($search_name)){ echo $search_name; }?>"  class="input_type"/>
+                <input type="submit"  name="search_submit" value class="input_submit" />
             </form>
         </div>
         <img class="logo" src="/img/logo.jpg" height="70" width="70" />

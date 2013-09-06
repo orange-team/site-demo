@@ -16,8 +16,10 @@ class mmxue_art_list extends MY_Controller
 		$this->load->model('relation_tag_model','relation_tag');
 		$this->load->model('specpage_model','specpage');
 	}
-	public function index($section)
+	public function index()
 	{
+        $section = $this->uri->segment(3);
+
 		$this->data['section'] = (int)$section;
         //文章列表
         $this->load->helper('form'); 
@@ -27,36 +29,46 @@ class mmxue_art_list extends MY_Controller
         //搜栏目segment(4)
         $this->data['section'] = 0;
 
-        if($section)
+        if(intval($section))
         {
             $childs = $this->get_child($section);
             $childs_id = $childs[1] ? array_keys($childs[1]) : array();//子栏目id
             array_unshift($childs_id,$section);
             $where['section'] = $childs_id;
             $this->data['section'] = $section; 
-        }
-        //获取对应栏目
-        $section = $this->section->get_one(array('id'=>$section));
-        //$row['nav'] = "<a href='".base_url()."mmxue_art_list/index/".$section['id']."' > ".$section['name']."</a>";
-        $row['nav'] = "<a href='".base_url()."mmxue'> ".$section['name']."</a>";
 
-        //获得上级栏目
-        if(3 == $section['pt_depth'])
-        {
-            $section_parent = $this->get_section($section['parent']);
-            //$row['nav'] = "<a href='".base_url()."mmxue_art_list/index/".$section_parent[0]['id']."' > ".$section_parent[0]['name']."</a> > ";
-            $row['nav'] = "<a href='".base_url()."mmxue'> ".$section_parent[0]['name']."</a> > ";
-            $row['nav'] .= "<a href='".base_url()."mmxue_art_list/index/".$section_parent[1]['id']."' > ".$section_parent[1]['name']."</a> > ";
-            $row['nav'] .= "<a href='".base_url()."mmxue_art_list/index/".$section['id']."'>".$section['name']."</a>";
-        }else if(2 == $section['pt_depth'])
-        {
-            $section_parent = $this->section->get_one(array('id'=>$section['parent']));
-            //$row['nav'] = "<a href='".base_url()."mmxue_art_list/index/".$section_parent['id']."' > ".$section_parent['name']."</a> >";
-            $row['nav'] = "<a href='".base_url()."mmxue' > ".$section_parent['name']."</a> >";
-            $row['nav'] .= "<a href='".base_url()."mmxue_art_list/index/".$section['id']."' > ".$section['name']."</a>";
+            //获取对应栏目
+            $section_row = $this->section->get_one(array('id'=>$section));
+            $row['nav'] = "<a href='".base_url()."mmxue/index'> ".$section_row['name']."</a>";
+
+            //获得上级栏目
+            if(3 == $section_row['pt_depth'])
+            {
+                $section_parent = $this->get_section($section_row['parent']);
+                $row['nav'] = "<a href='".base_url()."mmxue/index/'> ".$section_parent[0]['name']."</a> > ";
+                $row['nav'] .= "<a href='".base_url()."mmxue_art_list/index/".$section_parent[1]['id']."' > ".$section_parent[1]['name']."</a> > ";
+                $row['nav'] .= "<a href='".base_url()."mmxue_art_list/index/".$section_row['id']."'>".$section_row['name']."</a>";
+            }else if(2 == $section_row['pt_depth'])
+            {
+                $section_parent = $this->section->get_one(array('id'=>$section_row['parent']));
+                $row['nav'] = "<a href='".base_url()."mmxue/index/' > ".$section_parent['name']."</a> >";
+                $row['nav'] .= "<a href='".base_url()."mmxue_art_list/index/".$section_row['id']."' > ".$section_row['name']."</a>";
+            }
         }
+
+        $search_name = '';
+        //头部搜索
+        if('search' == $section)
+        {
+            $search_name = $this->data['search_name'] = addslashes(trim($this->input->get('search_name')));
+            $where = array('title'=>$search_name);
+            $row['nav'] = "<a href='".base_url()."mmxue/index/'>妈妈学</a> > 首页搜索";
+            
+        }
+
         $this->data['nav'] = $row['nav'];
         unset($row['nav']);
+
 
 		//分页
 		$this->load->library('pagination');

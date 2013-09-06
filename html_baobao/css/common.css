@@ -29,14 +29,14 @@ a:hover { color:#F6724A; text-decoration:underline; cursor:pointer; }
 .hd_box .top_nav_rg a:hover { background-color:#6D6D6D;}
 
 .hd_box .search { width:400px;height:28px; bottom:10px; right:0; position:absolute; border:1px #d8d8d8 solid;}
-.hd_box .search input { border:0;}
+.hd_box .search input,select { border:0; color:#6D6D6D;}
 .hd_box .search .input_select { width:50px; height:28px; float:left; background:#FFFFFF; top:0; border:0;  font-size:14px; vertical-align:center;} 
-.hd_box .search .input_type { width:308px; height:28px; float:left; border-right:1px #d8d8d8  solid; border-left:1px #d8d8d8 solid; line-height:14px; font-size:14px;} 
+.hd_box .search .input_type { width:303px; height:28px; float:left; padding-left:5px; border-right:1px #d8d8d8  solid; border-left:1px #d8d8d8 solid; line-height:14px; font-size:14px;} 
 .hd_box .search .input_submit {background:url(/img/search_submit.png) no-repeat; background-position:center; background-color:#FFF;  width:40px; height:28px; float:left; border:0; cursor:pointer;}
 
 .hd_box .logo { display:block; margin-top:10px; margin-left:0;}
-.hd_box .logo_font { display:block; position:absolute; left:65px; top:12px; }
-.hd_box .nav_section { position:absolute; left:80px; bottom:15px; width:400px;} 
+.hd_box .logo_font { display:block; position:absolute; left:75px; top:12px; }
+.hd_box .nav_section { position:absolute; left:90px; bottom:15px; width:400px;} 
 .hd_box .nav_section a { display:block; width:120px; float:left; font:normal bold 16px Arial; text-decoration:none;text-decoration:none; color:#666666;  border-left:2px solid #666666; }
 .hd_box .nav_section a:hover { color:#FF0000;}
 .hd_box .nav_section .default {color:#FF0000;}
