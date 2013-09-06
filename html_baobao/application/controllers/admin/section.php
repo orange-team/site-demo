@@ -10,7 +10,7 @@ class Section extends MY_Controller
     function __construct()
     {
         parent::__construct(); 
-        $this->load->model('admin/section_model', 'section'); 
+        $this->load->model('section_model', 'section'); 
     }
 
     //栏目列表

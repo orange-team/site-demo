@@ -28,7 +28,7 @@
                 <input type="submit" name="search_submit" value class="input_submit" />
             </form>
         </div>
-        <img class="logo" src="/img/logo.png" height="58" width="55" />
+        <img class="logo" src="/img/logo.jpg" height="70" width="70" />
         <img class="logo_font" src="/img/logo_font.jpg" height="25" width="80">
         <div class="nav_section">
             <ul>

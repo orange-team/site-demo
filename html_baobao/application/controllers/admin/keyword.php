@@ -10,8 +10,8 @@ class Keyword extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('admin/keyword_model','keyword');
-		$this->load->model('admin/section_model','section');
+		$this->load->model('keyword_model','keyword');
+		$this->load->model('section_model','section');
 	}
     //列表页
 	function showlist($section=0,$name='')

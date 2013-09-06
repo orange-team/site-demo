@@ -10,7 +10,7 @@ class User extends MY_Controller
 	function __construct()
 	{error_reporting(E_ALL);
 		parent::__construct();
-		$this->load->model('admin/user_model','user');
+		$this->load->model('user_model','user');
 	}
 	
 	//新增
