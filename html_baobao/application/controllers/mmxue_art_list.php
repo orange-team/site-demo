@@ -10,8 +10,8 @@ class mmxue_art_list extends MY_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('admin/article_model','art');
-		$this->load->model('admin/section_model','section');
+		$this->load->model('article_model','art');
+		$this->load->model('section_model','section');
 		$this->load->model('tag_model','tag');
 		$this->load->model('relation_tag_model','relation_tag');
 		$this->load->model('specpage_model','specpage');

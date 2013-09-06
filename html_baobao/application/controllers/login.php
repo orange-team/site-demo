@@ -22,7 +22,7 @@ class Login extends CI_Controller
 	{
 		$uname = $this->input->post('uname');
 		$passwd = $this->input->post('passwd');
-		$this->load->model('admin/user_model','user');
+		$this->load->model('user_model','user');
 		$isRight = false;
 		$user = $this->user->chk($uname, $passwd);
 		//验证用户名，密码

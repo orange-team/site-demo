@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://site-demo.loc/';
+$config['base_url']	= 'http://baobao.loc:8000/';
 
 /*
 |--------------------------------------------------------------------------

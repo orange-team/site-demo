@@ -10,9 +10,9 @@ class Article extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('admin/article_model','art');
-		$this->load->model('admin/section_model','section');
-		$this->load->model('admin/keyword_model','keyword');
+		$this->load->model('article_model','art');
+		$this->load->model('section_model','section');
+		$this->load->model('keyword_model','keyword');
 	}
 	//文章列表:新闻中心-->最新新闻
 	function showlist($section=0,$title='')
@@ -98,10 +98,7 @@ class Article extends MY_Controller
 		$this->data['page'] = $this->pagination->create_links();
 		$offset = $this->uri->segment(6);
 		$arr = $this->art->getList($this->data['pagesize'], $offset, $where);
-		//foreach( $arr as $k=>$v )
-		//{
-		//	$arr[$k]['title'] = $this->my_substr($v['title'],0,14);
-		//}
+
         //顶级栏目
         $this->data['one_section'] = $this->section->getBy_parent(0);
 		$this->data['articleArr'] = $arr;
@@ -184,8 +181,8 @@ class Article extends MY_Controller
         $this->load->library('kindeditor',$edit);
         $arr['kindeditor'] = $this->kindeditor->getEditor( $edit );
         //相关标签
-               $this->load->model('admin/relation_tag_model','relation_tag');
-               $this->load->model('admin/tag_model','tag');
+               $this->load->model('relation_tag_model','relation_tag');
+               $this->load->model('tag_model','tag');
         $whereData = array('target_id'=>$art_id,'target_type'=>1,'status'=>0);
         $tagArr = $this->relation_tag->get($whereData);
         $arrTagIds = $tagNameArr = array();

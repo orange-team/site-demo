@@ -88,42 +88,34 @@ function check_form()
       		<td class="left_title_2">副标题</td>
       		<td><input class="text_style" type="text" name="subtitle" /></td>
     	</tr>
-        <!--
     	<tr>
-      		<td class="left_title_2">标题图片</td>
-      		<td><input type="file" name="titleimg" value="default" /></td>
-    	</tr>
-        -->
-    	<tr>
-    		<td class="left_title_1">文章来源</td>
-    		<td><input type="text" name="source"  /></td>
+      		<td class="left_title_1">页面描述</td>
+            <td><input class="text_style" type="type" name="description"/></td>
     	</tr>
     	<tr>
-      		<td class="left_title_2">文章内容</td>
+    		<td class="left_title_2">SEO关键字</td>
+    		<td><input type="text" class="text_style" name="page_keywords"  /></td>
+    	</tr>
+    	<tr>
+    		<td class="left_title_1">关注度</td>
+    		<td><input type="text" class="text_style w_50" name="attention"  /></td>
+    	</tr>
+    	<tr>
+    		<td class="left_title_2">文章来源</td>
+    		<td><input type="text" class="text_style" name="source"  /></td>
+    	</tr>
+    	<tr>
+      		<td class="left_title_1">文章内容</td>
       		<td> <?php echo $kindeditor;?></td>
 
     	</tr>
-        <!--
     	<tr>
-      		<td class="left_title_1">文章状态</td>
+      		<td class="left_title_2">是否推荐</td>
       		<td>
-      			<input type="radio" name="status" value="2" checked="checked" />待审核	&nbsp;&nbsp;
-      			<input type="radio" name="status" value="1" />审核通过 &nbsp;&nbsp;
-      			<input type="radio" name="status" value="0" />禁用	&nbsp;&nbsp;
+      			<input type="radio" name="recommend" value="1" />是  &nbsp;&nbsp;
+      			<input type="radio" name="recommend" checked value="0" />否  &nbsp;&nbsp;
       		</td>
     	</tr>
-    	<tr>
-      		<td class="left_title_2">文章优先</td>
-      		<td>
-      			<input type="checkbox" name="top" value="1" />置顶文章  &nbsp;&nbsp;
-      			<input type="checkbox" name="recommend" value="1" />推荐文章  &nbsp;&nbsp;
-      		</td>
-    	</tr>
-        <tr>
-        	<td class="left_title_1">点击量</td>
-            <td><input class="text_style" type="text" name="click" value="{$click}" style="width:66px;"></td>
-        </tr>       
-        -->
         <tr>
       		<td class="left_title_2">&nbsp;<input type="hidden" name='section' id='section' value='' /></td>
       		<td><input type="submit" name="submit" value=" 提交 " />&nbsp;&nbsp;
