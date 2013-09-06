@@ -13,7 +13,7 @@ class Relation_tag extends MY_Controller
         //初始化父类成员变量
         //当前控制器名，用于view中复用
         $this->data['_class'] = Strtolower(__CLASS__);
-		$this->load->model('admin/tag_model','tag');
+		$this->load->model('tag_model','tag');
 	}
 
     //列表页
@@ -58,7 +58,7 @@ class Relation_tag extends MY_Controller
 	//添加
 	function oprate()
 	{
-		$this->load->model('admin/relation_tag_model','relation_tag');
+		$this->load->model('relation_tag_model','relation_tag');
         $tag_id = trim(addslashes($this->input->get('tag_id')));
         $target_id = trim(addslashes($this->input->get('target_id')));
         $target_type = trim(addslashes($this->input->get('target_type')));

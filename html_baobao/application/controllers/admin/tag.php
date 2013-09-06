@@ -10,7 +10,7 @@ class Tag extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('admin/tag_model','tag');
+		$this->load->model('tag_model','tag');
 	}
 
     //列表页

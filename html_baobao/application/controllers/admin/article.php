@@ -105,6 +105,8 @@ class Article extends MY_Controller
         $this->data['number'] = $offset+1; 
 		$this->load->view('admin/articleList', $this->data);
 	}
+
+    //添加
 	function add()
 	{
 		$this->load->helper('form');
@@ -116,6 +118,7 @@ class Article extends MY_Controller
         $this->data ['kindeditor'] = $this->kindeditor->getEditor();
 		$this->load->view('admin/articleAdd', $this->data);
 	}
+
 	//编辑文章
 	function editArt($art_id)
 	{
