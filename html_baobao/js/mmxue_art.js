@@ -16,11 +16,11 @@ function showHide(id)
 //文章内容页，显示和隐藏标题
 function showTitle()
 {
-    $("#info").css('display','block');
+    $("#info").css('visibility','visible');
 }
 function hideTitle()
 {
-    $("#info").css('display','none');
+    $("#info").css('visibility','hidden');
 }
 
 //文章列表页搜索
