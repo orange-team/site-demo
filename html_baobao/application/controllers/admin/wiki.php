@@ -8,12 +8,13 @@
 class wiki extends MY_Controller
 {
     //封面图片路径
-    var $wiki_path = '/';
+    var $wiki_img_path = '/uploads/img/wiki/';
+
 	function __construct()
 	{
 		parent::__construct();
-        //当前控制器名，用于view中复用
-        $this->data['_class'] = Strtolower(__CLASS__);
+        $this->_info['cls'] = strtolower(__CLASS__);
+        $this->_info['name'] = '百科';
 		$this->load->model('wiki_model','wiki');
     }
 

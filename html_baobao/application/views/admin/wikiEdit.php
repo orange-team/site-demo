@@ -2,48 +2,36 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>百科修改网站后台管理</title>
+<title><?php echo $this->_info['name']?>修改网站后台管理</title>
 <link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
 </head>
 
 <body>
 <div id="man_zone">
-	<h5>&nbsp;&nbsp;◆ 百科修改&nbsp;&raquo;&nbsp;<span style='color:red'><b>*</b></span> 代表必填项；</h5>
+	<h5>&nbsp;&nbsp;◆ <?php echo $this->_info['name']?>修改&nbsp;&raquo;&nbsp;<span style='color:red'><b>*</b></span> 代表必填项；</h5>
     <?php echo form_open(site_url('admin/wiki/saveEdit/'.$id), array('class'=>"jnice","onsubmit"=>"return check_form()","enctype"=>"multipart/form-data"));?>
   	<table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style">
     	<tr>
-      		<td class="left_title_1"><span style='color:red'>*</span>&nbsp;所属栏目</td>
-      		<td>
-      			<select name="tag_id" id="tag_id" >
-                	<option value="0">-- 请选择 --</option>
-                    <?php if(!empty($tags)) {foreach($tags as $k=>$v) {?>
-                    <option value="<?php echo $v['id']?>" <?php if($v['id'] == $tag_id) echo 'selected';?> style="background-color:#FFC;"><?php echo $v['name']?></option>
-                    <?php }} ?>
-                </select>
-                <span style="color:red;" id="errorTag"></span>
-            </td>
+      		<td width="18%" class="left_title_2">关键词</td>
+            <td width="82%"><input class="text_style" type="text" name="<?php echo $this->_info['cls']?>_key" id="<?php echo $this->_info['cls']?>_key" value="<?php echo $wiki_key ?>" /> <span style="color:red;" id="errorKeyword"></span></td>
     	</tr>
     	<tr>
-      		<td width="18%" class="left_title_2">百科关键词</td>
-            <td width="82%"><input class="text_style" type="text" name="wiki_key" id="wiki_key" value="<?php echo $wiki_key ?>" /> <span style="color:red;" id="errorKeyword"></span></td>
-    	</tr>
-    	<tr>
-      		<td width="18%" class="left_title_1">百科图片</td>
+      		<td width="18%" class="left_title_1">图片</td>
             <td width="82%">
-                <?php if(empty($wiki_img)){ echo '还没有上传百科图片...';}else{ ?>
-                <img src="/uploads/img/wiki/<?php echo $id?>/<?php echo $wiki_img;?>" border="0" />
+                <?php if(empty($wiki_img)){ echo '还没有上传图片...';}else{ ?>
+                <img src="<?php echo $this->wiki_img_path,$id,'/',$wiki_img;?>" border="0" />
                 <?php } ?>
-                <input  type="file" name="upImg" id="wiki_image" />
+                <input  type="file" name="upImg" id="<?php echo $this->_info['cls']?>_image" />
             </td>
     	</tr>
     	<tr>
-      		<td class="left_title_2">百科内容</td>
+      		<td class="left_title_2">内容</td>
       		<td> <?php echo $kindeditor;?> <span style="color:red;" id="errorContent"></span></td>
     	</tr>
         <tr>
       		<td class="left_title_2">&nbsp;</td>
       		<td><input type="submit" name="submit" value=" 提交 " />&nbsp;&nbsp;
-            <input type="reset" name="reset" value=" 重置 " />
+            <input type="button" name="back" value=" 返回 " onclick="window.location.href='<?php echo site_url('admin/'.$this->_info['cls'].'/showList/');?>'"/>
             </td>
     	</tr>
   	</table>
@@ -55,6 +43,9 @@
 <script type="text/javascript" src="/adminStatic/js/jquery.js" ></script>
 <script type="text/javascript" src="/adminStatic/js/common.js" ></script>
 <script type="text/javascript">
+//定义控制器信息
+var _info = {'cls':'<?php echo $this->_info['cls']?>', 'name':'<?php echo $this->_info['name']?>'};
+
 function check_form()
 {
     var tag_id = $("#tag_id").val();

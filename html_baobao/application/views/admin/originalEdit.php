@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>深度原创修改网站后台管理</title>
+<title><?php echo $this->_info['name']?>修改网站后台管理</title>
 <link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
 <script type="text/javascript" src="/adminStatic/js/jquery.js" ></script>
 </head>
 <body>
 <div id="man_zone">
-	<h5>&nbsp;&nbsp;◆ 深度原创修改&nbsp;&raquo;&nbsp;<span style='color:red'><b>*</b></span> 代表必填项；</h5>
-    <?php echo form_open(site_url('admin/'.$this->_class.'/saveEdit/'.$id), array('class'=>"jnice","onsubmit"=>"return check_form()"));?>
+	<h5>&nbsp;&nbsp;◆ <?php echo $this->_info['name']?>修改&nbsp;&raquo;&nbsp;<span style='color:red'><b>*</b></span> 代表必填项；</h5>
+    <?php echo form_open(site_url('admin/'.$this->_info['cls'].'/saveEdit/'.$id), array('class'=>"jnice","onsubmit"=>"return check_form()"));?>
   	<table id="table" width="96%" border="0" align="center" cellpadding="3" cellspacing="1" class="table_style">
     	<tr>
       		<td width="100px" class="left_title_1"><span style='color:red'>*</span>&nbsp;栏目</td>
@@ -40,11 +40,12 @@
       		<td>
       			<select name="keyword" id="keyword">
                 	<option value="0">-- 选择关键词 --</option>
-                    <?php if(chk($keywords)) {foreach($keywords as $k=>$v) {?>
+                    <?php if(chk($keywords)) {foreach($keywords as $v) {?>
                     <option value="<?php echo $v['id']?>" <?php if($v['id'] == $keyword) echo 'selected' ;?>><?php echo $v['name'];?></option>
                     <?php }} ?>
                 </select>
                 <span style="color:red;" id="errorKeyword"></span>
+                <span style="color:green;" id="statistics_substr"></span>
                 <a href="javascript:engine_search('keyword');" target="_blank" class="search">点击搜索</a>
       		</td>
     	</tr>
@@ -81,7 +82,7 @@
         <tr>
       		<td class="left_title_2">&nbsp;<input type="hidden" name='section' id='section' value='' /></td>
       		<td><input type="submit" name="submit" value=" 提交 " />&nbsp;&nbsp;
-            <input type="button" name="back" value=" 返回 " onclick="window.location.href='<?php echo site_url('admin/'.$this->_class.'/showList/');?>'"/>
+            <input type="button" name="back" value=" 返回 " onclick="window.location.href='<?php echo site_url('admin/'.$this->_info['cls'].'/showList/');?>'"/>
             </td>
     	</tr>
   	</table>
@@ -104,20 +105,40 @@
 .img_lib dl img:hover {opacity:1;}
 .img_lib dl:hover {background:#f3f8f7;}
 .jnice { position:relative; }
+
+.ke-icon-replace { background-image: url(/adminStatic/editor/themes/common/hello.gif); width: 16px; height: 16px; }
 </style>
 <script type="text/javascript">
+//定义控制器信息
+var _info = {'cls':'<?php echo $this->_info['cls']?>', 'name':'<?php echo $this->_info['name']?>'};
+
+//插入图片库图片
 function insert(handle)
 {
     var html = '<img src="'+handle.src+'" title="'+handle.title+'" />';
     editor.insertHtml(html);
 }
+
 $(function(){
-        $('#table tr').mouseover(function(){
-            $(this).find('a.search').show();
-            }).mouseout(function(){
-                $(this).find('a.search').hide();
-                });
-        });
+    $('#table tr').mouseover(function(){
+        $(this).find('a.search').show();
+    }).mouseout(function(){
+        $(this).find('a.search').hide();
+    });
+    $('#keyword').change(statistics_substr);
+    statistics_substr();
+});
+
+//统计关键词在内容出现次数
+function statistics_substr(){
+    var keyword = $("#keyword").find("option:selected").text();
+    if( keyword ) {
+        var bigstr = $('#content').val();
+        var result = bigstr.match(new RegExp(keyword), 'g');
+        var match_count = (null==result) ? 0 : bigstr.match(new RegExp(keyword,'g')).length;
+        $('#statistics_substr').html(' 文中共有关键词 <span style="color:red;">'+keyword+'</span>：'+match_count+'次 ');
+   }
+}
 //搜索
 function engine_search(id)
 {
@@ -156,13 +177,13 @@ function check_form()
     {
         if(0==section)
         {
-            $("#errorSection").html('深度原创所属栏目不能为空！');
+            $("#errorSection").html('所属栏目不能为空！');
         }else if(0==keyword)
         {
             $("#errorKeyword").html('关键词不能为空！');
         }else
         { 
-            $("#errorTitle").html('深度原创栏目不能为空！');
+            $("#errorTitle").html('栏目不能为空！');
         }
         return false;
     }

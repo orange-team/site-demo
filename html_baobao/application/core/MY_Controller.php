@@ -3,8 +3,8 @@
 class MY_Controller extends CI_Controller
 {
 	protected $data=array();
-    //当前控制器名，用于view中复用
-    protected $_class = '';
+    //控制器信息
+    public $_info = array();
 
     public function __construct()
     {

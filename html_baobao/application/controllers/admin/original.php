@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-* description: 后台--原创管理
+* description: 后台--深度原创管理
 * author: zg
 * date: 2013-09-06
 */
@@ -9,13 +9,12 @@ class Original extends MY_Controller
 {
     //用百度搜索关键词
     var $baiduSearch = 'http://www.baidu.com/s?wd=';
-    //当前控制器名，用于view中复用
-    var $_class = '';
 
 	function __construct()
 	{
 		parent::__construct();
-        $this->_class = strtolower(__CLASS__);
+        $this->_info['cls'] = strtolower(__CLASS__);
+        $this->_info['name'] = '深度原创';
 		$this->load->model('original_model','original');
 		$this->load->model('section_model','section');
 		$this->load->model('keyword_model','keyword');

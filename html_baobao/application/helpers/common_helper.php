@@ -6,3 +6,4 @@ function chk($var)
 {
     return isset($var) && !empty($var);
 }
+
