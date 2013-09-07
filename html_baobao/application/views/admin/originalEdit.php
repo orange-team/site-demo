@@ -40,11 +40,12 @@
       		<td>
       			<select name="keyword" id="keyword">
                 	<option value="0">-- 选择关键词 --</option>
-                    <?php if(chk($keywords)) {foreach($keywords as $k=>$v) {?>
+                    <?php if(chk($keywords)) {foreach($keywords as $v) {?>
                     <option value="<?php echo $v['id']?>" <?php if($v['id'] == $keyword) echo 'selected' ;?>><?php echo $v['name'];?></option>
                     <?php }} ?>
                 </select>
                 <span style="color:red;" id="errorKeyword"></span>
+                <span style="color:green;" id="statistics_substr"></span>
                 <a href="javascript:engine_search('keyword');" target="_blank" class="search">点击搜索</a>
       		</td>
     	</tr>
@@ -104,6 +105,8 @@
 .img_lib dl img:hover {opacity:1;}
 .img_lib dl:hover {background:#f3f8f7;}
 .jnice { position:relative; }
+
+.ke-icon-replace { background-image: url(/adminStatic/editor/themes/common/hello.gif); width: 16px; height: 16px; }
 </style>
 <script type="text/javascript">
 function insert(handle)
@@ -111,13 +114,21 @@ function insert(handle)
     var html = '<img src="'+handle.src+'" title="'+handle.title+'" />';
     editor.insertHtml(html);
 }
+
 $(function(){
-        $('#table tr').mouseover(function(){
-            $(this).find('a.search').show();
-            }).mouseout(function(){
-                $(this).find('a.search').hide();
-                });
-        });
+    $('#table tr').mouseover(function(){
+        $(this).find('a.search').show();
+    }).mouseout(function(){
+        $(this).find('a.search').hide();
+    });
+    var keyword = $('#keyword option[selected]').text(); 
+    if( keyword ) {
+        var bigstr = $('#content').val()+'';
+        var result = bigstr.match(new RegExp(keyword), 'g');
+        var match_count = (null==result) ? '' : bigstr.match(new RegExp(keyword,'g')).length;
+        $('#statistics_substr').text('文中共有关键词 '+keyword+'：'+match_count+'个');
+   }
+});
 //搜索
 function engine_search(id)
 {

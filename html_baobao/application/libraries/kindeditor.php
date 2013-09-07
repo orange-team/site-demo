@@ -32,18 +32,16 @@ class Kindeditor {
                 $sd .= "editor = K.create('textarea[name=\"{$this->id}\"]', {
 					resizeType : 1,
 					allowPreviewEmoticons : true,
-					allowImageUpload : true
+					allowImageUpload : true,
+                    items : [
+						'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+						'insertunorderedlist', '|', 'emoticons', 'image', 'link', 'pagebreak', 'code', 'source',
+                        'replace']
 				})";
                 $sd .= '});';
                 $sd .= '</script>';
                 return $sd;
         }
-		/*
-		items : [
-						'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
-						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-						'insertunorderedlist', '|', 'emoticons', 'image', 'link']
-						*/
-
- 
+         
 }
