@@ -121,14 +121,20 @@ $(function(){
     }).mouseout(function(){
         $(this).find('a.search').hide();
     });
-    var keyword = $('#keyword option[selected]').text(); 
-    if( keyword ) {
-        var bigstr = $('#content').val()+'';
-        var result = bigstr.match(new RegExp(keyword), 'g');
-        var match_count = (null==result) ? '' : bigstr.match(new RegExp(keyword,'g')).length;
-        $('#statistics_substr').text('文中共有关键词 '+keyword+'：'+match_count+'个');
-   }
+    $('#keyword').change(statistics_substr);
+    statistics_substr();
 });
+
+//统计关键词在内容出现次数
+function statistics_substr(){
+    var keyword = $("#keyword").find("option:selected").text();
+    if( keyword ) {
+        var bigstr = $('#content').val();
+        var result = bigstr.match(new RegExp(keyword), 'g');
+        var match_count = (null==result) ? 0 : bigstr.match(new RegExp(keyword,'g')).length;
+        $('#statistics_substr').html(' 文中共有关键词 <span style="color:red;">'+keyword+'</span>：'+match_count+'次 ');
+   }
+}
 //搜索
 function engine_search(id)
 {

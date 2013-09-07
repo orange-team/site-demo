@@ -7,8 +7,3 @@ function chk($var)
     return isset($var) && !empty($var);
 }
 
-//统计子字符串在字符串中的出现次数
-function statistics_str_count($substring)
-{
-    return mb_substr_count();
-}
