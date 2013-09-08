@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>文章添加网站后台管理</title>
+<title><?php echo $this->_info['name']?>添加网站后台管理</title>
 <link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
 </head>
 <body>
 <div id="man_zone">
-	<h5>&nbsp;&nbsp;◆ 文章发布&nbsp;&raquo;&nbsp;<span style='color:red'><b>*</b></span> 代表必填项；</h5>
-	<?php echo form_open(site_url('admin/article/saveAdd'), array('class'=>"jnice","onsubmit"=>"return check_form()"));?>
-  	<table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style">
+	<h5>&nbsp;&nbsp;◆ <?php echo $this->_info['name']?>发布&nbsp;&raquo;&nbsp;<span style='color:red'><b>*</b></span> 代表必填项；</h5>
+	<?php echo form_open(site_url('admin/'.$this->_info['cls'].'/saveAdd'), array('class'=>"jnice","onsubmit"=>"return check_form()"));?>
+  	<table width="96%" border="0" align="center" cellpadding="3" cellspacing="1" class="table_style">
     	<tr>
       		<td class="left_title_1"><span style='color:red'>*</span>&nbsp;所属栏目</td>
       		<td>
@@ -58,13 +58,12 @@
     		<td><input type="text" class="text_style w_50" name="attention"  /></td>
     	</tr>
     	<tr>
-    		<td class="left_title_2">文章来源</td>
+    		<td class="left_title_2">来源</td>
     		<td><input type="text" class="text_style" name="source"  /></td>
     	</tr>
     	<tr>
-      		<td class="left_title_1">文章内容</td>
+      		<td class="left_title_1">内容</td>
       		<td> <?php echo $kindeditor;?></td>
-
     	</tr>
     	<tr>
       		<td class="left_title_2">是否推荐</td>
@@ -76,7 +75,7 @@
         <tr>
       		<td class="left_title_2">&nbsp;<input type="hidden" name='section' id='section' value='' /></td>
       		<td><input type="submit" name="submit" value=" 提交 " />&nbsp;&nbsp;
-            <input type="reset" name="reset" value=" 重置 " />
+            <input type="button" name="back" value=" 返回 " onclick="window.location.href='<?php echo site_url('admin/'.$this->_info['cls'].'/showList/');?>'"/>
             </td>
     	</tr>
   	</table>
@@ -111,13 +110,13 @@ function check_form()
     {
         if(0==section)
         {
-            $("#errorSection").html('文章所属栏目不能为空！');
+            $("#errorSection").html('所属栏目不能为空！');
         }else if(0==keyword)
         {
             $("#errorKeyword").html('关键词不能为空！');
         }else
         { 
-            $("#errorTitle").html('文章栏目不能为空！');
+            $("#errorTitle").html('栏目不能为空！');
         }
         return false;
     }

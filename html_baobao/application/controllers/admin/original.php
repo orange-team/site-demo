@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-* description: 后台--深度原创管理
+* description: 后台--原创管理
 * author: zg
 * date: 2013-09-06
 */
@@ -33,7 +33,6 @@ class Original extends MY_Controller
         $this->data['two_value'] = $this->data['three_value'] = '';         //栏目内容
         $this->data['keywords'] = array(); //关键词数组
         $this->data['keyword_id'] = 0;     //关键词id
-
         if($section)
         {
             //0:一级栏目id, 1:二级栏目id, 2:三级栏目id, 3:关键词id
@@ -46,7 +45,7 @@ class Original extends MY_Controller
                 $where['section'] = $childs_id;
                 $this->data['two_value'] = $childs[0] ? $childs[0] : '';   //二级栏目内容
             }
-            if($arr[1] != 0 && !empty($this->data['two_value']))
+            if(isset($arr[1]) && $arr[1] != 0 && !empty($this->data['two_value']))
             {
                 unset($childs,$childs_id,$where['section']);
                 $childs = $this->get_child($arr[1],false);
@@ -55,12 +54,12 @@ class Original extends MY_Controller
                 $where['section'] = $childs_id;
                 $this->data['three_value'] = $childs[0] ? $childs[0] : ''; //三级栏目内容
             }
-            if($arr[2] != 0 && !empty($this->data['three_value']))
+            if(isset($arr[2]) && $arr[2] != 0 && !empty($this->data['three_value']))
             {
                 unset($where['section']);
                 $where['section'] = array($arr[2]);
             }
-            if($arr[3] != 0)
+            if(isset($arr[3]) && $arr[3] != 0)
             {
                 $this->data['keyword_id'] = $where['keyword'] = (int)$arr[3];
             }
@@ -73,9 +72,9 @@ class Original extends MY_Controller
             }
 
             $this->data['section'] = $section; 
-            $this->data['one'] = $arr[0]; 
-            $this->data['two'] = $arr[1]; 
-            $this->data['three'] = $arr[2]; 
+            $this->data['one'] = isset($arr[0]) ? $arr[0] : 0;
+            $this->data['two'] = isset($arr[1]) ? $arr[1] : 0;
+            $this->data['three'] = isset($arr[2]) ? $arr[2] : 0;
         }
 
 
@@ -128,7 +127,9 @@ class Original extends MY_Controller
 	//编辑原创
 	function edit($original_id)
 	{
+        //读取图片库
 		$this->load->helper('form');
+		$this->load->helper('common');
 		$this->data = $this->original->getBy_id($original_id);
         $section = $this->section->get_one(array('id'=>$this->data['section']));
         $is_two = false;     //是否显示二级栏目
@@ -186,25 +187,17 @@ class Original extends MY_Controller
         $this->data['kindeditor'] = $this->kindeditor->getEditor( $edit );
         //相关标签
         $this->load->model('relation_tag_model','relation_tag');
+        $this->load->model('tag_model','tag');
         $whereData = array('target_id'=>$original_id,'target_type'=>1,'status'=>0);
         $tagArr = $this->relation_tag->get($whereData);
-        $arrTagIds = array();
+        $arrTagIds = $tagNameArr = array();
         foreach($tagArr as $k=>$v)
         {
             $arrTagIds[] = $v['tag_id'];
         }
         unset($tagArr);
-        if(0<count($arrTagIds))
-        {
-            $this->load->model('tag_model','tag');
-            $this->load->model('img_lib_model','img_lib');
-            $this->data['tagNameArr'] = $this->tag->getBy_ids($arrTagIds);
-            //读取图片库
-            $this->data['img_libArr'] = $this->img_lib->getBy_tag_ids($arrTagIds);
-        }
-        //insert into a_img_lib values(null,'图片title','http://site-demo.loc/img/art_detail_right.png', 0 ,'图片来源','',now());
-        //var_dump($img_libArr,$arrTagIds);exit;
-        $this->load->helper('common');
+        if(0<count($arrTagIds)) $tagNameArr = $this->tag->getBy_ids($arrTagIds);
+        $this->data['tagNameArr'] = $tagNameArr;
 		$this->load->view('admin/originalEdit', $this->data);
 	}
 

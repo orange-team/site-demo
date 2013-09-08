@@ -46,21 +46,33 @@
                 </select>
                 <span style="color:red;" id="errorKeyword"></span>
                 <span style="color:green;" id="statistics_substr"></span>
-                <a href="javascript:engine_search('keyword');" target="_blank" class="search">点击搜索</a>
+                <a href="javascript:engine_search('keyword','select');" target="_blank" class="search">点击搜索</a>
       		</td>
     	</tr>
     	<tr>
       		<td class="left_title_1"><span style='color:red'>*</span>&nbsp;标题</td>
             <td>
             <input class="text_style" type="text" name="title" id="title" value="<?php echo $title;?>" /> <span style="color:red;" id="errorTitle"></span>
-            <a href="javascript:engine_search('title');" target="_blank" class="search">点击搜索</a>
+            <a href="javascript:engine_search('title','input');" target="_blank" class="search">点击搜索</a>
             </td>
     	</tr>
     	<tr>
       		<td class="left_title_2">副标题</td>
             <td><input class="text_style" type="text" name="subtitle" id="subtitle" value="<?php echo $subtitle;?>" />
-            <a href="javascript:engine_search('subtitle');" target="_blank" class="search">点击搜索</a>
+            <a href="javascript:engine_search('subtitle','input');" target="_blank" class="search">点击搜索</a>
             </td>
+    	</tr>
+        <tr>
+      		<td class="left_title_1">页面描述</td>
+            <td><input class="text_style" type="type" name="description" value="<?php echo $description;?>"/></td>
+    	</tr>
+    	<tr>
+    		<td class="left_title_2">SEO关键字</td>
+    		<td><input type="text" class="text_style" name="page_keywords" value="<?php echo $page_keywords;?>"/></td>
+    	</tr>
+    	<tr>
+    		<td class="left_title_1">关注度</td>
+    		<td><input type="text" class="text_style w_50" name="attention" value="<?php echo $attention;?>"/></td>
     	</tr>
     	<tr>
     		<td class="left_title_1">来源</td>
@@ -80,6 +92,13 @@
       		<td> <?php echo $kindeditor;?></td>
     	</tr>
         <tr>
+      		<td class="left_title_2">是否推荐</td>
+      		<td>
+      			<input type="radio" name="recommend"<?php if(1==(int)$recommend) echo ' checked';?> value="1" id="rec_1"/><label for="rec_1">是</label>  &nbsp;&nbsp;
+      			<input type="radio" name="recommend"<?php if(0==(int)$recommend) echo ' checked';?> value="0" id="rec_2"/><label for="rec_2">否</label>  &nbsp;&nbsp;
+      		</td>
+    	</tr>
+        <tr>
       		<td class="left_title_2">&nbsp;<input type="hidden" name='section' id='section' value='' /></td>
       		<td><input type="submit" name="submit" value=" 提交 " />&nbsp;&nbsp;
             <input type="button" name="back" value=" 返回 " onclick="window.location.href='<?php echo site_url('admin/'.$this->_info['cls'].'/showList/');?>'"/>
@@ -90,9 +109,9 @@
     <div class="img_lib">
         <span class="title">图片库</span>
         <dl>
-        <?php if(chk($img_libArr)) {foreach($img_libArr as $k=>$v) {?>
+        <?php if(isset($img_libArr)) {foreach($img_libArr as $k=>$v) {?>
         <dt><img src="<?php echo $v['path']?>" title="<?php echo $v['title']?>" onclick="insert(this)"/></dt>
-        <?php }} ?>
+        <?php }}else{ echo '暂无相关标签对应的图片';} ?>
         </dl>
     </div>
 </div>
@@ -105,9 +124,13 @@
 .img_lib dl img:hover {opacity:1;}
 .img_lib dl:hover {background:#f3f8f7;}
 .jnice { position:relative; }
-
+/* kindeditor替换按钮 */
 .ke-icon-replace { background-image: url(/adminStatic/editor/themes/common/hello.gif); width: 16px; height: 16px; }
 </style>
+<?php
+$this->load->helper('admin');
+relation_tag($id, 3, $tagNameArr);
+?>
 <script type="text/javascript">
 //定义控制器信息
 var _info = {'cls':'<?php echo $this->_info['cls']?>', 'name':'<?php echo $this->_info['name']?>'};
@@ -140,17 +163,11 @@ function statistics_substr(){
    }
 }
 //搜索
-function engine_search(id)
+function engine_search(id,type)
 {
-    var wd = $('#'+id).val();
+    var wd = (type=='select') ? $('#'+id).find('option:selected').text() : $('#'+id).val();
     window.open('<?php echo $this->baiduSearch?>'+wd);
 }
-</script>
-<?php
-$this->load->helper('admin');
-relation_tag($id, 1, $tagNameArr);
-?>
-<script type="text/javascript">
 function check_form()
 {
     var one = $("#one").val();
