@@ -11,19 +11,10 @@ require_once 'JSON.php';
 
 $php_path = dirname(__FILE__) . '/';
 $php_url = dirname($_SERVER['PHP_SELF']) . '/';
-//var_dump($php_path,$php_url);exit;
-/*print
-string 'E:\bohua\adminStatic\editor\php/' (length=32)
-string '/adminStatic/editor/php/' (length=24)
-*/
 //文件保存目录路径
-//$save_path = $php_path . '../attache';
 $save_path = $php_path . '../../../uploads/article/';
-echo $save_path;
 //文件保存目录URL
-//$save_url = $php_url . '/uploads/article/';
 $save_url = $php_url.'../../../uploads/article/';
-//var_dump($save_path,$save_url);exit;
 //定义允许上传的文件扩展名
 $ext_arr = array(
 	'image' => array('gif', 'jpg', 'jpeg', 'png', 'bmp'),
@@ -33,9 +24,7 @@ $ext_arr = array(
 );
 //最大文件大小
 $max_size = 1000000;
-
 $save_path = realpath($save_path) . '/';
-
 //有上传文件时
 if (empty($_FILES) === false) {
 	//原文件名
@@ -49,15 +38,15 @@ if (empty($_FILES) === false) {
 		alert("请选择文件。");
 	}
 	//检查目录
-	if (@is_dir($save_path) === false) {
+	if (is_dir($save_path) === false) {
 		alert("上传目录不存在。");
 	}
 	//检查目录写权限
-	if (@is_writable($save_path) === false) {
+	if (is_writable($save_path) === false) {
 		alert("上传目录没有写权限。");
 	}
 	//检查是否已上传
-	if (@is_uploaded_file($tmp_name) === false) {
+	if (is_uploaded_file($tmp_name) === false) {
 		alert("临时文件可能不是上传文件。");
 	}
 	//检查文件大小
@@ -86,9 +75,11 @@ if (empty($_FILES) === false) {
 			mkdir($save_path);
 		}
 	}
+    //散列规则
+    $hash_dir = create_hash_rule($file_name);
 	$ymd = date("Ymd");
-	$save_path .= $ymd . "/";
-	$save_url .= $ymd . "/";
+	$save_path .= $hash_dir . "/";
+	$save_url .= $hash_dir . "/";
 	if (!file_exists($save_path)) {
 		mkdir($save_path);
 	}
@@ -99,7 +90,7 @@ if (empty($_FILES) === false) {
 	if (move_uploaded_file($tmp_name, $file_path) === false) {
 		alert("上传文件失败。");
 	}
-	@chmod($file_path, 0644);
+	chmod($file_path, 0644);
 	$file_url = $save_url . $new_file_name;
 	
 	header('Content-type: text/html; charset=UTF-8');
@@ -113,5 +104,12 @@ function alert($msg) {
 	$json = new Services_JSON();
 	echo $json->encode(array('error' => 1, 'message' => $msg));
 	exit;
+}
+
+//生成散列目录
+function create_hash_rule($file_name)
+{
+    $hash_dir = substr(md5($file_name),0,2);
+    return $hash_dir;
 }
 ?>

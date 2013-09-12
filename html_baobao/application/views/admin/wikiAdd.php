@@ -34,7 +34,6 @@
     	<tr>
       		<td class="left_title_2">内容</td>
       		<td> <?php echo $kindeditor;?> <span style="color:red;" id="errorContent"></span></td>
-
     	</tr>
         <tr>
       		<td class="left_title_1">&nbsp;</td>

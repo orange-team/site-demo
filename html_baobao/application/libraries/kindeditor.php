@@ -36,7 +36,7 @@ class Kindeditor {
                     items : [
 						'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
 						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-						'insertunorderedlist', '|', 'emoticons', 'image', 'link', 'pagebreak', 'code', 'source',
+						'insertunorderedlist', '|', 'emoticons', 'link', 'pagebreak', 'code', 'source',
                         'replace']
 				})";
                 $sd .= '});';

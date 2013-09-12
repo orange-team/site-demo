@@ -1,18 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><?php echo $this->_info['name']?>修改网站后台管理</title>
-<link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
-<script type="text/javascript" src="/adminStatic/js/jquery.js" ></script>
-</head>
+<?php $this->load->view('admin/header',$this->_info)?>
 <body>
+<style type="text/css">
+.extract_tag a { margin:0 0 0 5px; }
+</style>
 <div id="man_zone">
-	<h5>&nbsp;&nbsp;◆ <?php echo $this->_info['name']?>修改&nbsp;&raquo;&nbsp;<span style='color:red'><b>*</b></span> 代表必填项；</h5>
+	<h5>◆ <?php echo $this->_info['name']?>修改<span style='color:red'><b>*</b></span>代表必填项；</h5>
     <?php echo form_open(site_url('admin/'.$this->_info['cls'].'/saveEdit/'.$id), array('class'=>"jnice","onsubmit"=>"return check_form()"));?>
   	<table id="table" width="96%" border="0" align="center" cellpadding="3" cellspacing="1" class="table_style">
     	<tr>
-      		<td width="100px" class="left_title_1"><span style='color:red'>*</span>&nbsp;栏目</td>
+      		<td width="100px"><span style='color:red'>*</span>&nbsp;栏目</td>
       		<td>
       			<select name="one" id="one" onchange="changeOn('one',this.value,1)">
                 	<option value="0">-- 请选择 --</option>
@@ -36,7 +32,7 @@
             </td>
     	</tr>
     	<tr>
-      		<td class="left_title_2"><span style='color:red'>*</span>&nbsp;关键词</td>
+      		<td><span style='color:red'>*</span>&nbsp;关键词</td>
       		<td>
       			<select name="keyword" id="keyword">
                 	<option value="0">-- 选择关键词 --</option>
@@ -46,60 +42,74 @@
                 </select>
                 <span style="color:red;" id="errorKeyword"></span>
                 <span style="color:green;" id="statistics_substr"></span>
-                <a href="javascript:engine_search('keyword','select');" target="_blank" class="search">点击搜索</a>
+                <a href="javascript:engine_tool('keyword','select','search');" target="_blank" class="search">点击搜索</a>&nbsp;&nbsp;
+                <a href="javascript:engine_tool('keyword','select','index');" target="_blank" class="search">百度指数</a>
       		</td>
     	</tr>
     	<tr>
-      		<td class="left_title_1"><span style='color:red'>*</span>&nbsp;标题</td>
+      		<td><span style='color:red'>*</span>&nbsp;标题</td>
             <td>
             <input class="text_style" type="text" name="title" id="title" value="<?php echo $title;?>" /> <span style="color:red;" id="errorTitle"></span>
-            <a href="javascript:engine_search('title','input');" target="_blank" class="search">点击搜索</a>
+            <a href="javascript:engine_tool('title','input','search');" target="_blank" class="search">点击搜索</a>&nbsp;&nbsp;
+            <a href="javascript:engine_tool('title','input','index');" target="_blank" class="search">百度指数</a>
             </td>
     	</tr>
     	<tr>
-      		<td class="left_title_2">副标题</td>
+      		<td>副标题</td>
             <td><input class="text_style" type="text" name="subtitle" id="subtitle" value="<?php echo $subtitle;?>" />
-            <a href="javascript:engine_search('subtitle','input');" target="_blank" class="search">点击搜索</a>
+            <a href="javascript:engine_tool('subtitle','input','search');" target="_blank" class="search">点击搜索</a>&nbsp;&nbsp;
+            <a href="javascript:engine_tool('subtitle','input','index');" target="_blank" class="search">百度指数</a>
             </td>
     	</tr>
         <tr>
-      		<td class="left_title_1">页面描述</td>
+      		<td>页面描述</td>
             <td><input class="text_style" type="type" name="description" value="<?php echo $description;?>"/></td>
     	</tr>
     	<tr>
-    		<td class="left_title_2">SEO关键字</td>
+    		<td>SEO关键字</td>
     		<td><input type="text" class="text_style" name="page_keywords" value="<?php echo $page_keywords;?>"/></td>
     	</tr>
     	<tr>
-    		<td class="left_title_1">关注度</td>
+    		<td>关注度</td>
     		<td><input type="text" class="text_style w_50" name="attention" value="<?php echo $attention;?>"/></td>
     	</tr>
     	<tr>
-    		<td class="left_title_1">来源</td>
+    		<td>来源</td>
             <td><input class="text_style" type="text" name="source" value="<?php echo $source;?>" />
             </td>
     	</tr>
         <tr>
-    		<td class="left_title_2">相关标签</td>
+    		<td>相关标签</td>
     		<td>
                 <div id="my_tag" class="my_tag clearfloat">
                     <button onclick="show_div()" type="button">添加标签</button>
                 </div>
             </td>
     	</tr>
+        <tr>
+    		<td>抽取标签</td>
+    		<td>
+                <div id="extract_tag" class="extract_tag clearfloat">
+                    <span><a href="#">2岁宝宝</a>[23]</span>
+                    <span><a href="#">4岁宝宝</a>[3]</span>
+                    <button onclick="highlight(1)" type="button">高亮</button>
+                    <button onclick="highlight(0)" type="button">取消</button>
+                </div>
+            </td>
+    	</tr>
     	<tr>
-      		<td class="left_title_2">内容</td>
+      		<td>内容</td>
       		<td> <?php echo $kindeditor;?></td>
     	</tr>
         <tr>
-      		<td class="left_title_2">是否推荐</td>
+      		<td>是否推荐</td>
       		<td>
       			<input type="radio" name="recommend"<?php if(1==(int)$recommend) echo ' checked';?> value="1" id="rec_1"/><label for="rec_1">是</label>  &nbsp;&nbsp;
       			<input type="radio" name="recommend"<?php if(0==(int)$recommend) echo ' checked';?> value="0" id="rec_2"/><label for="rec_2">否</label>  &nbsp;&nbsp;
       		</td>
     	</tr>
         <tr>
-      		<td class="left_title_2">&nbsp;<input type="hidden" name='section' id='section' value='' /></td>
+      		<td>&nbsp;<input type="hidden" name='section' id='section' value='' /></td>
       		<td><input type="submit" name="submit" value=" 提交 " />&nbsp;&nbsp;
             <input type="button" name="back" value=" 返回 " onclick="window.location.href='<?php echo site_url('admin/'.$this->_info['cls'].'/showList/');?>'"/>
             </td>
@@ -126,6 +136,8 @@
 .jnice { position:relative; }
 /* kindeditor替换按钮 */
 .ke-icon-replace { background-image: url(/adminStatic/editor/themes/common/hello.gif); width: 16px; height: 16px; }
+/* 高亮本行 */
+//#table tr:hover{ background-color:red; //使用CSS伪类达到鼠标移入行变色的效果，比Jquery 的mouseover,hover 好用 }
 </style>
 <?php
 $this->load->helper('admin');
@@ -136,8 +148,7 @@ relation_tag($id, 3, $tagNameArr);
 var _info = {'cls':'<?php echo $this->_info['cls']?>', 'name':'<?php echo $this->_info['name']?>'};
 
 //插入图片库图片
-function insert(handle)
-{
+function insert(handle){
     var html = '<img src="'+handle.src+'" title="'+handle.title+'" />';
     editor.insertHtml(html);
 }
@@ -151,7 +162,25 @@ $(function(){
     $('#keyword').change(statistics_substr);
     statistics_substr();
 });
-
+//高亮
+function highlight(){
+    var str = editor.html();
+    var tagList = $('#extract_tag').find('span a');
+    /* test for upperCase
+    var newstr=str.replace(/\b\w+\b/g, function(word){
+            return word.substring(0,1).toUpperCase()+word.substring(1);}
+            );
+    */
+    //editor.html(newstr);
+    //var exp = new RegExp('a');
+    var tag=exp='' ;
+    tagList.each(function(i,item){
+        tag = $(this).text();
+        exp = new RegExp(tag,'g');
+        str = str.replace(exp, function(word){ return '<a href="#">'+word+'</a>'; });
+    });
+    editor.html(str);
+}
 //统计关键词在内容出现次数
 function statistics_substr(){
     var keyword = $("#keyword").find("option:selected").text();
@@ -163,10 +192,11 @@ function statistics_substr(){
    }
 }
 //搜索
-function engine_search(id,type)
+function engine_tool(id,type,tool_type)
 {
     var wd = (type=='select') ? $('#'+id).find('option:selected').text() : $('#'+id).val();
-    window.open('<?php echo $this->baiduSearch?>'+wd);
+    var url = ('search'==tool_type) ? '<?php echo $this->baidu['search']?>'+wd : '<?php echo $this->baidu['index']?>'+wd;
+    window.open(('search'==tool_type) ? url : '<?php echo site_url('admin/original/go_baidu_index');?>/'+wd);
 }
 function check_form()
 {

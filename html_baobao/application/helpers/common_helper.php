@@ -7,3 +7,16 @@ function chk($var)
     return isset($var) && !empty($var);
 }
 
+//过滤变量,相当于trim,addslashes
+function filter($var)
+{
+    return trim(addslashes($var));
+}
+
+//转码
+function utf2gbk($str)
+{
+    return mb_convert_encoding($str, 'GBK', 'UTF-8'); 
+}
+
+

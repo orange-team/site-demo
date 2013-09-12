@@ -22,7 +22,8 @@ class Tag_model extends CI_Model
     function getFieldBy_id($id, $field)
 	{
 		$this->db->select($field)->from($this->_table)->where('id', (int)$id);
-		return $this->db->get()->row_array();
+		$arr = $this->db->get()->row_array();
+        return empty($arr[$field])?'':$arr[$field];
     }
 
     function getOrder_weight($limit,$offset)

@@ -56,7 +56,7 @@ class Mmxue extends MY_Controller
         foreach( $timelineArr as $k=>$v )
         {
             //limit 6 是因为页面上只有6个可显示
-            $this->db->select('id, title, keyword')->from('a_article')->where('timeline_id',$v['id'])->order_by('timeline_id')->limit($this->limit_num);
+            $this->db->select('id, title, keyword')->from('a_article')->where('timeline',$v['id'])->order_by('timeline')->limit($this->limit_num);
             $tmpArr = array();
             $tmpArr = $this->db->get()->result_array();
             //var_dump($tmpArr, count($tmpArr));

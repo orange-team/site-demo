@@ -65,17 +65,11 @@ class Img_lib_model extends CI_Model
 	//列表页
 	function getList($limit=0, $offset=0, $where=array(1=>1))
     {
-        if(isset($where['name']) && !empty($where['name'])) 
+        if(isset($where['title']) && !empty($where['title'])) 
         {
-            $this->db->like('name',$where['name']);
-            unset($where['name']);
+            $this->db->like('title',$where['title']);
+            unset($where['title']);
         } 
-        if(isset($where['section']) && !empty($where['section']))
-        {
-            $in_where = $where['section'];
-            unset($where['section']);
-        }
-        if(isset($in_where)) $this->db->where_in('section',$in_where);
 		$this->db->select('*')->from($this->_table);
 		($where) ? $this->db->where($where) : '';
 		$this->db->order_by("id DESC");
@@ -84,10 +78,10 @@ class Img_lib_model extends CI_Model
 		return $this->db->get()->result_array();
 	}
 
-	function insertNew($data)
+	function addone($data)
 	{
 		$this->db->insert($this->_table, $data); 
-		return $this->db->affected_rows();
+		return $this->db->insert_id();
 	}
 
 	function update($id, $data=array())

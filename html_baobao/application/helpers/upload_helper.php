@@ -13,16 +13,16 @@
  *          $id，上传目录的id，如：/uploads/img/article/$id/
  * @return : boolean/intager
  */
-function upload_img($upimg, $id, $img_type='article')
+function upload_img($upimg)
 {
     //未上传图片
     if( empty($_FILES[$upimg]['name']) ) return 1;
     //重命名图片, 防止了.php.jpg
-    $img_ext = substr($_FILES[$upimg]['name'],0, strpos($_FILES[$upimg]['name'],'.'));
-    $myImg = date('YmdHis').'_'.rand(10000,99999);
-    $config['file_name'] = $myImg.$img_ext;
-    $config['upload_path'] = './uploads/img/'.$img_type.'/'.(int)$id;
-    //var_dump($config,getcwd());
+    $img_ext = substr($_FILES[$upimg]['name'], strpos($_FILES[$upimg]['name'],'.'));
+    //$myImg = date('YmdHis').'_'.rand(10000,99999);
+    $my_img_name = substr(md5($_FILES[$upimg]['name']), 8, 16);
+    $config['file_name'] = $my_img_name.$img_ext;
+    $config['upload_path'] = './uploads/img_lib/'.substr($my_img_name,0,2).'/';
     //生成散列目录
     if( !file_exists($config['upload_path']) ) mkdir($config['upload_path']);
     $config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -45,7 +45,7 @@ function upload_img($upimg, $id, $img_type='article')
     $config['width'] = 120;
     $config['height'] = 120;
     $config['quality'] = 90;
-    $new_image = $myImg.$img_ext.'_s'.$uploadData['file_ext'];
+    $new_image = $my_img_name.$img_ext.'_s'.$uploadData['file_ext'];
     $config['new_image'] = $new_image;
     $CI->image_lib->initialize($config);
     if (!$CI->image_lib->resize()) 

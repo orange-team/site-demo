@@ -15,6 +15,7 @@ class wiki extends MY_Controller
 		parent::__construct();
         $this->_info['cls'] = strtolower(__CLASS__);
         $this->_info['name'] = '百科';
+        $this->_info['view_path'] = 'admin/'.$this->_info['cls'];
 		$this->load->model('wiki_model','wiki');
     }
 
@@ -36,7 +37,7 @@ class wiki extends MY_Controller
         }
 		//分页
 		$this->load->library('pagination');
-		$config['base_url'] = site_url('admin/wiki/showlist/'.$this->data['wiki_key'].'/'.$this->data['tag_name'].'/');
+		$config['base_url'] = site_url($this->_info['view_path'].'/showlist/'.$this->data['wiki_key'].'/'.$this->data['tag_name'].'/');
 		//每页
 		$config['per_page'] = $this->data['pagesize'] = 15 ; 
 		//总数
@@ -52,20 +53,13 @@ class wiki extends MY_Controller
 		$arr = $this->wiki->getList($this->data['pagesize'], $offset, $where);
         foreach($arr as $key=>$val)
         {
-            $arr[$key]['tag_name'] = $this->get_tag_name($val['tag_id']);
+            //获得标签名称
+            $arr[$key]['tag_name'] = $this->tag->getFieldBy_id($val['tag_id'],'name');
         }
 		$this->data['wikiArr'] = $arr;
         unset($arr);
         $this->data['number'] = $offset+1; 
-		$this->load->view('admin/wikiList', $this->data);
-    }
-
-    //获得标签名称
-    public function get_tag_name($id)
-    {
-		$this->load->model('tag_model','tag');
-        $arr = $this->tag->getFieldBy_id($id, 'name');
-        return empty($arr['name'])?'':$arr['name'];
+		$this->load->view($this->_info['view_path'].'List', $this->data);
     }
 
     //添加
@@ -78,9 +72,24 @@ class wiki extends MY_Controller
         $this->data = array('id'=>'null','wiki_key'=>'');
 		$this->data['id'] = $this->wiki->insertNew($this->data);
         $this->data['kindeditor'] = $this->kindeditor->getEditor($eddt);
-		$this->load->view('admin/wikiEdit', $this->data);
+		$this->load->view($this->_info['view_path'].'Edit', $this->data);
 	}
 
+    function saveAdd()
+	{
+		$data = array(
+				'title' => $this->input->post('title'),
+				'path' => $this->input->post('path'),
+				'source' => $this->input->post('本站'),
+				'add_time' => date('Y-m-d H:i:s'),
+				);
+		$affected_rows = $this->img_lib->insertNew($data);
+		$data['msg'] = ($affected_rows>0) ? '成功' : '失败';
+		$section = $this->input->post('section').'/';
+		$data['url'] = '/admin/original/showlist/'.$section;
+		$data['history'] = '1';
+		$this->load->view('admin/info', $data);
+	}
 	//编辑百科
 	function edit($wiki_id)
 	{
@@ -90,7 +99,7 @@ class wiki extends MY_Controller
 		$eddt = array('name' =>'wiki_content', 'id' =>'wiki_content', 'value' =>$arr['wiki_content']);
 		$this->load->library('kindeditor',$eddt);
         $arr['kindeditor'] = $this->kindeditor->getEditor( $eddt );
-		$this->load->view('admin/wikiEdit', $arr);
+		$this->load->view($this->_info['view_path'].'Edit', $arr);
 	}
 
     //保存编辑结果

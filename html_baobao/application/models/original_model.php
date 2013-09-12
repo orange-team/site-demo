@@ -13,19 +13,11 @@ class original_model extends CI_Model
 		parent::__construct();
 	}
 
-	function getBy_id($art_id)
+	function getBy_id($id)
 	{
-		$this->db->select('*')->from($this->_table)->where('id', (int)$art_id);
+		$this->db->select('*')->from($this->_table)->where('id', $id);
 		return $this->db->get()->row_array();
 	}
-
-	function getByorder_id($where,$order='id ASC')
-	{
-		$this->db->select('id,title')->from($this->_table)->where($where);
-		$this->db->order_by($order);
-		return $this->db->get()->row_array();
-	}
-
 
 	function getTotal($where=array())
 	{
@@ -61,7 +53,7 @@ class original_model extends CI_Model
         }
 		($where) ? $this->db->where($where) : '';
         ($in_where) ? $this->db->where_in('section',$in_where) : '';
-		$this->db->order_by("id DESC");
+		$this->db->order_by("add_time DESC");
 		$this->db->limit($limit, $offset);
         //echo $this->db->last_query();
 		return $this->db->get()->result_array();

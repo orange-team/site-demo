@@ -1,3 +1,8 @@
+$(function(){
+    //隔行变色
+    $('#table tr:even').find('td:nth-child(1)').addClass('left_title_1 even');
+    $('#table tr:odd').find('td:nth-child(1)').addClass('left_title_2 odd');
+});
 function chkform()
 {
 	var len = chkarr.length;

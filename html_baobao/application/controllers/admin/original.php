@@ -8,13 +8,15 @@
 class Original extends MY_Controller
 {
     //用百度搜索关键词
-    var $baiduSearch = 'http://www.baidu.com/s?wd=';
+    var $baidu = array('search' => 'http://www.baidu.com/s?wd=',
+        'index'=>'http://index.baidu.com/main/word.php?word=');
 
 	function __construct()
 	{
 		parent::__construct();
         $this->_info['cls'] = strtolower(__CLASS__);
         $this->_info['name'] = '深度原创';
+        $this->_info['view_path'] = 'admin/'.$this->_info['cls'];
 		$this->load->model('original_model','original');
 		$this->load->model('section_model','section');
 		$this->load->model('keyword_model','keyword');
@@ -76,19 +78,16 @@ class Original extends MY_Controller
             $this->data['two'] = isset($arr[1]) ? $arr[1] : 0;
             $this->data['three'] = isset($arr[2]) ? $arr[2] : 0;
         }
-
-
         //搜标题segment(5)
         $this->data['title'] = 0;
         if($title)  
         {
-            $this->data['title'] = urldecode(trim(addslashes($title))); 
+            $this->data['title'] = urldecode(filter($title));
             $where['title'] = $this->data['title']; 
         }
-
 		//分页
 		$this->load->library('pagination');
-		$config['base_url'] = site_url('admin/original/showlist/'.$this->data['section'].'/'.$this->data['title'].'/');
+		$config['base_url'] = site_url($this->_info['view_path'].'/showlist/'.$this->data['section'].'/'.$this->data['title'].'/');
 		//每页
 		$config['per_page'] = $this->data['pagesize'] = 15; 
 		//总数
@@ -103,12 +102,11 @@ class Original extends MY_Controller
 		$this->data['page'] = $this->pagination->create_links();
 		$offset = $this->uri->segment(6);
 		$arr = $this->original->getList($this->data['pagesize'], $offset, $where);
-
         //顶级栏目
         $this->data['one_section'] = $this->section->getBy_parent(0);
 		$this->data['originalArr'] = $arr;
         $this->data['number'] = $offset+1; 
-		$this->load->view('admin/originalList', $this->data);
+		$this->load->view($this->_info['view_path'].'List', $this->data);
 	}
 
     //添加
@@ -121,7 +119,7 @@ class Original extends MY_Controller
 		$edit = array('name' =>'content', 'id' =>'content', 'value' =>'');
 		$this->load->library('kindeditor',$edit);
         $this->data ['kindeditor'] = $this->kindeditor->getEditor();
-		$this->load->view('admin/originalAdd', $this->data);
+		$this->load->view($this->_info['view_path'].'Add', $this->data);
 	}
 
 	//编辑原创
@@ -198,24 +196,40 @@ class Original extends MY_Controller
         unset($tagArr);
         if(0<count($arrTagIds)) $tagNameArr = $this->tag->getBy_ids($arrTagIds);
         $this->data['tagNameArr'] = $tagNameArr;
-		$this->load->view('admin/originalEdit', $this->data);
+		$this->load->view($this->_info['view_path'].'Edit', $this->data);
 	}
+
+    //百度指数是gbk的，所以单写页面实现跳转
+    function go_baidu_index($str)
+    {
+        $this->load->helper('common');
+        header('Content-Type: text/html; charset=gbk');
+        echo '
+        <script type="text/javascript">
+        window.location.href="'.$this->baidu['index'].'"+decodeURIComponent("'.utf2gbk($str).'");
+        </script>
+        ';
+    }
 
 	function saveEdit($original_id)
 	{
-		if($this->input->post('section')) $data['section'] = trim(addslashes($this->input->post('section')));
-		if($this->input->post('keyword')) $data['keyword'] = trim(addslashes($this->input->post('keyword')));
-		if($this->input->post('title')) $data['title'] = trim(addslashes($this->input->post('title')));
-		if($this->input->post('subtitle')) $data['subtitle'] = trim(addslashes($this->input->post('subtitle')));
-		if($this->input->post('source')) $data['source'] = trim(addslashes($this->input->post('source')));
-		if($this->input->post('content')) $data['content'] = $this->input->post('content');
-		if($this->input->post('description')) $data['description'] = $this->input->post('description');
-		if($this->input->post('page_keywords')) $data['page_keywords'] = $this->input->post('page_keywords');
-		if($this->input->post('attention')) $data['attention'] = $this->input->post('attention');
-		if($this->input->post('recommend')) $data['recommend'] = $this->input->post('recommend');
+        $this->load->helper('common');
+		if($this->input->post('section')) $data['section'] = filter($this->input->post('section'));
+		if($this->input->post('keyword')) $data['keyword'] = filter($this->input->post('keyword'));
+		if($this->input->post('title')) $data['title'] = filter($this->input->post('title'));
+		if($this->input->post('subtitle')) $data['subtitle'] = filter($this->input->post('subtitle'));
+		if($this->input->post('source')) $data['source'] = filter($this->input->post('source'));
+		if($this->input->post('content')) $data['content'] = filter($this->input->post('content'));
+		if($this->input->post('description')) $data['description'] = filter($this->input->post('description'));
+		if($this->input->post('page_keywords')) $data['page_keywords'] = filter($this->input->post('page_keywords'));
+		if($this->input->post('attention')) $data['attention'] = filter($this->input->post('attention'));
+		if($this->input->post('recommend')) $data['recommend'] = filter($this->input->post('recommend'));
+        //更新时间，防止没有改动的提交，导致affected_rows=0
+        $data['add_time'] = date('Y-m-d H:i:s');
 		$affected_rows = $this->original->update($original_id, $data);
+        unset($data);
 		$data['msg'] = ($affected_rows>0) ? '成功' : '失败';
-		$data['url'] = '/admin/original/showList/';
+		$data['url'] = site_url($this->_info['view_path'].'/showList/');
 		$this->load->view('admin/info', $data);
 	}
 	
@@ -241,20 +255,7 @@ class Original extends MY_Controller
 		$data['history'] = '1';
 		$this->load->view('admin/info', $data);
 	}
-	//新增
-	function addNew($section)
-	{
-		$this->load->helper('form');
-		$this->data['AddOrEdit'] = 'Add';//添加&更新
-		$this->data['original_id'] = '';
-		$this->data['content'] = '';
-		//在线编辑器
-		$edit = array('name' =>'content', 'id' =>'content', 'value' =>$this->data['content']);
-		$this->load->library('kindeditor',$edit);
-        $this->data ['kindeditor'] = $this->kindeditor->getEditor( $edit );
 		
-		$this->load->view('admin/originalAddNew', $this->data);
-	}	
 	function del($id)
 	{
 		$affected_rows = $this->original->del($id);
@@ -264,25 +265,6 @@ class Original extends MY_Controller
 		$this->load->view('admin/info', $data);
 	}
 
-	function doUpload($upImg)
-	{
-		//重命名图片, 防止了.php.jpg
-		$config['file_name'] = date('YmdHis').substr($_FILES[$upImg]['name'],0, strpos($_FILES[$upImg]['name'],'.'));
-		$config['upload_path'] = './uploads/';
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size'] = '1600';
-		$config['max_width']  = '1200';
-		$config['max_height']  = '1200';
-		//载入文件上传类，加入配置
-		$this->load->library('upload', $config);
-		if ( ! $this->upload->do_upload($upImg))//上传失败
-		{
-			$data = array('error' => $this->upload->display_errors());
-			$this->load->view('admin/info', $data);
-			var_dump($data);
-			exit;
-		} 
-    }
     //ajax异步三级联动
     function ajax_change($id=0)//$id有值，則代表不是ajax异步获取
     {

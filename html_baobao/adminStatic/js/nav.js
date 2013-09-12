@@ -16,6 +16,10 @@ t=outlookbar.addtitle('原创管理','妈妈学习',1)
 outlookbar.additem('原创管理',t,'/admin/original/showlist/')
 outlookbar.additem('深度原创',t,'/admin/original/add/')
 
+t=outlookbar.addtitle('图库管理','妈妈学习',1)
+outlookbar.additem('图库管理',t,'/admin/img_lib/showlist/')
+outlookbar.additem('添加图片',t,'/admin/img_lib/add/')
+
 t=outlookbar.addtitle('关键词管理','妈妈学习',1)
 outlookbar.additem('关键词管理',t,'/admin/keyword/showlist/')
 outlookbar.additem('添加关键词',t,'/admin/keyword/add/')

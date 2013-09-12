@@ -1,10 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>网站后台管理-<?php echo $this->_info['name']?>列表</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="/adminStatic/css/common_new.css" rel="stylesheet" type="text/css" media="screen" />
-</head>
+<?php $this->load->view('admin/header',$this->_info)?>
 <body>
 <div id="man_zone">
 	<h2><?php echo $this->_info['name']?>列表</h2>
@@ -31,8 +25,6 @@
     		<td align="center" ><input type="checkbox" name="news_check" value="{$nl.id}"/></input></td>
             <td align="center" ><?php echo $k+$number;?></td>
             <td><?php echo anchor(site_url('admin/'.$this->_info['cls'].'/edit/'.$row['id']), $row['wiki_key']);?></td>
-            <!--<td><?php echo empty($row['tag_name'])?'':anchor(site_url('admin/'.$this->_info['cls'].'/del/'.$row['id']), $row['tag_name']), '&nbsp;', anchor(site_url('admin/relation_tag/showList/?type='.$this->this->_info['cls'].'&id='.$row['id']),'添加','class="view"')?></td>
-            -->
             <td><?php echo $row['tag_name'], '&nbsp;', anchor(site_url('admin/relation_tag/showList/?type='.$this->_info['cls'].'&id='.$row['id']),'添加','class="view"')?></td>
             <td class="action" align="center">
             <?php echo anchor(site_url(''),'查看&nbsp;&nbsp;','class="view" target="_blank"'), 
