@@ -1,14 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>网站后台管理</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="/adminStatic/css/common_new.css" rel="stylesheet" type="text/css" media="screen" />
-</head>
-
+<?php $this->load->view('admin/header',$this->_info)?>
 <body>
 <div id="man_zone">
-	<h2>专栏列表</h2>
+	<h2><?php echo $this->_info['name']?>列表</h2>
     <table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style">
     	<tr>
             <td>
@@ -53,25 +46,23 @@
         </tr>
     </table>
 </div>
-<script type="text/javascript" src="/adminStatic/js/jquery.js"></script>
 <script type="text/javascript" src="/adminStatic/js/common.js"></script>
 <script type=text/javascript>
 <!--
+//定义控制器信息
+var _info = {'cls':'<?php echo $this->_info['cls']?>', 'name':'<?php echo $this->_info['name']?>'};
 function toSearch(type)
 {
     var name = $("#name").val();
-    window.location.href="/admin/specpage/showlist/"+name+"/";
+    window.location.href="/admin/"+_info.cls+"/showlist/"+name+"/";
 }
-function showAll()
-{
-    window.location.href="/admin/specpage/showlist/";
-}
+
 function delOne(id)
 {
     var name = $("#name_"+id).text()
     if( confirm('确认要删除专栏 "'+name+'" 吗？') )
     {
-        location.href='<?php echo site_url('admin/specpage/del/')?>/'+id;
+        window.location.href='/admin/'+_info.cls+'/del/'+id;
     }
 }
 //-->

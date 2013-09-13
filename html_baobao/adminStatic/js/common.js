@@ -3,6 +3,11 @@ $(function(){
     $('#table tr:even').find('td:nth-child(1)').addClass('left_title_1 even');
     $('#table tr:odd').find('td:nth-child(1)').addClass('left_title_2 odd');
 });
+//显示全部
+function showAll()
+{
+    window.location.href="/admin/"+_info.cls+"/showlist/";
+}
 function chkform()
 {
 	var len = chkarr.length;
@@ -85,3 +90,4 @@ function changeOn(level,id,showKey)
         }
     })
 }
+

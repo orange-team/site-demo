@@ -14,6 +14,7 @@ class Relation_tag extends MY_Controller
         //当前控制器名，用于view中复用
         $this->data['_class'] = Strtolower(__CLASS__);
 		$this->load->model('tag_model','tag');
+        $this->load->helper('common');
 	}
 
     //列表页
@@ -80,6 +81,23 @@ class Relation_tag extends MY_Controller
         unset($data);
         echo ($affected_rows>0) ? '1' : '-2';
     }    
+
+    //添加往关联表中
+    function add()
+    {
+        $obj_id = filter($this->input->get('id'));
+        $type = filter($this->input->get('type'));
+        $tag_id = filter($this->uri->segment(4));
+        if('img_lib'==$type)
+        {
+            $this->load->model('img_lib_model','img_lib');
+            $data = array('tag_id'=>$tag_id);
+            $affected_rows = $this->img_lib->update($obj_id, $data);
+        }
+		$data['msg'] = ($affected_rows) ? '成功' : '失败';
+		$data['url'] = '/admin/img_lib/showList/';
+		$this->load->view('admin/info', $data);
+    }
 
     //ajax获取标签
     function ajax_get($key)

@@ -51,6 +51,7 @@ class wiki extends MY_Controller
 		$this->data['page'] = $this->pagination->create_links();
 		$offset = $this->uri->segment($config['uri_segment']);
 		$arr = $this->wiki->getList($this->data['pagesize'], $offset, $where);
+        $this->load->model('tag_model','tag');
         foreach($arr as $key=>$val)
         {
             //获得标签名称
@@ -75,21 +76,6 @@ class wiki extends MY_Controller
 		$this->load->view($this->_info['view_path'].'Edit', $this->data);
 	}
 
-    function saveAdd()
-	{
-		$data = array(
-				'title' => $this->input->post('title'),
-				'path' => $this->input->post('path'),
-				'source' => $this->input->post('本站'),
-				'add_time' => date('Y-m-d H:i:s'),
-				);
-		$affected_rows = $this->img_lib->insertNew($data);
-		$data['msg'] = ($affected_rows>0) ? '成功' : '失败';
-		$section = $this->input->post('section').'/';
-		$data['url'] = '/admin/original/showlist/'.$section;
-		$data['history'] = '1';
-		$this->load->view('admin/info', $data);
-	}
 	//编辑百科
 	function edit($wiki_id)
 	{

@@ -1,8 +1,5 @@
 <?php $this->load->view('admin/header',$this->_info)?>
 <body>
-<style type="text/css">
-.extract_tag a { margin:0 0 0 5px; }
-</style>
 <div id="man_zone">
 	<h5>◆ <?php echo $this->_info['name']?>修改<span style='color:red'><b>*</b></span>代表必填项；</h5>
     <?php echo form_open(site_url('admin/'.$this->_info['cls'].'/saveEdit/'.$id), array('class'=>"jnice","onsubmit"=>"return check_form()"));?>
@@ -90,10 +87,9 @@
     		<td>抽取标签</td>
     		<td>
                 <div id="extract_tag" class="extract_tag clearfloat">
-                    <span><a href="#">2岁宝宝</a>[23]</span>
-                    <span><a href="#">4岁宝宝</a>[3]</span>
-                    <button onclick="highlight(1)" type="button">高亮</button>
-                    <button onclick="highlight(0)" type="button">取消</button>
+                    <span><a href="#">2岁宝宝</a>[<em>23</em>]</span>
+                    <span><a href="#">4岁宝宝</a>[<em>3</em>]</span>
+                    <button onclick="javascript:high.light(this)" type="button">高亮</button>
                 </div>
             </td>
     	</tr>
@@ -125,8 +121,7 @@
         </dl>
     </div>
 </div>
-<script type="text/javascript" src="/adminStatic/js/common.js" ></script>
-<style>
+<style type="text/css">
 .search {display:none;}
 .img_lib { float:right; z-index:999; position:fixed; bottom:50px; right:100px;/*position:absolute; top:0; right:10px;*/ border:1px solid grey; width:150px;height:400px; overflow-y:scroll;}
 .img_lib .title {display:block;background:#F3F8F7;color:#73938E;width:100%;line-height:30px;height:30px;font-weight:bold;text-align:center;}
@@ -143,9 +138,8 @@
 $this->load->helper('admin');
 relation_tag($id, 3, $tagNameArr);
 ?>
+<?php $this->load->view('admin/common',$this->_info);?>
 <script type="text/javascript">
-//定义控制器信息
-var _info = {'cls':'<?php echo $this->_info['cls']?>', 'name':'<?php echo $this->_info['name']?>'};
 
 //插入图片库图片
 function insert(handle){
@@ -163,23 +157,44 @@ $(function(){
     statistics_substr();
 });
 //高亮
-function highlight(){
-    var str = editor.html();
-    var tagList = $('#extract_tag').find('span a');
-    /* test for upperCase
-    var newstr=str.replace(/\b\w+\b/g, function(word){
-            return word.substring(0,1).toUpperCase()+word.substring(1);}
-            );
-    */
-    //editor.html(newstr);
-    //var exp = new RegExp('a');
-    var tag=exp='' ;
-    tagList.each(function(i,item){
-        tag = $(this).text();
-        exp = new RegExp(tag,'g');
-        str = str.replace(exp, function(word){ return '<a href="#">'+word+'</a>'; });
-    });
-    editor.html(str);
+var high = {
+    clicked : 0,
+    light : function (t){
+        this.turn(t);
+        //alert(this.clicked);
+        //editor的内容
+        var str = editor.html();
+        var tagList = $('#extract_tag').find('span a');
+        /* test for upperCase
+        var newstr=str.replace(/\b\w+\b/g, function(word){
+                return word.substring(0,1).toUpperCase()+word.substring(1);}
+                );
+        */
+        //editor.html(newstr);
+        //var exp = new RegExp('a');
+        var tag=exp='' ;
+        if(1==this.clicked){
+            tagList.each(function(i,item){
+                tag = $(this).text();
+                num = $(this).siblings(1).text();
+                exp = new RegExp(tag,'g');
+                style = 'style="color:green;font-size:'+num+'px;"';
+                str = str.replace(exp, function(word){ return '<a href="#" '+style+'>'+word+'</a>'; });
+            });
+        }else{
+            tagList.each(function(i,item){
+                tag = $(this).text();
+                exp = new RegExp('<a[^>]*?>'+tag+'<\/a>','g');
+                str = str.replace(exp, tag);
+            });
+        }
+        editor.html(str);
+    },
+    turn : function (t){
+        $(t).text((0==this.clicked)?'取消':'高亮');
+        this.clicked = this.clicked^1;
+    }
+
 }
 //统计关键词在内容出现次数
 function statistics_substr(){
@@ -237,5 +252,10 @@ function check_form()
 
 }
 </script>
+<style type="text/css">
+.extract_tag a { margin:0 0 0 5px; }
+/* editor中高亮 */
+.highlight {border:1px solid #73938E;background:#333;font-size:20px;}
+</style>
 </body>
 </html>

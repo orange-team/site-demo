@@ -33,7 +33,7 @@
                     <?php }} ?>
                 </select>
                   <input type="submit" name="submit" id='submit' onclick='toSearch()' value=" 搜索 " />
-
+                  <input type="button" name="button" onclick='showAll()' value="显示全部" />
             </td>
         </tr>
     </table>

@@ -1,36 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>网站后台管理</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="/adminStatic/css/common_new.css" rel="stylesheet" type="text/css" media="screen" />
-<script type="text/javascript" src="/adminStatic/js/jquery.js"></script>
-<script type="text/javascript" src="/adminStatic/js/common.js"></script>
-<script type=text/javascript>
-function toSearch(type)
-{
-    if(type=='one')
-    {
-        $("#two").get(0).selectedIndex = 0;
-        $("#three").get(0).selectedIndex = 0;
-    }
-    if(type=='two')
-    {
-        $("#three").get(0).selectedIndex = 0;
-    }
-    var one = $("#one").val();
-    var two = $("#two").val();
-    var three = $("#three").val();
-    section = one+"-"+two+"-"+three
-    
-    var name = $("#name").val();
-    if(''==section) section=0;
-    if(''==name) name=0;
-    window.location.href="/admin/keyword/showlist/"+section+"/"+name+"/";
-}
-</script>
-</head>
-
+<?php $this->load->view('admin/header',$this->_info)?>
 <body>
 <div id="man_zone">
 	<h2>关键词列表</h2>
@@ -58,6 +26,7 @@ function toSearch(type)
                     <?php }} ?>
                 </select>
                   <input type="submit" name="submit" id='submit' onclick='toSearch()' value=" 搜索 " />
+                  <input type="button" name="button" onclick='showAll()' value="显示全部" />
             </td>
         </tr>
     </table>
@@ -92,5 +61,30 @@ function toSearch(type)
         </tr>
     </table>
 </div>
+<?php $this->load->view('admin/common',$this->_info);?>
+<script type=text/javascript>
+function toSearch(type)
+{
+    if(type=='one')
+    {
+        $("#two").get(0).selectedIndex = 0;
+        $("#three").get(0).selectedIndex = 0;
+    }
+    if(type=='two')
+    {
+        $("#three").get(0).selectedIndex = 0;
+    }
+    var one = $("#one").val();
+    var two = $("#two").val();
+    var three = $("#three").val();
+    section = one+"-"+two+"-"+three
+    
+    var name = $("#name").val();
+    if(''==section) section=0;
+    if(''==name) name=0;
+    window.location.href="/admin/keyword/showlist/"+section+"/"+name+"/";
+}
+</script>
+
 </body>
 </html>

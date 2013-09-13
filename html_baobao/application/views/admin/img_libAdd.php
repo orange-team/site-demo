@@ -9,8 +9,7 @@
     <input type="button" name="back" value=" 返回 " onclick="window.location.href='<?php echo site_url('admin/'.$this->_info['cls'].'/showList/');?>'"/>
     </form>
 </div>
-<script type="text/javascript" src="/adminStatic/js/jquery.js" ></script>
-<script type="text/javascript" src="/adminStatic/js/common.js" ></script>
+<?php $this->load->view('admin/common',$this->_info);?>
 <script type="text/javascript">
 function check_form()
 {

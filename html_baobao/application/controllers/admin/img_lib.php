@@ -30,7 +30,6 @@ class Img_lib extends MY_Controller
         //搜索
         $where = array();
         $this->data['keywords'] = array(); //关键词数组
-        $this->data['section'] = 0;
         $this->data['keyword_id'] = 0;     //关键词id
         //搜标题segment(5)
         $this->data['title'] = 0;
@@ -40,22 +39,13 @@ class Img_lib extends MY_Controller
             $where['title'] = $this->data['title']; 
         }
 		//分页
-		$this->load->library('pagination');
+        $this->load->helper('admin');
 		$config['base_url'] = site_url($this->_info['view_path'].'/showlist/'.$this->data['title'].'/');
-		//每页
-		$config['per_page'] = $this->data['pagesize'] = 15; 
 		//总数
 		$config['total_rows'] = $this->img_lib->getTotal($where);
-		$this->data['section'] = (int)$section;
-		$config['uri_segment'] = 5;
-		$config['first_link'] = '首页';
-		$config['last_link'] = '尾页';
-		$config['next_link'] = '下一页';
-		$config['prev_link'] = '上一页';
-		$this->pagination->initialize($config); 
-		$this->data['page'] = $this->pagination->create_links();
-		$offset = $this->uri->segment($config['uri_segment']);
-		$arr = $this->img_lib->getList($this->data['pagesize'], $offset, $where);
+		$this->data['page'] = my_page($config);
+		$offset = $this->uri->segment(5);
+		$arr = $this->img_lib->getList(15, $offset, $where);
 		$this->load->model('tag_model','tag');
         foreach($arr as $key=>$val)
         {

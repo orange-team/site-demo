@@ -100,7 +100,7 @@ class Original extends MY_Controller
 		$config['prev_link'] = '上一页';
 		$this->pagination->initialize($config); 
 		$this->data['page'] = $this->pagination->create_links();
-		$offset = $this->uri->segment(6);
+		$offset = $this->uri->segment($config['uri_segment']);
 		$arr = $this->original->getList($this->data['pagesize'], $offset, $where);
         //顶级栏目
         $this->data['one_section'] = $this->section->getBy_parent(0);

@@ -33,3 +33,21 @@ function relation_tag($obj_id, $obj_type, $tagNameArr)
     }
     echo '</script>',"\n";
 }
+
+//分页
+function my_page($config)
+{
+    if(!isset($config['base_url'])) exit('con\'t find the per_page index of $config in my_page (admin_helper)');
+    $CI =& get_instance();
+    $CI->load->library('pagination');
+    //每页
+    $config['per_page'] = 15; 
+    //总数
+    $config['first_link'] = '首页';
+    $config['last_link'] = '尾页';
+    $config['next_link'] = '下一页';
+    $config['prev_link'] = '上一页';
+    $CI->pagination->initialize($config); 
+    return $CI->pagination->create_links();
+
+}
