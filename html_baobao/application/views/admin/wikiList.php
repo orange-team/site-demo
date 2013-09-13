@@ -46,12 +46,8 @@
         </tr>
     </table>
 </div>
-</body>
-<script type="text/javascript" src="/adminStatic/js/jquery.js"></script>
-<script type="text/javascript" src="/adminStatic/js/common.js"></script>
+<?php $this->load->view('admin/common',$this->_info);?>
 <script type=text/javascript>
-//定义控制器信息
-var _info = {'cls':'<?php echo $this->_info['cls']?>', 'name':'<?php echo $this->_info['name']?>'};
 function toSearch(type)
 {
     var tag_id = $("#tag_id").val();
@@ -66,4 +62,5 @@ function showAll()
     window.location.href="/admin/"+_info.cls+"/showlist/";
 }
 </script>
+</body>
 </html>

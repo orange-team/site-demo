@@ -1,18 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="/adminStatic/css/common_new.css" type="text/css" />
-<title>专栏修改网站后台管理</title>
-</head>
-
+<?php $this->load->view('admin/header',$this->_info)?>
 <body>
 <div id="man_zone">
-	<h5>&nbsp;&nbsp;◆ 专栏修改&nbsp;&raquo;&nbsp;<span style='color:red'><b>*</b></span> 代表必填项；</h5>
+    <?php $this->load->view('admin/editNav',$this->_info)?>
 	<?php echo form_open_multipart(site_url('admin/specpage/saveEdit/'.$id), array('class'=>"jnice",'onsubmit'=>'return check_form();'));?>
-  	<table width="96%" border="0" align="center"  cellpadding="3" cellspacing="1" class="table_style">
+    <?php $this->load->view('admin/editTable')?>
         <tr>
-      		<td class="left_title_1"><span style='color:red'>*</span>&nbsp;所属栏目</td>
+      		<td><span style='color:red'>*</span>&nbsp;所属栏目</td>
       		<td>
       			<select name="one" id="one" onchange="changeOn('one',this.value,1)">
                 	<option value="0">-- 请选择 --</option>
@@ -36,7 +29,7 @@
             </td>
     	</tr>
         <tr>
-      		<td class="left_title_2"><span style='color:red'>*</span>&nbsp;所属关键词</td>
+      		<td><span style='color:red'>*</span>&nbsp;所属关键词</td>
       		<td>
       			<select name="keyword" id="keyword">
                 	<option value="0">-- 选择关键词 --</option>
@@ -48,11 +41,11 @@
       		</td>
     	</tr>
     	<tr>
-      		<td width="18%" class="left_title_1"><span style='color:red'>*</span>&nbsp;名称</td>
+      		<td width="18%"><span style='color:red'>*</span>&nbsp;名称</td>
             <td width="82%"><input class="text_style" type="text" name="title" id="name" value="<?php echo $title;?>" /> <span style="color:red;" id="errorTitle"></span></td>
     	</tr>
         <tr>
-      		<td class="left_title_2">封面图片</td>
+      		<td>封面图片</td>
       		<td><input type="file" name="upImg" id="cover" value="上传图片"/>
 			<?php if( empty($cover) ) { echo '还未上传封面图片'; }else{?>
             <img src="<?php echo $this->specpage_path,$cover;?>" width="120" height="120"/>
@@ -60,7 +53,7 @@
             </td>
     	</tr>
         <tr>
-    		<td class="left_title_2">相关标签</td>
+    		<td>相关标签</td>
     		<td>
                 <div id="my_tag" class="my_tag clearfloat">
                     <button onclick="show_div()" type="button">添加标签</button>
@@ -68,26 +61,21 @@
             </td>
     	</tr>
         <tr>
-      		<td class="left_title_1">专栏内容</td>
+      		<td>专栏内容</td>
       		<td> <?php echo $kindeditor;?></td>
     	</tr>
         <tr>
-      		<td class="left_title_2">作者</td>
+      		<td>作者</td>
       		<td><input class="text_style" type="text" name="author" value="<?php echo $author?>"/></td>
     	</tr>
         <tr>
-      		<td class="left_title_1"> <input type="hidden" name='section' id='section' value='' /></td>
-      		<td><input type="submit" name="submit" value=" 提交 " />&nbsp;&nbsp;
-            <input type="reset" name="reset" value=" 重置 " />
-            </td>
+      		<td> <input type="hidden" name='section' id='section' value='' /></td>
+      		<td><?php $this->laod->view('admin/editSubmit',$this->_info)?></td>
     	</tr>
   	</table>
     </form>
-    <br />
-    <br /><br />
 </div>
-<script type="text/javascript" src="/adminStatic/js/jquery.js" ></script>
-<script type="text/javascript" src="/adminStatic/js/common.js" ></script>
+<?php $this->load->view('admin/common',$this->_info);?>
 <?php
 $this->load->helper('admin');
 relation_tag($id, 2, $tagNameArr);

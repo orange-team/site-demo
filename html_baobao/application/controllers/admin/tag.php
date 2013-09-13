@@ -10,6 +10,9 @@ class Tag extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
+        $this->_info['cls'] = strtolower(__CLASS__);
+        $this->_info['name'] = '标签';
+        $this->_info['view_path'] = 'admin/'.$this->_info['cls'];
 		$this->load->model('tag_model','tag');
 	}
 

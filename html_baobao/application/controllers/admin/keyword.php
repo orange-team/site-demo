@@ -10,6 +10,9 @@ class Keyword extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
+        $this->_info['cls'] = strtolower(__CLASS__);
+        $this->_info['name'] = '关键词';
+        $this->_info['view_path'] = 'admin/'.$this->_info['cls'];
 		$this->load->model('keyword_model','keyword');
 		$this->load->model('section_model','section');
 	}

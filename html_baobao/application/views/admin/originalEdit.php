@@ -1,9 +1,9 @@
 <?php $this->load->view('admin/header',$this->_info)?>
 <body>
 <div id="man_zone">
-	<h5>◆ <?php echo $this->_info['name']?>修改<span style='color:red'><b>*</b></span>代表必填项；</h5>
+    <?php $this->load->view('admin/editNav',$this->_info)?>
     <?php echo form_open(site_url('admin/'.$this->_info['cls'].'/saveEdit/'.$id), array('class'=>"jnice","onsubmit"=>"return check_form()"));?>
-  	<table id="table" width="96%" border="0" align="center" cellpadding="3" cellspacing="1" class="table_style">
+    <?php $this->load->view('admin/editTable')?>
     	<tr>
       		<td width="100px"><span style='color:red'>*</span>&nbsp;栏目</td>
       		<td>
@@ -106,9 +106,7 @@
     	</tr>
         <tr>
       		<td>&nbsp;<input type="hidden" name='section' id='section' value='' /></td>
-      		<td><input type="submit" name="submit" value=" 提交 " />&nbsp;&nbsp;
-            <input type="button" name="back" value=" 返回 " onclick="window.location.href='<?php echo site_url('admin/'.$this->_info['cls'].'/showList/');?>'"/>
-            </td>
+      		<td><?php $this->laod->view('admin/editSubmit',$this->_info)?></td>
     	</tr>
   	</table>
     </form>

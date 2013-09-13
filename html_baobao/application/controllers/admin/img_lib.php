@@ -24,7 +24,7 @@ class Img_lib extends MY_Controller
 	}
 
 	//列表
-	function showlist($section=0,$title='')
+	function showlist($title='')
 	{
         $this->load->helper('form'); 
         //搜索
@@ -43,6 +43,8 @@ class Img_lib extends MY_Controller
 		$config['base_url'] = site_url($this->_info['view_path'].'/showlist/'.$this->data['title'].'/');
 		//总数
 		$config['total_rows'] = $this->img_lib->getTotal($where);
+		$config['per_page'] = $this->data['pagesize'] = 15; 
+		$config['uri_segment'] = 5;
 		$this->data['page'] = my_page($config);
 		$offset = $this->uri->segment(5);
 		$arr = $this->img_lib->getList(15, $offset, $where);
@@ -57,6 +59,7 @@ class Img_lib extends MY_Controller
 		$this->data['img_libArr'] = $arr;
         unset($arr);
         $this->data['number'] = $offset+1; 
+        $this->load->helper('common');
 		$this->load->view($this->_info['view_path'].'List', $this->data);
 	}
 
@@ -110,101 +113,16 @@ class Img_lib extends MY_Controller
 		$this->load->helper('form');
 		$this->load->helper('common');
 		$this->data = $this->img_lib->getBy_id($img_lib_id);
-        $section = $this->section->get_one(array('id'=>$this->data['section']));
-        $is_two = false;     //是否显示二级栏目
-        $is_three = false;   //是否显示三级栏目
-        $keyword_section = '';  //与关键词关联的栏目id
-        $this->data['one'] = $this->data['two'] = '';//三个级栏目的selected标识
-
-        //如果原创属于非顶级栏目
-        if($section['parent'] != 0)
-        {
-            $section_up = $this->get_parent($section['parent']);
-            //如果原创属于三级栏目下
-            $is_two = true;
-            $this->data['one'] = $section_up[0] ? $section_up[0] : '';
-            $this->data['two'] = $section_up[1] ? $section_up[1] : '';
-            if('' != $this->data['one'] && '' != $this->data['two'])
-            {
-                $is_three = true;
-                $keyword_section = $section['id'];
-            }
-
-            //如果原创属于二级栏目下
-            if($this->data['one'] == '')
-            {
-                $this->data['one'] = $this->data['two']; unset($this->data['two']);
-                $this->data['two'] = $section;
-                $keyword_section = $this->data['two']['id'];
-            } 
-        }else//属于顶级栏目
-        {
-            $this->data['one'] = $section;
-            $keyword_section = $this->data['one']['id'];
-        }
-
-        //查询所选栏目对应的关键词
-        $list = $this->get_child($keyword_section);
-        $list[1] = $list[1] ? $list[1] : array();
-        $childs_id = array_keys($list[1]);//当前栏目下所有子栏目id
-        array_unshift($childs_id,$keyword_section);
-        $where['section'] = $childs_id;
-        $this->data['keywords'] = $this->keyword->getList(0,0,$where);
-        
-        //顶级栏目
-        $this->data['one_section'] = $this->section->getBy_parent(0);
-        if( $is_two == true )
-        {
-            $fid = '' != $this->data['one'] ? $this->data['one']['id'] : $this->data['two']['id'];
-            $this->data['two_section'] =  $this->section->getList(array('parent'=>$fid));
-        }
-        $this->data['three_section'] = $is_three==true ? $this->section->getList(array('parent'=>$this->data['two']['id'])) : '';
-
-		//在线编辑器
-		$edit = array('name' =>'content', 'id' =>'content', 'value' =>$this->data['content']);
-		$this->load->library('kindeditor',$edit);
-        $this->data['kindeditor'] = $this->kindeditor->getEditor( $edit );
-        //相关标签
-        $this->load->model('relation_tag_model','relation_tag');
-        $this->load->model('tag_model','tag');
-        $whereData = array('target_id'=>$img_lib_id,'target_type'=>1,'status'=>0);
-        $tagArr = $this->relation_tag->get($whereData);
-        $arrTagIds = $tagNameArr = array();
-        foreach($tagArr as $k=>$v)
-        {
-            $arrTagIds[] = $v['tag_id'];
-        }
-        unset($tagArr);
-        if(0<count($arrTagIds)) $tagNameArr = $this->tag->getBy_ids($arrTagIds);
-        $this->data['tagNameArr'] = $tagNameArr;
-		$this->load->view($this->_info['view_path'].'Edit', $this->data);
+        $this->load->view($this->_info['view_path'].'Edit', $this->data);
 	}
-
-    //百度指数是gbk的，所以单写页面实现跳转
-    function go_baidu_index($str)
-    {
-        $this->load->helper('common');
-        header('Content-Type: text/html; charset=gbk');
-        echo '
-        <script type="text/javascript">
-        window.location.href="'.$this->baidu['index'].'"+decodeURIComponent("'.utf2gbk($str).'");
-        </script>
-        ';
-    }
 
 	function saveEdit($img_lib_id)
 	{
         $this->load->helper('common');
-		if($this->input->post('section')) $data['section'] = filter($this->input->post('section'));
-		if($this->input->post('keyword')) $data['keyword'] = filter($this->input->post('keyword'));
+        $data = array();
 		if($this->input->post('title')) $data['title'] = filter($this->input->post('title'));
-		if($this->input->post('subtitle')) $data['subtitle'] = filter($this->input->post('subtitle'));
 		if($this->input->post('source')) $data['source'] = filter($this->input->post('source'));
-		if($this->input->post('content')) $data['content'] = filter($this->input->post('content'));
-		if($this->input->post('description')) $data['description'] = filter($this->input->post('description'));
-		if($this->input->post('page_keywords')) $data['page_keywords'] = filter($this->input->post('page_keywords'));
-		if($this->input->post('attention')) $data['attention'] = filter($this->input->post('attention'));
-		if($this->input->post('recommend')) $data['recommend'] = filter($this->input->post('recommend'));
+		if($this->input->post('source_link')) $data['source_link'] = filter($this->input->post('source_link'));
         //更新时间，防止没有改动的提交，导致affected_rows=0
         $data['add_time'] = date('Y-m-d H:i:s');
 		$affected_rows = $this->img_lib->update($img_lib_id, $data);
@@ -222,5 +140,17 @@ class Img_lib extends MY_Controller
 		$data['url'] = '/admin/img_lib/showlist/';
 		$this->load->view('admin/info', $data);
 	}
+
+    //百度指数是gbk的，所以单写页面实现跳转
+    function go_baidu_index($str)
+    {
+        $this->load->helper('common');
+        header('Content-Type: text/html; charset=gbk');
+        echo '
+        <script type="text/javascript">
+        window.location.href="'.$this->baidu['index'].'"+decodeURIComponent("'.utf2gbk($str).'");
+        </script>
+        ';
+    }
 
 }

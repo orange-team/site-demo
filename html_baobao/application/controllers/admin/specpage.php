@@ -160,8 +160,8 @@ class specpage extends MY_Controller
 		$this->load->library('kindeditor',$eddt);
         $arr['kindeditor'] = $this->kindeditor->getEditor( $eddt );
         //相关标签
-		$this->load->model('admin/relation_tag_model','relation_tag');
-		$this->load->model('admin/tag_model','tag');
+		$this->load->model('relation_tag_model','relation_tag');
+		$this->load->model('tag_model','tag');
         $whereData = array('target_id'=>$specpage_id,'target_type'=>2,'status'=>0);
         $tagArr = $this->relation_tag->get($whereData);
         $arrTagIds = $tagNameArr = array();

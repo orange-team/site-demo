@@ -3,6 +3,11 @@ $(function(){
     $('#table tr:even').find('td:nth-child(1)').addClass('left_title_1 even');
     $('#table tr:odd').find('td:nth-child(1)').addClass('left_title_2 odd');
 });
+//页面跳转
+function go(url)
+{
+    window.location.href=url;
+}
 //显示全部
 function showAll()
 {

@@ -4,7 +4,7 @@
 	<h2><?php echo $this->_info['name']?>列表</h2>
     <div class="search_area">
         <span class="title">名称：</span>
-        <input type="text" id="title" name="title" style="width:260px;" value="<?php echo $title?$title:'';?>"/> &nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" id="title" name="title" style="width:260px;" value="<?php echo $title?$title:'';?>"/>
         <input type="submit" name="submit" id='submit' onclick='toSearch()' value=" 搜索 " />
         <input type="button" name="button" onclick='showAll()' value="显示全部" />
     </div>
@@ -36,7 +36,7 @@
                 <div class="thumbnail"><img src="<?php echo $row['path'];?>"/></div>
                 <dl>
                 <dt><a href="#"><?php echo anchor(site_url('admin/img_lib/edit/'.$row['id']), $row['title']);?></a></dt>
-                <dt>来源：<?php echo $row['source']?></dt>
+                <dt>来源：<?php echo chk($row['source'])?anchor($row['source_link'],$row['source'],'target="_blank"'):'';?></dt>
                 <dt class="action"><?php echo anchor(site_url('admin/img_lib/edit/'.$row['id']),'编辑&nbsp;','class="edit"')?>|<a class="delete" href="javascript:if( confirm('确认要删除吗？') ) location.href='<?php echo site_url('admin/img_lib/del/'.$row['id'])?>';">永久删除</a>|<a href="#">查看</a></dt>
                 </dl>
             </div>
@@ -74,30 +74,9 @@
 <script type=text/javascript>
 function toSearch(type)
 {
-    if(type=='one')
-    {
-        $("#keyword").get(0).selectedIndex = 0;
-        $("#two").get(0).selectedIndex = 0;
-        $("#three").get(0).selectedIndex = 0;
-    }
-    if(type=='two')
-    {
-        $("#three").get(0).selectedIndex = 0;
-        $("#keyword").get(0).selectedIndex = 0;
-    }
-    if(type=='three')
-    {
-        $("#keyword").get(0).selectedIndex = 0;
-    }
-    var one = $("#one").val();
-    var two = $("#two").val();
-    var three = $("#three").val();
-    var keyword = $("#keyword").val();
-    section = one+"-"+two+"-"+three+"-"+keyword;
     var title = $("#title").val();
-    if(''==section) section=0;
     if(''==title) title=0;
-    window.location.href="/admin/img_lib/showlist/"+section+"/"+title+"/";
+    window.location.href="/admin/img_lib/showlist/"+title+"/";
 }
 </script>
 </body>
