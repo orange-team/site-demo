@@ -106,7 +106,7 @@
     	</tr>
         <tr>
       		<td>&nbsp;<input type="hidden" name='section' id='section' value='' /></td>
-      		<td><?php $this->laod->view('admin/editSubmit',$this->_info)?></td>
+      		<td><?php $this->load->view('admin/editSubmit',$this->_info)?></td>
     	</tr>
   	</table>
     </form>
@@ -131,6 +131,9 @@
 .ke-icon-replace { background-image: url(/adminStatic/editor/themes/common/hello.gif); width: 16px; height: 16px; }
 /* 高亮本行 */
 //#table tr:hover{ background-color:red; //使用CSS伪类达到鼠标移入行变色的效果，比Jquery 的mouseover,hover 好用 }
+.extract_tag a { margin:0 0 0 5px; }
+/* editor中高亮 */
+.highlight {border:1px solid #73938E;background:#333;font-size:20px;}
 </style>
 <?php
 $this->load->helper('admin');
@@ -250,10 +253,5 @@ function check_form()
 
 }
 </script>
-<style type="text/css">
-.extract_tag a { margin:0 0 0 5px; }
-/* editor中高亮 */
-.highlight {border:1px solid #73938E;background:#333;font-size:20px;}
-</style>
 </body>
 </html>

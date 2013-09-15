@@ -11,7 +11,7 @@
     <div class="bacth-operate">
         <div class="page"><?php echo (!empty($page)) ? $page : '';?></div>
     </div>
-  	<table class="list-table table_style">
+  	<table class="list-table table_style" id="list-table">
         <thead><tr>
     		<th class="th-1"><input type="checkbox" name="news_check" value="{$nl.id}"/></input></th>	
       		<th class="th-2">编号</th>
@@ -61,9 +61,12 @@
 .th-3 { width:10px; }
 .th-4 { width:10px; }
 .th-5 { width:10px; }
+.list-table td { vertical-align: top; padding:5px 0 0 0;}
 .img_area .thumbnail { float:left; height:70px;}
-.img_area img { width:60px;height:60px;border:none;margin:10px 5px 0 5px; }
-.img_area dl { float:left; margin:8px;}
+.img_area img { width:60px;height:60px;border:none;margin:5px 5px 0 5px; }
+.img_area dl { float:left; margin:0 8px;width:130px;}
+.img_area dt { width:99%;}
+.img_area dt.action { display:none; }
 .img_area dt.action a { margin:0 4px;}
 .img_area .delete { color:red; }
 .bacth-operate { display:inline-block;margin:5px 0 0 25px;padding:4px 0;width:96%; }
@@ -72,6 +75,14 @@
 </style>
 <?php $this->load->view('admin/common',$this->_info);?>
 <script type=text/javascript>
+$(function(){
+    $('#list-table tr').mouseover(function(){
+        $(this).find('dt.action').show();
+    }).mouseout(function(){
+        $(this).find('dt.action').hide();
+    });
+});
+
 function toSearch(type)
 {
     var title = $("#title").val();

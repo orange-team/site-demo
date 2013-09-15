@@ -16,6 +16,8 @@ a:hover { color:#F6724A; text-decoration:underline; cursor:pointer; }
 /* 清除浮动代码 */
 .clearfloat:after{display:block;clear:both;content:"";visibility:hidden;height:0}
 .clearfloat{zoom:1}
+/* 垂直居中 label font-size:14px */
+.chk_box_middle {height:17px; vertical-align:text-top; margin-top:0;}
 
 /*头部样式*/
 #header { width:auto; height:auto; }
