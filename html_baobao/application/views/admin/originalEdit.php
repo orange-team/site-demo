@@ -137,7 +137,7 @@
 </style>
 <?php
 $this->load->helper('admin');
-relation_tag($id, 3, $tagNameArr);
+relation_tag($id, 1, $tagNameArr);
 ?>
 <?php $this->load->view('admin/common',$this->_info);?>
 <script type="text/javascript">
