@@ -56,7 +56,7 @@
             <dt class="clearfloat"><img src="#" id="weibo"/><label for="weibo">用微博账号登录</label></dt>
             <dt class="clearfloat"><img src="#" id="weibo"/><label for="weibo">用微博账号登录</label></dt>
             </dl>
-            <a href="#" class="to_reg btn_blue">还没有账号,注册</a>
+            <a href="#" class="to_reg btn_orange">还没有账号,注册</a>
         </div>
   </div><!-- content -->
 </div>

@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-* description: 后台登录页面
+* description: 用户登录页面
 * author: arkulo yesgang
 * date: 2011-10-29
 */

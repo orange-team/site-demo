@@ -73,7 +73,7 @@ function do_ajax_relation_tag(tag_id,type)
     }
     $.get('/admin/relation_tag/oprate', {'oprate_type':type,'tag_id':tag_id,'target_id':tag_container.target_id,'target_type':tag_container.target_type}, function(data) {
         if(-1==data) alert('参数传递失败');
-        if(-2==data) alert('数据插入失败');
+        if(-2==data) alert('数据操作失败');
     });
 }
 

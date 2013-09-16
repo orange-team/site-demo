@@ -114,7 +114,7 @@
         <span class="title">图片库</span>
         <dl>
         <?php if(isset($img_libArr)) {foreach($img_libArr as $k=>$v) {?>
-        <dt><img src="<?php echo $v['path']?>" title="<?php echo $v['title']?>" onclick="insert(this)"/></dt>
+        <dt><img src="<?php echo $this->img_lib_path,substr($v['path'],0,2),'/',$v['path'];?>" title="<?php echo $v['title']?>" onclick="insert(this)"/></dt>
         <?php }}else{ echo '暂无相关标签对应的图片';} ?>
         </dl>
     </div>
@@ -137,7 +137,7 @@
 </style>
 <?php
 $this->load->helper('admin');
-relation_tag($id, 3, $tagNameArr);
+relation_tag($id, 1, $tagNameArr);
 ?>
 <?php $this->load->view('admin/common',$this->_info);?>
 <script type="text/javascript">
