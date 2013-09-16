@@ -10,6 +10,7 @@ class Original extends MY_Controller
     //用百度搜索关键词
     var $baidu = array('search' => 'http://www.baidu.com/s?wd=',
         'index'=>'http://index.baidu.com/main/word.php?word=');
+    var $img_lib_path = '/uploads/img_lib/';
 
 	function __construct()
 	{
@@ -125,7 +126,6 @@ class Original extends MY_Controller
 	//编辑原创
 	function edit($original_id)
 	{
-        //读取图片库
 		$this->load->helper('form');
 		$this->load->helper('common');
 		$this->data = $this->original->getBy_id($original_id);
@@ -185,17 +185,21 @@ class Original extends MY_Controller
         $this->data['kindeditor'] = $this->kindeditor->getEditor( $edit );
         //相关标签
         $this->load->model('relation_tag_model','relation_tag');
+        $this->load->model('img_lib_model','img_lib');
         $this->load->model('tag_model','tag');
         $whereData = array('target_id'=>$original_id,'target_type'=>1,'status'=>0);
         $tagArr = $this->relation_tag->get($whereData);
         $arrTagIds = $tagNameArr = array();
         foreach($tagArr as $k=>$v)
         {
+            //读取图片库
+            $img_libArr[] = $this->img_lib->getBy_tag($v['tag_id']);
             $arrTagIds[] = $v['tag_id'];
         }
         unset($tagArr);
         if(0<count($arrTagIds)) $tagNameArr = $this->tag->getBy_ids($arrTagIds);
         $this->data['tagNameArr'] = $tagNameArr;
+        $this->data['img_libArr'] = $img_libArr;
 		$this->load->view($this->_info['view_path'].'Edit', $this->data);
 	}
 

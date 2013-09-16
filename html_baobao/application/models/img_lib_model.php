@@ -19,6 +19,12 @@ class Img_lib_model extends CI_Model
 		return $this->db->get()->row_array();
     }
 
+    function getBy_tag($tag_id)
+	{
+		$this->db->select('*')->from($this->_table)->where('tag_id', (int)$tag_id);
+		return $this->db->get()->row_array();
+    }
+
     function getFieldBy_id($id, $field)
 	{
 		$this->db->select($field)->from($this->_table)->where('id', (int)$id);
