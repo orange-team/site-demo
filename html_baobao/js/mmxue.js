@@ -39,10 +39,10 @@ function showHide(id)
     showBox.toggle();
     if(true == showBox.is(":visible"))//判断元素显示或隐藏状态                                                                                     
     {
-       imgSrc.attr('src','img/top.jpg');
+       imgSrc.attr('src','/img/top.jpg');
     }else
     {
-       imgSrc.attr('src','img/bottom.jpg');
+       imgSrc.attr('src','/img/bottom.jpg');
     }
 }
 function showTitle()

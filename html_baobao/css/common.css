@@ -41,7 +41,7 @@ a:hover { color:#F6724A; text-decoration:underline; cursor:pointer; }
 .hd_box .nav_section { position:absolute; left:90px; bottom:15px; width:400px;} 
 .hd_box .nav_section a { display:block; width:120px; float:left; font:normal bold 16px Arial; text-decoration:none;text-decoration:none; color:#666666;  border-left:2px solid #666666; }
 .hd_box .nav_section a:hover { color:#FF0000;}
-.hd_box .nav_section .default {color:#FF0000;}
+.hd_box .nav_section .classRed {color:#FF0000; border-left:2px solid #FF0000;}
 .hd_box .nav_section li {display:inline}
 
 

@@ -36,6 +36,7 @@ class specpage extends MY_Controller
         $this->data['specpageArr']['source'] = '本站';
         //得到推荐文章
         $this->data['recommend'] = $this->get_recommend((int)$specpageArr['tag_id']);
+        $this->data['isRed'] = 1;
         unset($specpageArr);
 		$this->load->view('specpage_detail', $this->data);
 	}
