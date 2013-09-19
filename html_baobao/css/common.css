@@ -2,6 +2,7 @@
 /* CSS Document */
 * { margin:0; padding:0; border: 0; outline: 0;}
 body { font-family: "微软雅黑",Arial, Helvetica, sans-serif; font-size:13px; color:#333;}
+
 .clear { clear:both;}
 img.block { display:block;}
 img { border:none; }
