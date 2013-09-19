@@ -39,9 +39,9 @@ a:hover { color:#F6724A; text-decoration:underline; cursor:pointer; }
 .hd_box .logo { display:block; margin-top:10px; margin-left:0;}
 .hd_box .logo_font { display:block; position:absolute; left:75px; top:12px; }
 .hd_box .nav_section { position:absolute; left:90px; bottom:15px; width:400px;} 
-.hd_box .nav_section a { display:block; width:120px; float:left; font:normal bold 16px Arial; text-decoration:none;text-decoration:none; color:#666666;  border-left:2px solid #666666; }
-.hd_box .nav_section a:hover { color:#FF0000;}
-.hd_box .nav_section .classRed {color:#FF0000; border-left:2px solid #FF0000;}
+.hd_box .nav_section a { display:block; width:120px; float:left; font:normal bold 16px Arial; text-decoration:none; color:#666666;  border-left:3px solid #666666; padding-left:4px; display:block; height:16px;}
+.hd_box .nav_section a:hover { color:#FF0000; border-left:3px solid #FF9900;}
+.hd_box .nav_section .classRed {color:#FF0000; border-left:3px solid #FF9900;}
 .hd_box .nav_section li {display:inline}
 
 

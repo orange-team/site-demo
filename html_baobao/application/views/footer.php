@@ -4,7 +4,7 @@
     </div>
     <div class="copyright">Orange-Team工作室 · 版权所有 © 2013-2016</div>
 </div>
-<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.8.1.js"></script>
 <script type="text/javascript" src="/js/<?php echo $file['js']?>.js"></script>
 </body>
 </html>
