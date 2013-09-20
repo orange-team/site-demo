@@ -140,7 +140,7 @@ class user extends CI_Controller
         $this->data['row'] = $this->user->get($user_id);
         //获取标签信息
         
-        $this->data['tagNameArr'] = $this->tag->getOrder_weight(40,0);
+        $this->data['tagNameArr'] = $this->tag->getOrder_weight(40,0,1);
         
         $relation = $this->relation->get(array('target_type'=>3));
         //print_r($this->data['row']);
