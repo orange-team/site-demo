@@ -132,5 +132,27 @@ class user extends CI_Controller
         }
     }
 
+    //用户根据时间轴选择标签
+    function user_select_tag()
+    {
+        $user_id = 1;
+        //获取用户信息
+        $this->data['row'] = $this->user->get($user_id);
+        //获取标签信息
+        
+        $this->data['tagNameArr'] = $this->tag->getOrder_weight(40,0);
+        
+        $relation = $this->relation->get(array('target_type'=>3));
+        //print_r($this->data['row']);
+        $this->data['seo'] = array('title'=>'蜡笔画注册用户选择标签',
+                'description'=>'蜡笔画注册用户选择标签的描述页面信息',
+                'keywords'=>'蜡笔画注册用户选择标签,母婴知识,宝宝健康'
+                );
+        //要载入的css, js文件
+        $this->data['file'] = array('js'=>'user_select_tag','css'=>'user_select_tag');
+        $this->data['isRed'] = 2;
+		$this->load->helper(array('url','form'));
+		$this->load->view('user_select_tag', $this->data);
+    }
 
 }
