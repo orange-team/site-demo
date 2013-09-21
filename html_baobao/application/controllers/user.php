@@ -135,7 +135,7 @@ class user extends CI_Controller
     //用户根据时间轴选择标签
     function user_select_tag()
     {
-        $user_id = 1;
+        $user_id = $this->data['user_id'] = 1;
         //获取用户信息
         $this->data['row'] = $this->user->get($user_id);
         //获取标签信息
@@ -153,6 +153,34 @@ class user extends CI_Controller
         $this->data['isRed'] = 2;
 		$this->load->helper(array('url','form'));
 		$this->load->view('user_select_tag', $this->data);
+    }  
+
+    //关联用户关注的标签
+    function select_tag_action()
+    {
+        $user_id = $this->input->post('user_id') ? $this->input->post('user_id') : '';
+        if('' != $user_id)
+        {
+            $tags = $this->input->post('tags') ? $this->input->post('tags') : '';
+            if( '' != $tags )
+            {
+                $tagId_arr = explode(',',$tags);
+                $tagId_num = count($tagId_arr);
+                $sucess_num = 0;
+                foreach($tagId_arr as $v)
+                {
+                    $res = $this->relation->insertNew(array('target_type'=>3,'target_id'=>$user_id,'tag_id'=>$v));
+                    if($res)
+                    {
+                        $sucess_num++;
+                    }
+                }
+                if($tagId_num == $sucess_num)
+                {
+                    header("Location:/user/user_center");
+                }
+            }
+        }
     }
 
 }

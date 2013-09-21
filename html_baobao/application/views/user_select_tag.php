@@ -29,9 +29,9 @@
             </div>
             <p class="color_2">请选择您现在所处的阶段，我们将为您提供贴心个性化的推荐... </p>
             <div class="time_line">
-                时间周
+                <object type="application/x-shockwave-flash" name="timeline" data="http://h.yaolanimage.cn/global/head/images/timeline.swf?ver=20130905" width="960" height="35" id="flashcontent" style="visibility: visible;"> </object>
             </div>
-            <p class="color_2">顺便选择一些您关注的标签吧 &nbsp;&nbsp;<img src="/img/love_red.jpg" /> <img src="/img/love_grap.jpg" /></p>
+            <p class="color_2">顺便选择一些您关注的标签吧 &nbsp;&nbsp;<span id="selected"></span>
             <div class="clear"></div>
             <div class="tag_list">
                <!-- loop start -->
@@ -49,7 +49,8 @@
             <div class="ok_box">
                 <form action="/user/select_tag_action" method="post">
                     <input type="hidden" id="tags" name="tags" />
-                    <input type="submit" class="ok_button" name="ok" value="ok" /> 
+                    <input type="hidden" id="user_id" name="user_id" value="<?php echo $user_id;?>" />
+                    <input type="submit" class="ok_button" name="ok" value="ok" onclick="return goSubmit()" /> 
                     <a href="/user/user_select_tag">换一组看看</a>
                 </form>
             </div>
@@ -60,13 +61,14 @@
 <?php $this->load->view('footer')?>
 <script type="text/javascript">
 var tag_arr = new Array();//定义标签id数组
+//点选标签触发的方法
 function select_tag(id)
 {
 
-    var showBox = $("#li_"+id);   //ul li 的id
-    var nameBox = $("#name_"+id); //标签名称的id
-    var imgBox = $("#img_"+id);   //心形图片的id
-    var tags_val = $("#tags").val();
+    var showBox = $("#li_"+id);         //ul li 的id
+    var nameBox = $("#name_"+id);       //标签名称的id
+    var imgBox = $("#img_"+id);         //心形图片的id
+    var tags_val = $("#tags").val("");  //隐藏域存储选择好的标签id
     if('' == tags_val)
     {
         $("#tags").val(id);
@@ -81,13 +83,30 @@ function select_tag(id)
         nameBox.css('color','#FF763D');
         imgBox.attr('src','/img/love.jpg'); 
         tag_arr.push(id);
+        $("#selected").append("<img src=\"/img/love_red.jpg\" id=\"imgSel_"+id+"\" />")
+
     }else
     {
         nameBox.css('color','white');
         imgBox.attr('src','/img/love_grap_ground.jpg'); 
-        tag_arr.splice($.inArray(id,arr),1);
+        tag_arr.splice($.inArray(id,tag_arr),1);
+        $("#imgSel_"+id).remove();
     }
-    alert(tag_arr);
+    $("#tags").val(tag_arr);
+}
+//点击OK按钮触发的方法
+function goSubmit()
+{
+    var tags_val = $("#tags").val();  //隐藏域存储选择好的标签id
+    if('' == tags_val)
+    {
+        alert('请选择您关注的标签！');
+        return false;
+    }else
+    {
+        return true;
+    }
+    
 }
 </script>
 

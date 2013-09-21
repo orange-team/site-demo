@@ -23,12 +23,14 @@
                 <h3>妈妈关注标签</h3>
             </div>
             <div class="tag_list">
-               <!-- loop start -->
-               <?php foreach($tagNameArr as $v){ ?>
-               <div class="tag_box">
-                   <div class="tag"><a href="#"><?php echo $v['name'];?></a></div><img src="/img/love.jpg" />
-               </div> 
+               <ul>
+               <?php foreach($tagNameArr as $k=>$v){ $k++;?>
+                    <li <?php if( 0 ==$k%5 ){ echo 'style="margin-right:0;"'; }?> id="li_<?php echo $v['id'];?>" onclick="select_tag(<?php echo $v['id'];?>)">
+                        <span id="name_<?php echo $v['id'];?>" ><?php echo $v['name'];?></span>
+                        <img id="img_<?php echo $v['id'];?>" src="/img/love.jpg" />
+                    </li>
                <?php } ?>
+               </ul>
                <!-- loop end -->
                <div class="clear"></div>
             </div>

@@ -15,8 +15,8 @@
 .user_center .head { height:25px; line-height:25px;border-bottom: 4px #ffcc99 solid; color: #585858; }
 .user_center .head h3 { margin:0 0 0 10px; }
 .user_center .tag_list { height:auto; width:auto; padding:20px 0; border-bottom:1px dashed #B6B6B6; margin-bottom:160px;}
-.user_center .tag_list .tag_box { width:auto; height:36px; float:left; margin:0 15px 15px 15px;}
-.user_center .tag_list .tag { height:36px; background:#D7D7D7; text-align: center; float:left; line-height:36px; padding:0 15px; color:#FF7B6B; font-size:14px;}
-.user_center .tag_list .tag_box img { float:left; display:block; }
+.user_center .tag_list li { list-style-type:none; width:157px; height:36px; float:left; margin-right:53px; margin-bottom:15px; cursor:pointer;  }
+.user_center .tag_list li span { height:36px; width:117px; display:block; background:#B6B6B6; text-align:center; line-height:36px; color:#FFFFFF; font-weight:900; font-size:14px; float:left; overflow:hidden; }
+.user_center .tag_list li img { float:left; display:block;  }
 .user_center .tag_list a,a:visited { color:#FF7B6B;}
 .user_center .tag_list a:hover { color:#494949; }
