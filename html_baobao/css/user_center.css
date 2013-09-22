@@ -1,0 +1,22 @@
+@charset "utf-8";
+/*用户中心样式*/
+.user_center { padding-top:10px;}
+.user_center .color_1 { color:#6D6D6D }
+.user_center .color_2 { color:#929292;}
+.user_center .color_3 { color:#B6B6B6;}
+.user_center .title{ position:relative;}
+.user_center h1{ font-size:20px;color:#6D6D6D;}
+.user_center .email{ color:#929292; display:block; position:absolute; left:65px; bottom:0;}
+.user_center p { padding:15px 0 15px 0; }
+.user_center .user_info {  height:110px; margin-bottom:15px;}
+.user_center .user_info textarea { width:803px;  height:88px; border:1px solid #B6B6B6; padding:10px; display:block; float:left; overflow:auto; }
+.user_center .user_info .button { border:1px solid #B6B6B6; float:left; border-left:0;}
+.user_center .user_info input.submit{ height:108px; width:173px; border:0; display:block; background-color:#DDF4D5; cursor:pointer; font-size:14px;}
+.user_center .head { height:25px; line-height:25px;border-bottom: 4px #ffcc99 solid; color: #585858; }
+.user_center .head h3 { margin:0 0 0 10px; }
+.user_center .tag_list { height:auto; width:auto; padding:20px 0; border-bottom:1px dashed #B6B6B6; margin-bottom:160px;}
+.user_center .tag_list li { list-style-type:none; width:157px; height:36px; float:left; margin-right:53px; margin-bottom:15px; cursor:pointer;  }
+.user_center .tag_list li span { height:36px; width:117px; display:block; background:#B6B6B6; text-align:center; line-height:36px; color:#FFFFFF; font-weight:900; font-size:14px; float:left; overflow:hidden; }
+.user_center .tag_list li img { float:left; display:block;  }
+.user_center .tag_list a,a:visited { color:#FF7B6B;}
+.user_center .tag_list a:hover { color:#494949; }

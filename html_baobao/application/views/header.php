@@ -7,6 +7,9 @@
 <link rel="shortcut icon" href="/img/favicon.ico" />
 <link href="/css/common.css" rel="stylesheet" type="text/css" />
 <link href="/css/<?php echo $file['css']?>.css?v=0.11" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+
+</script>
 </head>
 <body>
 <div id="header">
@@ -32,9 +35,9 @@
         <img class="logo_font" src="/img/logo_font.jpg" height="25" width="80">
         <div class="nav_section">
             <ul>
-                <li><a href="/mmxue/" class="default">妈妈学</a></li>
-                <li><a href="#">妈妈说</a></li>
-                <li><a href="#">妈妈看</a></li>
+                <li><a href="/mmxue/index/" class="<?php if(isset($isRed) && 1==$isRed){ echo 'classRed'; }?>" >妈妈学</a></li>
+                <li><a href="/mmshuo/index/" class="<?php if(isset($isRed) && 2==$isRed){ echo 'classRed'; }?>">妈妈说</a></li>
+                <li><a href="#" class="<?php if(isset($isRed) && 3==$isRed){ echo 'classRed'; }?>">妈妈看</a></li>
             </ul>
             <div class="clear"></div>
         </div>

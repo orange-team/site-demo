@@ -13,9 +13,13 @@ class Relation_tag_model extends CI_Model
 		parent::__construct();
 	}
 
-	function get($data)
+	function get($data,$limit=0)
 	{
 		$this->db->select('tag_id')->from($this->_table)->where($data);
+        if(0 != $limit)
+        {
+            $this->db->limit($limit);
+        }
 		return $this->db->get()->result_array();
     }
 	function insertNew($data)

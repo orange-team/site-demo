@@ -26,9 +26,16 @@ class Tag_model extends CI_Model
         return empty($arr[$field])?'':$arr[$field];
     }
 
-    function getOrder_weight($limit,$offset)
+    function getOrder_weight($limit,$offset,$rand=0)
     {
-        $this->db->select('id,name')->from($this->_table)->order_by("weight DESC");
+        $this->db->select('id,name')->from($this->_table);
+        if(0 != $rand)
+        {
+            $this->db->order_by("rand()");
+        }else
+        {
+            $this->db->order_by("weight DESC");
+        }
         $this->db->limit($limit, $offset);
         return $this->db->get()->result_array();
 

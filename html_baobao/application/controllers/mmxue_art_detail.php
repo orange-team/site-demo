@@ -67,6 +67,7 @@ class mmxue_art_detail extends MY_Controller
         $artList = $this->get_recommend_art(10);
         $row['artList_1'] = array_slice($artList,0,5);
         $row['artList_2'] = array_slice($artList,5,5);
+        $row['isRed'] = 1;
 
 
 		$this->load->helper('url');

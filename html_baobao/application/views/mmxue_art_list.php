@@ -27,8 +27,8 @@
                     </div>
                     <div class="item_desc">
                         <?php 
-                        echo mb_substr(strip_tags($row['content']),0,100,'utf-8');
-                        if( mb_strlen($row['content'])>100 )echo '...';
+                        echo mb_substr(strip_tags($row['content']),0,98,'utf-8');
+                        if( mb_strlen($row['content'])>98 )echo '...';
                         ?>
                         <span>[ <a href="/mmxue_art_detail/index/<?php echo $row['id']?>">详情</a> ]</span>
                     </div>

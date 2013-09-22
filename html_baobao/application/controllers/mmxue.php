@@ -42,6 +42,7 @@ class Mmxue extends MY_Controller
         //得到时间轴文章
         $this->data['timelineArr'] = $this->get_timeline();
         $this->data['panelArr'] = $this->get_panel();
+        $this->data['isRed'] = 1;
         //$this->db->stop_cache();
 		$this->load->view('mmxue', $this->data);
 	}

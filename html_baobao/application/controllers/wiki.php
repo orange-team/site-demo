@@ -35,6 +35,7 @@ class Wiki extends MY_Controller
         $this->data['wikiArr'] = $wikiArr;
         //得到推荐文章
         $this->data['recommend'] = $this->get_recommend((int)$wikiArr['tag_id']);
+        $this->data['isRed'] = 1;
         unset($wikiArr);
 		$this->load->view('wiki_detail', $this->data);
 	}

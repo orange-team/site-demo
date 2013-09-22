@@ -28,6 +28,7 @@ class mmxue_art_list extends MY_Controller
         $where = array();
         //搜栏目segment(4)
         $this->data['section'] = 0;
+        $row['nav'] = '';
 
         if(intval($section))
         {
@@ -138,6 +139,7 @@ class mmxue_art_list extends MY_Controller
 
         //取得标签列表
         $this->data['tagList'] = $this->get_tag(30);
+        $this->data['isRed'] = 1;
 
 		$this->load->helper('url');
 		$this->load->view('mmxue_art_list',$this->data);
