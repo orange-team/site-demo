@@ -2,7 +2,7 @@
 <div id="wraper">
     <div class="content clearfloat">
         <div class="reg clearfloat">
-        <?php echo form_open(site_url($this->_info['cls'].'/reg/'.urlencode($this->_ref), array('name'=>'reg',"onsubmit"=>"return chk_reg()")));?>
+        <?php echo form_open(site_url('user_act/reg/'.urlencode($this->_ref), array('name'=>'reg',"onsubmit"=>"return chk_reg()")));?>
             <h1>注册蜡笔画</h1>
             <div class="field-input clearfloat">
                 <div id="customer_email_wrap" class="field err">
@@ -20,7 +20,9 @@
                     <div id="customer_authcode_wrap" class="field clearfloat">
                         <input type="text" value="" placeholder="验证码" tabindex="4" class="input" name="authcode" autocomplete="off" id="authcode">
                     </div>
-                    <span class="img_authcode"><img src="#" alt="点击获取或换一张" title="点击获取或换一张"/></span>
+                    <span class="img_authcode">
+                    <img src="/authcode/" style="cursor:pointer" onclick="ReIMG(this,'/authcode/')" alt="点击获取或换一张" title="点击获取或换一张"/>
+                    </span>
                     <span class="err_txt">验证码</span>
                 </div>
             </div>
@@ -45,5 +47,12 @@
         </div>
   </div><!-- content -->
 </div>
+<script type="text/javascript">
+//刷新验证码
+function ReIMG(obj,url){
+    obj.src = url + "?t="+100*Math.random();
+}
+</script>
+
 <?php $this->load->view('footer')?>
 
