@@ -19,16 +19,12 @@ class user_act extends CI_Controller
 	}
 
 	//
-	function index()
-	{
-    }
+	function index() { }
 
     //保存注册
 	function reg()
 	{
-        $nickname = $this->input->post('nickname');
-        $email = $this->input->post('email');
-		$pwd = $this->input->post('password');
+        session_start();
         $this->load->helper('common');
 		$authcode = filter($this->input->post('authcode'));
         $this->load->library('session');
@@ -36,28 +32,35 @@ class user_act extends CI_Controller
         if( empty($my_authcode) || $authcode != $my_authcode )
         {
 			//显示错误信息
-			$data['wrongAuthcode'] = 1;
+			$this->data['wrongAuthcode'] = 1;
             $this->load->helper(array('url','form'));
-			$this->load->view('user_reg', $data);
+			$this->load->view('user_reg', $this->data);
+            var_dump($my_authcode,$authcode);
             exit;
         }
-		$isRight = false;
-		//判断验证
-		if ( $authcode )
-		{
-			//显示错误信息
-			$data['wrongPwd'] = 1;
-			$this->load->helper('url');
-			$this->load->view('user_reg', $data);
-		} else {
-			//注册session
-            $this->load->library('session'); 
-			$arr = array('nickname'=>$nickname, 'user_id'=>$user['user_id']);
-            $this->session->set_user_actdata($arr); 
-			//重定向到后台首页
-			$this->load->helper('url');
-			redirect('user/index');
-		}
+        $now = date('Y-m-d H:i:s');
+        $data = array(
+                'user_nickname' => filter($this->input->post('nickname')),
+                'user_email' => filter($this->input->post('email')),
+                'user_passwd' => filter($this->input->post('password')),
+                'user_reg_time' => $now,
+                'user_login_time' => $now,
+        );
+        $insert_id = $this->user->add($data);
+        //数据写入失败
+        if( 0>=$insert_id )
+        {
+            $info['msg'] = '注册失败';
+            $info['url'] = '/user/reg/';
+            $this->load->view('msg', $info);
+            exit;
+        }
+        //注册session
+        $arr = array('nickname'=>$data['nickname'], 'user_id'=>$insert_id);
+        $this->session->set_userdata($arr); 
+        unset($data,$arr);
+        //重定向到首页
+        redirect('/mmxue/index');
 	}
 
 	//登录验证

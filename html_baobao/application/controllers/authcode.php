@@ -67,8 +67,9 @@ class authcode extends CI_Controller
 
         //把验证码字符串写入session
         session_start();
-        $_SESSION['randcode'] = $randcode;
-
+        $this->load->library('session');
+        $arr = array('authcode'=>$randcode);
+        $this->session->set_userdata($arr); 
         /*绘图结束*/
         Imagegif($im);
         ImageDestroy($im);

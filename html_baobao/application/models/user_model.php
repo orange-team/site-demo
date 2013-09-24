@@ -8,7 +8,13 @@ class user_model extends CI_Model
 		parent::__construct();
 		$this->load->database();
 	}
-	
+
+    function add($data)
+	{
+		$this->db->insert($this->_table, $data); 
+		return $this->db->insert_id();
+	}
+
 	function edit($user_id, $data)
 	{
 		$this->db->where('user_id', (int)$user_id)->update($this->_table, $data);

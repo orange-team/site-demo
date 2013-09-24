@@ -21,7 +21,7 @@
                         <input type="text" value="" placeholder="验证码" tabindex="4" class="input" name="authcode" autocomplete="off" id="authcode">
                     </div>
                     <span class="img_authcode">
-                    <img src="/authcode/" style="cursor:pointer" onclick="ReIMG(this,'/authcode/')" alt="点击获取或换一张" title="点击获取或换一张"/>
+                    <img src="<?php echo site_url('/authcode/')?>" style="cursor:pointer" onclick="ReIMG(this,'/authcode/')" alt="点击获取或换一张" title="点击获取或换一张"/>
                     </span>
                     <span class="err_txt">验证码</span>
                 </div>

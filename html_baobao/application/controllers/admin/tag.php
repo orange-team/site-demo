@@ -57,8 +57,9 @@ class Tag extends MY_Controller
 	{
         if($this->input->post('name'))
         {
-            $data['name'] = trim(addslashes($this->input->post('name')));
-            $data['weight'] = trim(addslashes($this->input->post('weight')));
+            $this->load->helper('common');
+            $data['name'] = fileter($this->input->post('name'));
+            $data['weight'] = fileter($this->input->post('weight'));
             $affected_rows = $this->tag->insertNew($data);
             unset($data);
             $data['msg'] = ($affected_rows>0) ? '成功' : '失败';

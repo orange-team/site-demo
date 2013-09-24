@@ -15,7 +15,7 @@ class user extends CI_Controller
         $this->_info['cls'] = strtolower(__CLASS__);
         $this->_info['name'] = '用户';
         $this->_info['view_path'] = 'admin/'.$this->_info['cls'];
-        $this->load->model('user_member_model','user');
+        $this->load->model('user_model','user');
 		$this->load->model('tag_model','tag');
 		$this->load->model('relation_tag_model','relation');
 	}
