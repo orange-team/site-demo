@@ -5,7 +5,19 @@
 .select_tag .color_3 { color:#B6B6B6;}
 .select_tag .title{ position:relative;}
 .select_tag .title img { position:relative; top:10px; }
-.select_tag .time_line { padding:15px 0 15px 0; }
+.select_tag .time_line { padding:15px 0 15px 0; height:20px; width:auto;}
+.select_tag .time_line a{ float:left; margin-left:1px;}
+.select_tag .time_line span{ display:block;  width:165px; height:20px; }
+.select_tag .time_line .beiyun{ background-color:gray; }
+.select_tag .time_line .huaiyun{ background-color:red; }
+.select_tag .time_line .fenmian{ background-color:#484848; }
+.select_tag .time_line .zerone{ background-color:yellow; }
+.select_tag .time_line .onethree{ background-color:green; }
+.select_tag .time_line .threesix{ background-color:#b2b2b2; }
+
+
+
+
 .select_tag .color_2 img {  vertical-align:middle; }
 .select_tag p { padding:15px 0 15px 0; }
 .select_tag .tag_list { height:auto; width:1000px; padding-left:2px;}
@@ -29,7 +41,18 @@
             </div>
             <p class="color_2">请选择您现在所处的阶段，我们将为您提供贴心个性化的推荐... </p>
             <div class="time_line">
-                <object type="application/x-shockwave-flash" name="timeline" data="http://h.yaolanimage.cn/global/head/images/timeline.swf?ver=20130905" width="960" height="35" id="flashcontent" style="visibility: visible;"> </object>
+                <?php foreach($time as $v){?>
+                <a href="">
+                <span class="<?php switch($v['name']){ 
+                                        case '备孕': echo 'beiyun';break;
+                                        case '怀孕': echo 'huaiyun';break;
+                                        case '分娩': echo 'fenmian';break;
+                                        case '0-1岁': echo 'zerone';break;
+                                        case '1-3岁': echo 'onethree';break;
+                                        default: echo 'threesix';
+                             };?>"></span><?php echo $v['name'];?>
+                </a>
+                <?php } ?>
             </div>
             <p class="color_2">顺便选择一些您关注的标签吧 &nbsp;&nbsp;<span id="selected"></span>
             <div class="clear"></div>
