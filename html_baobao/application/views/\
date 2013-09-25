@@ -7,10 +7,9 @@
 .select_tag .title img { position:relative; top:10px; }
 .select_tag .time_line { padding:8px 0 25px 0; height:20px; width:auto;}
 .select_tag .time_line a{ float:left; margin-left:1px;}
-.select_tag .time_line .section{ width:165px; float:left; margin-left:1px; height:25px; cursor:pointer; }}
+.select_tag .time_line .section{ width:165px; float:left; margin-left:1px; height:10px; cursor:pointer; }}
 .select_tag .time_line .section h6{ font-style:normal; }
 .select_tag .time_line .section div{  width:165px; float:left;  height:10px; margin-top:5px;}
-.select_tag .time_line .section span{ display:block; height:15px; }
 .select_tag .time_line .beiyun{ background-color:#FFCCCC; }
 .select_tag .time_line .huaiyun{ background-color:#FF99FF; }
 .select_tag .time_line .fenmian{ background-color:#FFCC00; }
@@ -45,8 +44,8 @@
             <p class="color_2">请选择您现在所处的阶段，我们将为您提供贴心个性化的推荐... </p>
             <div class="time_line">
                 <?php foreach($time as $key=>$v){ $key++;?>
-                <div class="section" id="secBox_<?php echo $key;?>" onmouseout="hideSection('<?php echo $key; ?>')" onmouseover="showSection('<?php echo $key; ?>','<?php echo $v['id']; ?>')">
-                    <span id="secSpan_<?php echo $key;?>" ><?php echo $v['name'];?></span>
+                <div class="section" id="secBox_<?php echo $key;?>" onmouseout="hideSection('<?php echo $key; ?>')" onmouseover="showSection('<?php echo $key; ?>')">
+                    <span><?php echo $v['name'];?></span>
                     <div id="sec_<?php echo $key;?>" class="<?php switch($v['name']){ 
                                             case '备孕':  echo 'beiyun';break;
                                             case '怀孕':  echo 'huaiyun';break;
@@ -136,41 +135,12 @@ function goSubmit()
     
 }
 //鼠标悬停在时间轴上
-function showSection(sec,id)
+function showSection(sec)
 {
     if(2 == sec)
     {
-        $("#sec_"+2).css("width","200px");
-        $("#secBox_"+2).css("width","200px");
-        $("#secBox_"+2).empty();
-        $.ajax({
-            url:"/user/ajax_get_section",
-                type:'post',
-                data:{'id':id},
-                async: false,
-                cache: false,
-                success:function(str)
-                {
-                    var obj = eval(str);
-                    var leng = obj.length;
-                    for(var i=0; i<leng; i++)
-                    {
-                    <span id="secSpan_<?php echo $key;?>" ><?php echo $v['name'];?></span>
-                    <div id="sec_<?php echo $key;?>" class="<?php switch($v['name']){ 
-                                            case '备孕':  echo 'beiyun';break;
-                                            case '怀孕':  echo 'huaiyun';break;
-                                            case '分娩':  echo 'fenmian';break;
-                                            case '0-1岁': echo 'zerone';break;
-                                            case '1-3岁': echo 'onethree';break;
-                                            default: echo 'threesix'; };?>">
-                    </div>
-                        $("#secBox_"+2).append("<span>"+obj[i].name+"</span>");
-                    }
-
-                }
-
-        });
-
+        $("#sec_"+2).css("width","640px");
+        $("#secBox_"+2).css("width","640px");
         for(i=1; i<=6; i++)
         {
             if(2!=i)
@@ -182,6 +152,23 @@ function showSection(sec,id)
     }
 }
 
+
+    $.ajax({
+        url:"<?php echo base_url("admin/section/ajax_del")?>",
+            type:'post',
+            data:{'id':id},
+            async: false,
+            cache: false,
+            success:function(str)
+            {
+            }
+
+    });
+
+
+}
+
+ 
 //鼠标悬停在时间轴上
 function hideSection(sec)
 {

@@ -185,5 +185,13 @@ class user extends CI_Controller
             }
         }
     }
+    //ajax异步获取栏目
+    function ajax_get_section()
+    {
+        $id =  $this->input->post('id');
+        //$id = $this->input->post('id') ? $this->input->post('id') : 0;
+        $row = $this->section->getList(array('parent'=>$id));
+        echo json_encode($row);
+    }
 
 }
