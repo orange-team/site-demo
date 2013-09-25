@@ -5,18 +5,17 @@
 .select_tag .color_3 { color:#B6B6B6;}
 .select_tag .title{ position:relative;}
 .select_tag .title img { position:relative; top:10px; }
-.select_tag .time_line { padding:15px 0 15px 0; height:20px; width:auto;}
+.select_tag .time_line { padding:8px 0 25px 0; height:20px; width:auto;}
 .select_tag .time_line a{ float:left; margin-left:1px;}
-.select_tag .time_line span{ display:block;  width:165px; height:20px; }
-.select_tag .time_line .beiyun{ background-color:gray; }
-.select_tag .time_line .huaiyun{ background-color:red; }
-.select_tag .time_line .fenmian{ background-color:#484848; }
-.select_tag .time_line .zerone{ background-color:yellow; }
-.select_tag .time_line .onethree{ background-color:green; }
-.select_tag .time_line .threesix{ background-color:#b2b2b2; }
-
-
-
+.select_tag .time_line .section{ width:165px; float:left; margin-left:1px; height:10px; cursor:pointer; }}
+.select_tag .time_line .section h6{ font-style:normal; }
+.select_tag .time_line .section div{  width:165px; float:left;  height:10px; margin-top:5px;}
+.select_tag .time_line .beiyun{ background-color:#FFCCCC; }
+.select_tag .time_line .huaiyun{ background-color:#FF99FF; }
+.select_tag .time_line .fenmian{ background-color:#FFCC00; }
+.select_tag .time_line .zerone{ background-color:#BEF0B7; }
+.select_tag .time_line .onethree{ background-color:#BFE8E6; }
+.select_tag .time_line .threesix{ background-color:#42A855; }
 
 .select_tag .color_2 img {  vertical-align:middle; }
 .select_tag p { padding:15px 0 15px 0; }
@@ -37,21 +36,22 @@
         <div class="select_tag clearfloat">
             <div class="title">
                 <img src="/img/ok.jpg" />
-                <span class="color_1">嘎嘎嘎 （<?php echo isset($row['user_name']) ? $row['user_name'] : '';?>）创建成功！</span>
+                <span class="color_1">嘎嘎嘎 （<?php echo isset($row['user_nickname']) ? $row['user_nickname'] : '';?>）创建成功！</span>
             </div>
             <p class="color_2">请选择您现在所处的阶段，我们将为您提供贴心个性化的推荐... </p>
             <div class="time_line">
-                <?php foreach($time as $v){?>
-                <a href="">
-                <span class="<?php switch($v['name']){ 
-                                        case '备孕': echo 'beiyun';break;
-                                        case '怀孕': echo 'huaiyun';break;
-                                        case '分娩': echo 'fenmian';break;
-                                        case '0-1岁': echo 'zerone';break;
-                                        case '1-3岁': echo 'onethree';break;
-                                        default: echo 'threesix';
-                             };?>"></span><?php echo $v['name'];?>
-                </a>
+                <?php foreach($time as $key=>$v){ $key++;?>
+                <div class="section" id="secBox_<?php echo $key;?>" onmouseover="showSection('<?php echo $key; ?>')">
+                    <span><?php echo $v['name'];?></span>
+                    <div id="sec_<?php echo $key;?>" class="<?php switch($v['name']){ 
+                                            case '备孕':  echo 'beiyun';break;
+                                            case '怀孕':  echo 'huaiyun';break;
+                                            case '分娩':  echo 'fenmian';break;
+                                            case '0-1岁': echo 'zerone';break;
+                                            case '1-3岁': echo 'onethree';break;
+                                            default: echo 'threesix'; };?>">
+                    </div>
+                </div>
                 <?php } ?>
             </div>
             <p class="color_2">顺便选择一些您关注的标签吧 &nbsp;&nbsp;<span id="selected"></span>
@@ -130,6 +130,23 @@ function goSubmit()
         return true;
     }
     
+}
+//鼠标悬停在时间轴上
+function showSection(sec)
+{
+    if(2 == sec)
+    {
+        $("#sec_"+2).css("width","630px");
+        $("#secBox_"+2).css("width","630px");
+        for(i=1; i<=6; i++)
+        {
+            if(2!=i)
+            {
+                $("#sec_"+i).css("width","72px");
+                $("#secBox_"+i).css("width","72px");
+            }
+        }
+    }
 }
 </script>
 
