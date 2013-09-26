@@ -9,7 +9,12 @@
 .select_tag .time_line .section{ width:165px; float:left; margin-left:1px; height:25px; cursor:pointer; }
 .select_tag .time_line .section h6{ font-style:normal; }
 .select_tag .time_line .section .beiyun,.huaiyun,.fenmian,.zerone,.onethree,.threesix{  width:165px; float:left;  height:10px; margin-top:5px;}
-.select_tag .time_line .section .bigSpan{ display:block; height:15px; }
+.select_tag .time_line .section .secSpan{ display:block; height:15px; }
+.select_tag .time_line .section .huaiyunBig{ width:640px; height:15px;}
+.select_tag .time_line .section .huaiyunBig .bigSpan{ display:block; width:190px; float:left;}
+.select_tag .time_line .section .huaiyunBig .midWidth{  width:240px; }
+.select_tag .time_line .section .huaiyunTwo{  width:15px;}
+.select_tag .time_line .section .float{ display:block; float:left; margin-top:5px; height:auto; margin-left:1px}
 .select_tag .time_line .section a{ display:block; width:15px; height:10px; background-color:#FF99FF;}
 .select_tag .time_line .section a:hover { background-color:#F6724A; }
 .select_tag .time_line .beiyun{ background-color:#FFCCCC; }
@@ -46,8 +51,8 @@
             <p class="color_2">请选择您现在所处的阶段，我们将为您提供贴心个性化的推荐... </p>
             <div class="time_line">
                 <?php foreach($time as $key=>$v){ $key++;?>
-                <div class="section" id="secBox_<?php echo $key;?>" onmouseout="hideSection('<?php echo $key; ?>')" onmouseover="showSection('<?php echo $key; ?>','<?php echo $v['id']; ?>')">
-                    <span class="bigSpan" id="secSpan_<?php echo $key;?>" ><?php echo $v['name'];?></span>
+                <div class="section" id="secBox_<?php echo $key;?>"  onmouseover="showSection('<?php echo $key; ?>','<?php echo $v['id']; ?>')" onmouseout="hideSection('<?php echo $key; ?>')">
+                    <span class="secSpan" id="secSpan_<?php echo $key;?>" ><?php echo $v['name'];?></span>
                     <div id="sec_<?php echo $key;?>" class="<?php switch($v['name']){ 
                                             case '备孕':  echo 'beiyun';break;
                                             case '怀孕':  echo 'huaiyun';break;
@@ -127,7 +132,7 @@ function goSubmit()
 {
     var tags_val = $("#tags").val();  //隐藏域存储选择好的标签id
     if('' == tags_val)
-    {
+    {style='display:block; width:190px; float:left;'
         alert('请选择您关注的标签！');
         return false;
     }else
@@ -141,9 +146,15 @@ function showSection(sec,id)
 {
     if(2 == sec)
     {
-        $("#sec_"+2).css("width","640px");
-        $("#secBox_"+2).css("width","640px");
-        $("#secBox_"+2).empty();
+        $("#sec_"+sec).css("width","640px");
+        $("#secBox_"+sec).css("width","640px");
+        $("#secBox_"+sec).empty();
+        $("#secBox_"+sec).append("<div class='huaiyunBig'><span class='bigSpan'>孕早期（1-12周）</span> <span class='bigSpan midWidth'>孕中期（13-27周）</span> <span class='bigSpan'>孕晚期（28-40周）</span</div><div class='clear'></div>")
+        for(var i=1; i<=40; i++)
+        {
+            $("#secBox_"+sec).append("<div class='huaiyunTwo float'><a title='第"+i+"周' href=\"http://www.baidu.com\"></a></div>");
+        }
+        /*
         $.ajax({
             url:"/user/ajax_get_section",
                 type:'post',
@@ -153,43 +164,12 @@ function showSection(sec,id)
                 cache: false,
                 success:function(str)
                 {
-                    /*
                     $.each( str, function(i, n){
                         alert(n.name)
                     });
-                    */
-                    $("#secBox_"+2).append("<div style='width:640px; height:15px;'><span style='widht:213px;'>孕早期（1-12周）</span>")
-                    for(var i=1; i<=40; i++)
-                    {
-                        var name=' ';
-                        if( 1==i )
-                        {
-                            name = '1'
-                        }
-                        $("#secBox_"+2).append("<div style=\"float:left; width:15px; margin-top:5px; height:auto; margin-left:1px;\"><a title='第"+i+"周'></a></div>");
-                    }
-
-                    /*
-                    var obj = eval(str);
-                    var leng = obj.length;
-                    for(var i=0; i<leng; i++)
-                    {
-                    <span id="secSpan_<?php echo $key;?>" ><?php echo $v['name'];?></span>
-                    <div id="sec_<?php echo $key;?>" class="<?php switch($v['name']){ 
-                                            case '备孕':  echo 'beiyun';break;
-                                            case '怀孕':  echo 'huaiyun';break;
-                                            case '分娩':  echo 'fenmian';break;
-                                            case '0-1岁': echo 'zerone';break;
-                                            case '1-3岁': echo 'onethree';break;
-                                            default: echo 'threesix'; };?>">
-                    </div>
-                        $("#secBox_"+2).append("<span>"+obj[i].name+"</span>");
-                    }
-                    */
-
                 }
-
         });
+        */
 
         for(i=1; i<=6; i++)
         {
@@ -207,6 +187,12 @@ function hideSection(sec)
 {
     for(i=1; i<=6; i++)
     {
+        if(2 == i)
+        { 
+            $("#secBox_"+i).empty();
+            $("#secBox_"+i).append("<span class='secSpan' id='secSpan_2'>怀孕期</span>");
+            $("#secBox_"+i).append("<div class='huaiyun' id='sec_2'></div>");
+        }
         $("#sec_"+i).css("width","165px");
         $("#secBox_"+i).css("width","165px");
     }
