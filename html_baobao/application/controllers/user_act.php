@@ -42,7 +42,7 @@ class user_act extends CI_Controller
         $data = array(
                 'user_nickname' => filter($this->input->post('nickname')),
                 'user_email' => filter($this->input->post('email')),
-                'user_passwd' => filter($this->input->post('password')),
+                'user_passwd' => create_pwd(filter($this->input->post('password'))),
                 'user_reg_time' => $now,
                 'user_login_time' => $now,
         );
@@ -64,7 +64,7 @@ class user_act extends CI_Controller
 	}
 
 	//登录验证
-	function dologin()
+	function login()
 	{
 		$nickname = $this->input->post('nickname');
 		$passwd = $this->input->post('passwd');

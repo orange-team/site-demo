@@ -84,6 +84,60 @@ class user extends CI_Controller
         //要载入的css, js文件
         $this->data['file'] = array('js'=>'user','css'=>'user');
 		$this->load->helper(array('url','form'));
+        $this->load->library('jquery_validation');
+        // Set CodeIgniter standard validation rules ( The same rules format which has form_validtion library )
+        $rules = array(
+                array(
+                     'field'   => 'nickname',
+                     'label'   => 'nickname',
+                     'rules'   => 'required|min_length[2]'
+                  ),
+               array(
+                     'field'   => 'email',
+                     'label'   => 'email',
+                     'rules'   => 'required|valid_email'
+                  ),
+               array(
+                     'field'   => 'password',
+                     'label'   => 'password',
+                     'rules'   => 'required|min_length[6]'
+                  ),
+               array(
+                     'field'   => 'authcode',
+                     'label'   => 'authcode',
+                     'rules'   => 'required|min_length[4]|max_length[4]'
+                  ),
+               array(
+                     'field'   => 'agreement',
+                     'label'   => 'agreement',
+                     'rules'   => 'required'
+                  ),
+           );
+        // Set error messages.
+        $messages = array(
+                 'nickname'  => array( 'required'    => "昵称不能为空",
+                                       'min_length'  => "昵称至少要2个字符"
+                                     ),
+                 'email'     => array( 'required'    => "邮箱不能为空",
+                                       'valid_email' => "邮箱格式不正确"
+                                     ),
+                 'password'  => array( 'required'    => "密码不能为空",
+                                       'min_length'  => "密码至少要6个字符"
+                                     ),
+                 'authcode'  => array( 'required'    => "验证码不能为空",
+                                       'min_length'      => "验证码是4位的",
+                                       'max_length'      => "验证码是4位的"
+                                     ),
+                 'agreement'  => array( 'required'    => "请阅读并接受使用协议",
+                                     ),
+                 );
+        // Apply validation rules and messages to library.
+        $this->jquery_validation->set_rules($rules);
+        $this->jquery_validation->set_messages($messages);
+        // Generate Javascript validation code.
+        // pass css selector for your form to run method
+        $this->data['validation_script'] = $this->jquery_validation->run('#reg_form');
+        // echo $validation_script in your <script> tag
 		$this->load->view('user_reg', $this->data);
 	}
 
