@@ -7,7 +7,7 @@
         <div class="user_center clearfloat">
             <div class="title">
                 <h1 class="color_1">嘎嘎嘎</h1>
-                <span class='email color_2'>（<?php echo isset($row['user_name']) ? $row['user_name'] : '';?>）</span>
+                <span class='email color_2'>（<?php echo isset($row['user_nickname']) ? $row['user_nickname'] : '';?>）</span>
             </div>
             <p class="color_2">欢迎妈妈，您已经在蜡笔画留下了足迹，不做懵懂的妈妈，在这里学习、分享、买东西...</p>
             <div class="user_info">

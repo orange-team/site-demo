@@ -18,6 +18,7 @@ class user extends CI_Controller
         $this->load->model('user_model','user');
 		$this->load->model('tag_model','tag');
 		$this->load->model('relation_tag_model','relation');
+        $this->load->model('section_model','section');
 	}
 
 	//
@@ -192,8 +193,10 @@ class user extends CI_Controller
         $user_id = $this->data['user_id'] = 1;
         //获取用户信息
         $this->data['row'] = $this->user->get($user_id);
-        //获取标签信息
         
+        //获取时间轴信息
+        $this->data['time'] = $this->section->getList(array('pt_depth'=>2));
+        //获取标签信息
         $this->data['tagNameArr'] = $this->tag->getOrder_weight(40,0,1);
         
         $relation = $this->relation->get(array('target_type'=>3));
@@ -235,6 +238,14 @@ class user extends CI_Controller
                 }
             }
         }
+    }
+    //ajax异步获取栏目
+    function ajax_get_section()
+    {
+        $id =  $this->input->post('id');
+        //$id = $this->input->post('id') ? $this->input->post('id') : 0;
+        $row = $this->section->getList(array('parent'=>$id));
+        echo json_encode($row);
     }
 
 }
