@@ -6,12 +6,10 @@
 .select_tag .title{ position:relative;}
 .select_tag .title img { position:relative; top:10px; }
 .select_tag .time_line { padding:8px 0 25px 0; height:20px; width:auto;}
-.select_tag .time_line .section{ width:165px; float:left; margin-left:1px; height:25px; cursor:pointer; }
+.select_tag .time_line .section{ width:165px; float:left; margin-left:1px; height:25px; cursor:pointer; }}
 .select_tag .time_line .section h6{ font-style:normal; }
-.select_tag .time_line .section .beiyun,.huaiyun,.fenmian,.zerone,.onethree,.threesix{  width:165px; float:left;  height:10px; margin-top:5px;}
-.select_tag .time_line .section .bigSpan{ display:block; height:15px; }
-.select_tag .time_line .section a{ display:block; width:15px; height:10px; background-color:#FF99FF;}
-.select_tag .time_line .section a:hover { background-color:#F6724A; }
+.select_tag .time_line .section div{  width:165px; float:left;  height:10px; margin-top:5px;}
+.select_tag .time_line .section span{ display:block; height:15px; }
 .select_tag .time_line .beiyun{ background-color:#FFCCCC; }
 .select_tag .time_line .huaiyun{ background-color:#FF99FF; }
 .select_tag .time_line .fenmian{ background-color:#FFCC00; }
@@ -47,7 +45,7 @@
             <div class="time_line">
                 <?php foreach($time as $key=>$v){ $key++;?>
                 <div class="section" id="secBox_<?php echo $key;?>" onmouseout="hideSection('<?php echo $key; ?>')" onmouseover="showSection('<?php echo $key; ?>','<?php echo $v['id']; ?>')">
-                    <span class="bigSpan" id="secSpan_<?php echo $key;?>" ><?php echo $v['name'];?></span>
+                    <span id="secSpan_<?php echo $key;?>" ><?php echo $v['name'];?></span>
                     <div id="sec_<?php echo $key;?>" class="<?php switch($v['name']){ 
                                             case '备孕':  echo 'beiyun';break;
                                             case '怀孕':  echo 'huaiyun';break;
@@ -158,15 +156,9 @@ function showSection(sec,id)
                         alert(n.name)
                     });
                     */
-                    $("#secBox_"+2).append("<div style='width:640px; height:15px;'><span style='widht:213px;'>孕早期（1-12周）</span>")
                     for(var i=1; i<=40; i++)
                     {
-                        var name=' ';
-                        if( 1==i )
-                        {
-                            name = '1'
-                        }
-                        $("#secBox_"+2).append("<div style=\"float:left; width:15px; margin-top:5px; height:auto; margin-left:1px;\"><a title='第"+i+"周'></a></div>");
+                        $("#secBox_"+2).append("<a alt="+i+"style='display:block;float:left;margin-left:1px; margin-top:20px; width:15px; height:10px; background-color:#FF99FF;'></a>");
                     }
 
                     /*
