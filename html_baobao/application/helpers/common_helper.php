@@ -19,4 +19,8 @@ function utf2gbk($str)
     return mb_convert_encoding($str, 'GBK', 'UTF-8'); 
 }
 
-
+//生成密码
+function create_pwd($str)
+{
+    return md5('labi'.$str.'hua');
+}

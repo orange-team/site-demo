@@ -2,38 +2,30 @@
 <div id="wraper">
     <div class="content clearfloat">
         <div class="reg clearfloat">
-        <?php echo form_open(site_url('user_act/reg/'.urlencode($this->_ref), array('name'=>'reg',"onsubmit"=>"return chk_reg()")));?>
+        <?php echo form_open(site_url('user_act/reg/'.urlencode($this->_ref)), array('name'=>'reg_form','id'=>'reg_form'));?>
             <h1>注册蜡笔画</h1>
-            <div class="field-input clearfloat">
-                <div id="customer_email_wrap" class="field err">
-                    <input type="text" value="" placeholder="昵称" tabindex="1" class="input" name="nickname" maxlength="255" id="email">
-                </div>
-                <div id="customer_email_wrap" class="field err">
-                    <input type="email" value="" placeholder="邮箱" tabindex="2" class="input" name="email" maxlength="255" id="email">
-                </div>
-                <span class="err_txt clearfloat">邮箱格式错误</span>
-                <div id="customer_password_wrap" class="field yes">
-                    <input type="password" value="" placeholder="密码" tabindex="3" class="input" name="password" autocomplete="off" id="password">
-                </div>
-                <span class="err_txt clearfloat">用户名或密码错误</span>
-                <div class="authcode">
-                    <div id="customer_authcode_wrap" class="field clearfloat">
-                        <input type="text" value="" placeholder="验证码" tabindex="4" class="input" name="authcode" autocomplete="off" id="authcode">
-                    </div>
-                    <span class="img_authcode">
-                    <img src="<?php echo site_url('/authcode/')?>" style="cursor:pointer" onclick="ReIMG(this,'/authcode/')" alt="点击获取或换一张" title="点击获取或换一张"/>
-                    </span>
-                    <span class="err_txt">验证码</span>
-                </div>
+            <div class="field_input">
+                <input type="text" value="" placeholder="昵称" tabindex="1" class="input" name="nickname" maxlength="255" id="nickname">
+                <input type="email" value="" placeholder="邮箱" tabindex="2" class="input" name="email" maxlength="255" id="email">
+                <input type="password" value="" placeholder="密码" tabindex="3" class="input" name="password" autocomplete="off" id="password">
+                <input type="text" value="" placeholder="验证码" tabindex="4" class="authcode input" name="authcode" autocomplete="off" id="authcode">
+                <img src="<?php echo site_url('/authcode/')?>" class="img_authcode" onclick="ReIMG(this,'/authcode/')" alt="点击获取或换一张" title="点击获取或换一张"/>
             </div>
+            <dl class="field_label clearfloat">
+                <dt class="label">&nbsp;<label for="nickname" class="error"> </label></dt>
+                <dt class="label">&nbsp;<label for="email" class="error"> </label></dt>
+                <dt class="label">&nbsp;<label for="password" class="error"> </label></dt>
+                <dt class="label">&nbsp;<label for="authcode" class="error"> </label></dt>
+            </dl>
             <div class="form_submit">
 				<button type="submit" class="btn"><span>注册</span></button>
 			</div>
-            <div id="remember_wrap" class="field_protocal">
-				<label for="remember">
-					<input type="checkbox" value="true" checked class="chk_box_middle" name="remember" id="remember">
+            <div class="field_agreement">
+				<label for="agreement">
+					<input type="checkbox" value="true" checked class="chk_box_middle" name="agreement" id="agreement">
 					我已阅读并接受<a href="#">《使用协议》</a>
 				</label>
+                <label for="agreement" class="error"> </label>
 			</div>
         </form>
         </div><!-- reg -->
@@ -55,4 +47,8 @@ function ReIMG(obj,url){
 </script>
 
 <?php $this->load->view('footer')?>
+<script type="text/javascript" src="<?php echo base_url()?>js/jquery.validate.min.js"></script>
+<script type="text/javascript">
+<?php echo $validation_script?>
+</script>
 
