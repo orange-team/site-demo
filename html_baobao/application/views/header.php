@@ -7,8 +7,16 @@
 <link rel="shortcut icon" href="/img/favicon.ico" />
 <link href="/css/common.css" rel="stylesheet" type="text/css" />
 <link href="/css/<?php echo $file['css']?>.css?v=0.11" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/js/jquery-1.8.1.js"></script>
 <script type="text/javascript">
-
+function login()
+{
+    window.location.href = '<?php echo site_url('/user_login')?>/?ref='+window.location.href;
+}
+function reg()
+{
+    window.location.href = '<?php echo site_url('/user_reg')?>/?ref='+window.location.href;
+}
 </script>
 </head>
 <body>
@@ -17,8 +25,8 @@
     <div class="nav"></div>
     <div class="hd_box">
         <div class="top_nav_rg">
-            <a class="login">登录</a> 
-            <a>免费注册</a> 
+            <a href="javascript:login();" class="login">登录</a> 
+            <a href="javascript:reg();">免费注册</a> 
             <a><img src="/img/xina.png" width="25" height="25" /> 微薄登录</a> 
             <a><img src="/img/qq.png" width="25" height="25" /> QQ登录</a> 
         </div>

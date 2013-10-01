@@ -1,8 +1,10 @@
 <?php $this->load->view('header')?>
+<script type="text/javascript" src="<?php echo base_url()?>js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url()?>js/validate_reg.js?v=<?php echo rand()?>"></script>
 <div id="wraper">
     <div class="content clearfloat">
         <div class="reg clearfloat">
-        <?php echo form_open(site_url('user_act/reg/'.urlencode($this->_ref)), array('name'=>'reg_form','id'=>'reg_form'));?>
+        <?php echo form_open(site_url('user_reg/?ref='.urlencode($ref)), array('name'=>'reg_form','id'=>'reg_form'));?>
             <h1>注册蜡笔画</h1>
             <div class="field_input">
                 <input type="text" value="" placeholder="昵称" tabindex="1" class="input" name="nickname" maxlength="255" id="nickname">
@@ -18,7 +20,7 @@
                 <dt class="label">&nbsp;<label for="authcode" class="error"> </label></dt>
             </dl>
             <div class="form_submit">
-				<button type="submit" class="btn"><span>注册</span></button>
+				<button type="submit" class="btn" id="submit_btn"><span>注册</span></button>
 			</div>
             <div class="field_agreement">
 				<label for="agreement">
@@ -31,7 +33,7 @@
         </div><!-- reg -->
         <div class="other_reg clearfloat">
             快速注册登录
-            <a href="#" class="to_reg btn orange">已有账号登录</a>
+            <a href="<?php echo site_url('/user_login/')?>" class="to_reg btn orange">已有账号登录</a>
             <dl>
             <dt class="clearfloat"><img src="#" id="weibo"/><label for="weibo">用微博账号登录</label></dt>
             <dt class="clearfloat"><img src="#" id="weibo"/><label for="weibo">用微博账号登录</label></dt>
@@ -44,11 +46,7 @@
 function ReIMG(obj,url){
     obj.src = url + "?t="+100*Math.random();
 }
+$('#nickname').focus();
 </script>
-
 <?php $this->load->view('footer')?>
-<script type="text/javascript" src="<?php echo base_url()?>js/jquery.validate.min.js"></script>
-<script type="text/javascript">
-<?php echo $validation_script?>
-</script>
 

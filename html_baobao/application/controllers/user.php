@@ -18,13 +18,7 @@ class user extends CI_Controller
         $this->load->model('user_model','user');
 		$this->load->model('tag_model','tag');
 		$this->load->model('relation_tag_model','relation');
-        $this->load->model('section_model','section');
 	}
-
-	//
-	function index()
-	{
-    }
 
 	//登录
 	function login()
@@ -36,63 +30,7 @@ class user extends CI_Controller
         //要载入的css, js文件
         $this->data['file'] = array('js'=>'user','css'=>'user');
 		$this->load->helper(array('url','form'));
-		$this->load->view('user_login', $this->data);
-	}
-
-	//登录验证
-	function dologin()
-	{
-		$uname = $this->input->post('uname');
-		$passwd = $this->input->post('passwd');
-		$this->load->model('user_model','user');
-		$isRight = false;
-		$user = $this->user->chk($uname, $passwd);
-		//验证用户名，密码
-		if ( $user['user_id']<=0 )
-		{
-			//显示错误信息
-			$data['wrongPwd'] = 1;
-			$this->load->helper('url');
-			$this->load->view('user_a.html', $data);
-		} else {
-			//注册session
-            $this->load->library('session'); 
-			$arr = array('uname'=>$uname, 'userId'=>$user['user_id'], 'user_right'=>$user['user_right']);
-            $this->session->set_userdata($arr); 
-			//重定向到后台首页
-			$this->load->helper('url');
-			redirect('admin/main/index');
-		}
-	}
-
-	//退出
-	function doLogout()
-	{
-        $this->load->library('session'); 
-        $this->session->sess_destroy();
-		//重定向到后台首页
-		$this->load->helper('url');
-		redirect('/');
-	}
-
-    //注册
-	function reg()
-	{
-        $this->data['seo'] = array('title'=>'用户注册页',
-                'description'=>'用户注册页的描述页面信息',
-                'keywords'=>'用户注册,母婴知识,宝宝健康'
-                );
-        //要载入的css, js文件
-        $this->data['file'] = array('js'=>'user','css'=>'user');
-		$this->load->helper(array('url','form'));
-        $this->load->library('jquery_validation');
-        // Set CodeIgniter standard validation rules ( The same rules format which has form_validtion library )
         $rules = array(
-                array(
-                     'field'   => 'nickname',
-                     'label'   => 'nickname',
-                     'rules'   => 'required|min_length[2]'
-                  ),
                array(
                      'field'   => 'email',
                      'label'   => 'email',
@@ -103,44 +41,45 @@ class user extends CI_Controller
                      'label'   => 'password',
                      'rules'   => 'required|min_length[6]'
                   ),
-               array(
-                     'field'   => 'authcode',
-                     'label'   => 'authcode',
-                     'rules'   => 'required|min_length[4]|max_length[4]'
-                  ),
-               array(
-                     'field'   => 'agreement',
-                     'label'   => 'agreement',
-                     'rules'   => 'required'
-                  ),
            );
         // Set error messages.
         $messages = array(
-                 'nickname'  => array( 'required'    => "昵称不能为空",
-                                       'min_length'  => "昵称至少要2个字符"
-                                     ),
                  'email'     => array( 'required'    => "邮箱不能为空",
                                        'valid_email' => "邮箱格式不正确"
                                      ),
                  'password'  => array( 'required'    => "密码不能为空",
                                        'min_length'  => "密码至少要6个字符"
                                      ),
-                 'authcode'  => array( 'required'    => "验证码不能为空",
-                                       'min_length'      => "验证码是4位的",
-                                       'max_length'      => "验证码是4位的"
-                                     ),
-                 'agreement'  => array( 'required'    => "请阅读并接受使用协议",
-                                     ),
                  );
+        $this->set_jquery_validation('#login_form', $rules, $messages);
+		$this->load->view('user_login', $this->data);
+	}
+
+    //注册
+	function reg()
+	{
+        $this->data['seo'] = array('title'=>'用户注册页',
+                'description'=>'用户注册页的描述页面信息',
+                'keywords'=>'用户注册,母婴知识,宝宝健康'
+                );
+		$this->data['err_msg'] = $this->uri->segment(3, 0);
+        //要载入的css, js文件
+        $this->data['file'] = array('js'=>'user','css'=>'user');
+		$this->load->helper(array('url','form'));
+		$this->load->view('user_reg', $this->data);
+	}
+
+    function set_jquery_validation($form, $rules, $messages)
+    {
+        $this->load->library('jquery_validation');
         // Apply validation rules and messages to library.
         $this->jquery_validation->set_rules($rules);
         $this->jquery_validation->set_messages($messages);
         // Generate Javascript validation code.
         // pass css selector for your form to run method
-        $this->data['validation_script'] = $this->jquery_validation->run('#reg_form');
+        $this->data['validation_script'] = $this->jquery_validation->run($form);
         // echo $validation_script in your <script> tag
-		$this->load->view('user_reg', $this->data);
-	}
+    }
 
     //个人中心
     function user_center()
@@ -193,10 +132,8 @@ class user extends CI_Controller
         $user_id = $this->data['user_id'] = 1;
         //获取用户信息
         $this->data['row'] = $this->user->get($user_id);
-        
-        //获取时间轴信息
-        $this->data['time'] = $this->section->getList(array('pt_depth'=>2));
         //获取标签信息
+        
         $this->data['tagNameArr'] = $this->tag->getOrder_weight(40,0,1);
         
         $relation = $this->relation->get(array('target_type'=>3));
@@ -238,14 +175,6 @@ class user extends CI_Controller
                 }
             }
         }
-    }
-    //ajax异步获取栏目
-    function ajax_get_section()
-    {
-        $id =  $this->input->post('id');
-        //$id = $this->input->post('id') ? $this->input->post('id') : 0;
-        $row = $this->section->getList(array('parent'=>$id));
-        echo json_encode($row);
     }
 
 }

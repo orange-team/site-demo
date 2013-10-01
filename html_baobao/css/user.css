@@ -15,9 +15,9 @@
 .reg .valid {border:2px solid #6c0;}
 .reg input.error {border:2px solid red;}
 .reg label.error { display:none;width:200px;height:36px;line-height:36px;margin:0 0 0 5px;color:red;font-size:14px;font-weight:normal;}
-
 .reg .form_submit { display:inline-block;width:545px;height:60px;line-height:75px;}
 .reg .field_agreement { margin:10px 0;font-size:14px;color:#333;font-weight:normal;height:40px;}
+.reg .remember { float:none;display:inline-block;margin:20px 0 0 0;font-size:14px;font-weight:normal;color:#333; }
 .reg .field_agreement .error { line-height:100%; }
 .reg .field_agreement a { text-decoration:none;color:#076699;}
 .reg .btn { width:98px;height:36px; }
@@ -33,23 +33,5 @@
 .orange { background-color: #f37049;}
 /* 重写button宽度 */
 .other_reg .btn,.other_login .btn { width:170px; }
-/* 登录 */
-.user_login ,.user_login h1{ font-size:20px;color:#ccc;}
-.user_login { float:left;display:inline-block;width:505px;height:auto;font-size:20px;color:#ccc;font-weight:bold;margin:70px 80px;}
-.user_login .field { float:left;width:305px;height:38px;margin:12px 0 0 0;border:2px solid #ccc;}
-.user_login .field label { float:left;width:36px;height:36px; }
-.user_login .input { float:left;width:260px;height:38px;font-size:16px;}
-.user_login .field_autologin { margin:15px 0 0 0;font-size:14px;color:#333;font-weight:normal;height:40px;}
-.user_login .btn { width:98px;height:36px; }
 
-.user_login .valid {border:2px solid #6c0;}
-.user_login .error {border:2px solid red;}
-.user_login .error {float:left;display:inline-block;width:190px;height:42px;line-height:42px;margin:12px 0 0 5px;color:red;font-size:14px;font-weight:normal;}
-
-.other_login { float:left;display:inline-block;margin:70px 0;padding:0 0 0  65px;border-left:1px solid #c8c8c8;width:205px;height:320px;font-size:20px;color:#585858; }
-.other_login dl img { float:left;display:inline-block;border:none;width:36px;height:36px;}
-.other_login dt { color:#666;font-weight:normal;margin:20px 0;}
-.other_login label {float:left;display:inline-block;height:36px;line-height:36px;margin:0 0 0 10px;}
-.other_login .to_reg { display:block;width:170;height:26px;margin:40px 0 0 0;padding:8px 0 0 0;font-weight:600;}
-.other_login a.to_reg:hover { color:#fff; }
 

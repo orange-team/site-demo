@@ -1,41 +1,44 @@
 <?php $this->load->view('header')?>
+<script type="text/javascript" src="<?php echo base_url()?>js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url()?>js/validate_login.js?v=<?php echo rand()?>"></script>
 <div id="wraper">
     <div class="content clearfloat">
-        <div class="user_login clearfloat">
-        <?php echo form_open(site_url($this->_info['cls'].'/login/'.urlencode($this->_ref), array('name'=>'user_login',"onsubmit"=>"return chk_login()")));?>
+        <div class="reg clearfloat">
+        <?php echo form_open(site_url('/user_login/?ref='.urlencode($ref)), array('name'=>'user_login','id'=>'login_form'));?>
             <h1>登录蜡笔画</h1>
-            <div class="field-input clearfloat">
-                <div id="customer_email_wrap" class="field err">
-                    <label for="user_email"> </label>
-                    <input type="email" value="" placeholder="邮箱" tabindex="1" class="input" name="user_email" maxlength="255" id="user_email">
-                </div>
-                <span class="err_txt clearfloat">邮箱格式错误</span>
-                <div id="customer_password_wrap" class="field yes">
-                    <label for="user_password"> </label>
-                    <input type="password" value="" placeholder="密码" tabindex="2" class="input" name="user_password" autocomplete="off" id="user_password">
-                </div>
-                <span class="err_txt clearfloat">用户名或密码错误</span>
+            <div class="field_input">
+                <input type="email" value="<?php echo $email?>" placeholder="邮箱" tabindex="1" class="input" name="email" id="email">
+                <input type="password" value="" placeholder="密码" tabindex="2" class="input" name="password" autocomplete="off" id="password">
             </div>
-            <div id="remember_wrap" class="field_autologin">
-				<label for="remember">
-					<input type="checkbox" value="true" class="chk_box_middle" name="remember" id="remember">
-					记住我,一周之内自动登录
-				</label>
-			</div>
-            <div class="form_footer">
+            <dl class="field_label clearfloat">
+                <dt class="label">&nbsp;<label for="email" class="error"> </label></dt>
+                <dt class="label">&nbsp;<label for="password" class="error"></label></dt>
+            </dl>
+            <label for="remember" class="remember">
+                        <input type="checkbox" value="true" checked class="chk_box_middle" name="remember" id="remember">
+                        记住我,一周之内自动登录
+                    </label>
+                    <label for="remember" class="error"> </label>
+            <div class="form_submit">
 				<button type="submit" class="btn"><span>登录</span></button>
 			</div>
         </form>
         </div><!-- user_login -->
-        <div class="other_login clearfloat">
+        <div class="other_reg clearfloat">
             其他登录方式
             <dl>
             <dt class="clearfloat"><img src="#" id="weibo"/><label for="weibo">用微博账号登录</label></dt>
             <dt class="clearfloat"><img src="#" id="weibo"/><label for="weibo">用微博账号登录</label></dt>
             </dl>
-            <a href="#" class="to_reg btn orange">还没有账号,注册</a>
+            <a href="<?php echo site_url('/user_reg/')?>" class="to_reg btn orange">还没有账号,注册</a>
         </div>
   </div><!-- content -->
 </div>
+<script type="text/javascript">
+$('#email').focus();
+ <?php if(isset($msg)){ ?>
+ $('#password').focus().attr('class','input error');
+ $('label[for=password]').css('display','inline').text('<?php echo $msg?>');
+ <?php } ?>
+</script>
 <?php $this->load->view('footer')?>
-
