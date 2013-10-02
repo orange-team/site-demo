@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="zh-CN">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><?php echo $seo['title']?></title>
@@ -27,7 +28,7 @@ function reg()
         <div class="top_nav_rg">
             <a href="javascript:login();" class="login">登录</a> 
             <a href="javascript:reg();">免费注册</a> 
-            <a><img src="/img/xina.png" width="25" height="25" /> 微薄登录</a> 
+            <a><img src="/img/xina.png" width="25" height="25" /> 微博登录</a> 
             <a><img src="/img/qq.png" width="25" height="25" /> QQ登录</a> 
         </div>
         <div class="search">

@@ -7,8 +7,8 @@
         <?php echo form_open(site_url('/user_login/?ref='.urlencode($ref)), array('name'=>'user_login','id'=>'login_form'));?>
             <h1>登录蜡笔画</h1>
             <div class="field_input">
-                <input type="email" value="<?php echo $email?>" placeholder="邮箱" tabindex="1" class="input" name="email" id="email">
-                <input type="password" value="" placeholder="密码" tabindex="2" class="input" name="password" autocomplete="off" id="password">
+                <input type="email" value="<?php echo $email?>" placeholder="邮箱" tabindex="1" class="input email" name="email" id="email">
+                <input type="password" value="" placeholder="密码" tabindex="2" class="input passwd" name="password" autocomplete="off" id="password">
             </div>
             <dl class="field_label clearfloat">
                 <dt class="label">&nbsp;<label for="email" class="error"> </label></dt>
@@ -27,8 +27,15 @@
         <div class="other_reg clearfloat">
             其他登录方式
             <dl>
-            <dt class="clearfloat"><img src="#" id="weibo"/><label for="weibo">用微博账号登录</label></dt>
-            <dt class="clearfloat"><img src="#" id="weibo"/><label for="weibo">用微博账号登录</label></dt>
+            <dt class="clearfloat">
+                <a href="#" id="sina"><img src="/img/login_sina.png"/><span>用微博账号登录</span></a>
+            </dt>
+            <dt class="clearfloat">
+                <a href="#" id="qq"><img src="/img/login_qq.png"/><span>用QQ账号登录</span></a>
+            </dt>
+            <dt class="clearfloat">
+                <a href="#" id="taobao"><img src="/img/login_taobao.png"/><span>用淘宝账号登录</span></a>
+            </dt>
             </dl>
             <a href="<?php echo site_url('/user_reg/')?>" class="to_reg btn orange">还没有账号,注册</a>
         </div>
@@ -37,7 +44,7 @@
 <script type="text/javascript">
 $('#email').focus();
  <?php if(isset($msg)){ ?>
- $('#password').focus().attr('class','input error');
+ $('#password').focus().attr('class','input passwd error');
  $('label[for=password]').css('display','inline').text('<?php echo $msg?>');
  <?php } ?>
 </script>
