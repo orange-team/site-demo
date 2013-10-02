@@ -12,7 +12,7 @@ img.avator { display:inline-block; float:left; width:35px; height:35px; -webkit-
 .panel .tag a {color:#527F37;margin:0 10px 0 0;}
 /* 评论 */
 .discuss {margin:0 0 20px 0;}
-.discuss h2 {height:40px;line-height:40px;padding:0 0 0 20px;border-bottom:4px solid #fc9;font-size:14px;font-weight:normal;}
+.discuss h2 {height:40px;line-height:40px;padding:0 0 0 20px;border-bottom:4px solid #fa5;font-size:14px;font-weight:normal;}
 .discuss dt {margin:10px 0 10px 0;padding:0 0 15px 0;border-bottom:1px dashed #aaa;}
 .discuss img.avator { width:50px; height:50px; -webkit-border-radius:50px; -moz-border-radius:50px; -o-border-radius:50px; border-radius:50px;border:1px solid #aaa; }
 .discuss .right {float:left;width:606px;margin:0 0 0 10px;}
