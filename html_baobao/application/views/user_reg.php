@@ -35,8 +35,15 @@
             快速注册登录
             <a href="<?php echo site_url('/user_login/')?>" class="to_reg btn orange">已有账号登录</a>
             <dl>
-            <dt class="clearfloat"><img src="#" id="weibo"/><label for="weibo">用微博账号登录</label></dt>
-            <dt class="clearfloat"><img src="#" id="weibo"/><label for="weibo">用微博账号登录</label></dt>
+            <dt class="clearfloat">
+                <a href="#" id="sina"><img src="/img/login_sina.png"/><span>用微博账号登录</span></a>
+            </dt>
+            <dt class="clearfloat">
+                <a href="#" id="qq"><img src="/img/login_qq.png"/><span>用QQ账号登录</span></a>
+            </dt>
+            <dt class="clearfloat">
+                <a href="#" id="taobao"><img src="/img/login_taobao.png"/><span>用淘宝账号登录</span></a>
+            </dt>
             </dl>
         </div>
   </div><!-- content -->
