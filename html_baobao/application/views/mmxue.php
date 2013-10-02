@@ -290,7 +290,7 @@
         </div><!-- left -->
     </div><!-- wraper_left -->
 
-    <?php $this->load->view('mmxue_right')?>
+    <?php $this->load->view('mmxue_static_right')?>
 </div><!-- wraper -->
 <script type="text/javascript">
 <!--

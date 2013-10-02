@@ -27,10 +27,10 @@ class Create_html extends MY_Controller
         $this->load->view('mmxue_right',$row);
         $content = $this->output->get_output();
 
-        $path = $_SERVER["DOCUMENT_ROOT"].'/application/views/';
+        $path = $_SERVER["DOCUMENT_ROOT"].'application/views/';
         if ( !write_file($path.'mmxue_static_right.php', $content))
         {
-             echo 'Unable to write the file';
+             echo 'Unable to write the file: '.$path;
         }
         else
         {
