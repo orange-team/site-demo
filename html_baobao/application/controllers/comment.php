@@ -15,8 +15,14 @@ class comment extends CI_Controller
         $this->_info['cls'] = strtolower(__CLASS__);
         $this->_info['name'] = '评论';
         $this->_info['view_path'] = 'admin/'.$this->_info['cls'];
-        $this->load->model('user_model','user');
+        $this->load->model('comment_model','comment');
 	}
+
+    //用于测试评论页
+    function index()
+    {
+        $this->load->view('commnet');
+    }
 
     //保存评论
     function saveAdd()
@@ -45,29 +51,15 @@ class comment extends CI_Controller
         }
     }
 
-    //登录验证
-	private function _chk()
-	{
-		$passwd = create_pwd(filter($this->input->post('password')));
-		$email = filter($this->input->post('email'));
-		$user = $this->user->chk($email, $passwd);
-        $this->data['msg'] = '';
-        //判断密码
-        if( 0>=count($user) )
-        {
-            $this->data['msg'] = '密码不正确';
-            $this->data['email'] = $email;
-            return ;
-        }
-        //注册session
-        session_start();
-        $this->load->library('session'); 
-        $arr = array('nickname'=>$user['user_nickname'], 'user_id'=>$user['user_id'],);
-        $this->session->set_userdata($arr); 
-        //重定向到来源页
-        $this->load->helper('url');
-        $ref = $this->input->get('ref');
-        redirect($ref);
-	}
+    //初始化数据
+    function _init()
+    {
+        $this->data['seo'] = array('title'=>'用户登录首页',
+                'description'=>'用户登录首页的描述页面信息',
+                'keywords'=>'用户登录,母婴知识,宝宝健康'
+                );
+        //要载入的css, js文件
+        $this->data['file'] = array('js'=>'comment','css'=>'comment');
+    }
 
 }

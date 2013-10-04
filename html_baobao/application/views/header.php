@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <title><?php echo $seo['title']?></title>
 <meta name="description" content="<?php echo $seo['description']?>" />
 <meta name="keywords" content="<?php echo $seo['keywords']?>" />
