@@ -1,0 +1,9 @@
+*.doc
+*.swp
+*.sql
+*.svn
+uploads
+design
+#page
+database.php
+config.php
