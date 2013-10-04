@@ -2,7 +2,7 @@
 
 RewriteEngine on   
 
-RewriteCond $1 !^(index\.php|images|img|js|css|adminStatic|indexdemo|uploads|file|robots\.txt)   
+RewriteCond $1 !^(index\.php|page|img|js|css|adminStatic|indexdemo|uploads|file|robots\.txt)   
 
 RewriteRule ^(.*)$ index.php/$1 [L]
 

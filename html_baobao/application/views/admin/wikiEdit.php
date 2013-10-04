@@ -23,7 +23,7 @@
     	</tr>
         <tr>
       		<td>&nbsp;</td>
-      		<td><?php $this->load->view('admin/editSubmit',$this->_info)?></td>
+                <td><?php $this->load->view('admin/editSubmit',$this->_info)?></td>
     	</tr>
   	</table>
     </form>
