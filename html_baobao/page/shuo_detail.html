@@ -49,8 +49,20 @@
                         <div class="reply_content" style="display:block;">
                             <textarea></textarea>
                             <span class="tip">请输入不超出200字的评论</span>
-                            <button type="button">发表</button>
+                            <button type="button" onclick="javascript:comment.reply(10)">发表</button>
                         </div>
+                        <script type="text/javascript">
+                        var comment = {
+                            //对象id，如：一个问题
+                            var target_id = 1;
+                            var post = function(target_id) {
+                                //code ...
+                            }
+                            var reply = function(comment_id) {
+                                //code ...
+                            }
+                        };
+                        </script>
                         <!--reply part-->
                         <dl class="reply_part">
                         <!--超过6条，显示更多-->
