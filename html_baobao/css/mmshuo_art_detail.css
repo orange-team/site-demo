@@ -1,0 +1,40 @@
+@charset "utf-8";
+/* 公共 */
+a:visited {color:#2D80BA;}
+/* 灰色面板 */
+.panel { background:#f2f2f2;padding:10px 15px 10px 15px;border:1px solid #ccc;}
+.panel .info { height:35px;line-height:35px; }
+img.avator { display:inline-block; float:left; width:35px; height:35px; -webkit-border-radius:35px; -moz-border-radius:35px; -o-border-radius:35px; border-radius:35px;border:none; }
+.user_name { color:#2D80BA;margin:0 0 0 10px;}
+.panel .section { float:right;color:#ff6600; }
+.panel h1 {font-size:17px;margin:14px 0;}
+.panel .tag {height:20px;line-height:20px;margin:14px 0 0 0;}
+.panel .tag a {color:#527F37;margin:0 10px 0 0;}
+/* 评论 */
+.discuss {margin:0 0 20px 0;}
+.discuss h2 {height:40px;line-height:40px;padding:0 0 0 20px;border-bottom:4px solid #fa5;font-size:14px;font-weight:normal;}
+.discuss dt {margin:10px 0 10px 0;padding:0 0 15px 0;border-bottom:1px dashed #aaa;}
+.discuss img.avator { width:50px; height:50px; -webkit-border-radius:50px; -moz-border-radius:50px; -o-border-radius:50px; border-radius:50px;border:1px solid #aaa; }
+.discuss .right {float:left;width:606px;margin:0 0 0 10px;}
+.discuss .first {margin:10px 0;}
+.discuss .user_of_reply {padding:10px 0 5px 0;}
+.discuss .first_have_reply {background:#EDEDED;padding:15px 10px; }
+.discuss .the_reply {padding:10px;}
+.discuss .user_name {margin:0;}
+.discuss .info {color:#aaa;}
+.discuss .reply {float:right;color:#2D80BA;margin:0 5px 0 0;}
+.discuss .reply_content {margin:0;display:none;}
+.discuss textarea {width:100%;height:72px;margin:15px 0 5px 0;border:1px solid #333;}
+.discuss .num span {display:inline-block;float:right;margin:2px 18px 4px 0;}
+.discuss .tip {height:26px;line-height:26px;color:#aaa;}
+.discuss button {float:right;width:84px;height:26px;}
+.discuss .reply_bottom a {display:inline-block;float:right;width:50px;height:26px;line-height:26px;}
+/* 推荐内容 */
+.recommend {margin:0 0 20px 0;}
+.recommend a {color:#585858;}
+.recommend dl.list dt a {display:inline-block;width:194px;height:30px;line-height:30px;padding:4px 0 0 10px;}
+.recommend dl.list span {display:inline-block;width:26px;height:15px;line-height:15px;margin:0 0 0 10px;text-align:center;color:#fff;background:#F7AF9B;border:1px solid #d8d8d8; -webkit-border-radius:5px; -moz-border-radius:5px; -o-border-radius:5px; border-radius:5px;}
+.recommend .list {border:1px solid #d8d8d8;border-top:0; }
+.recommend .list {padding:2px 20px 6px 20px;}
+.recommend .name {width:100%;height:40px;line-height:40px;padding:0 0 0 10px;border-bottom:1px dashed #d8d8d8;}
+.recommend a {display:inline-block;width:116px;height:30px;line-height:30px;padding:4px 0 0 10px;}
