@@ -8,31 +8,27 @@
 class comment_model extends CI_Model
 {
 	var $_table = 'a_comment';
-    //分表
-    var $_type = '1';
 	function __construct()
 	{
 		parent::__construct();
 	}
 
     //分表规则
-    function _get_table()
+    function _get_table($type)
     {
         $commentArr = array(1=>'ask',2=>'article');
-        if( isset($commentArr[$this->_type]) )
-            $this->_table = $this->_table.'_'.$commentArr[$this->_type];
+        if( isset($commentArr[$type]) )
+            $this->_table = $this->_table.'_'.$commentArr[$type];
     }
 
 	function getBy_id($id)
 	{
-        $this->_get_table();
 		$this->db->select('*')->from($this->_table)->where('id', $id);
 		return $this->db->get()->row_array();
 	}
 
 	function getTotal($where=array())
 	{
-        $this->_get_table();
         if(isset($where['title'])) 
         {
             $this->db->like('title',$where['title']);
@@ -51,7 +47,6 @@ class comment_model extends CI_Model
 	//列表页
 	function getList($limit, $offset, $where=array())
     {
-        $this->_get_table();
         $in_where = '';
         if(isset($where['title'])) 
         {
@@ -74,7 +69,6 @@ class comment_model extends CI_Model
 
     function add_reply_num($id)
     {
-        $this->_get_table();
         $sql = 'update '.$this->_table.' set reply_num=reply_num+1 where id='.(int)$id;
         var_dump($sql);
 		$this->db->query($sql);
@@ -83,21 +77,18 @@ class comment_model extends CI_Model
 
 	function insert($data)
 	{
-        $this->_get_table();
 		$this->db->insert($this->_table, $data); 
 		return $this->db->affected_rows();
 	}
 
 	function update($comment_id, $data=array())
 	{
-        $this->_get_table();
 		$this->db->where('id', $comment_id)->update($this->_table, $data);
 		return $this->db->affected_rows();
 	}
 	
 	function del($comment_id)
 	{
-        $this->_get_table();
 		$this->db->where('id', $comment_id)->limit("1")->delete($this->_table);
 		return $this->db->affected_rows();
 	}

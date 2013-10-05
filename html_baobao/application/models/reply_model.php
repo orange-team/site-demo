@@ -8,31 +8,27 @@
 class reply_model extends CI_Model
 {
 	var $_table = 'a_comment_reply';
-    //分表
-    var $_type = '1';
 	function __construct()
 	{
 		parent::__construct();
 	}
 
     //分表规则
-    function _get_table()
+    function _get_table($type)
     {
         $replyArr = array(1=>'ask',2=>'article');
-        if( isset($replyArr[$this->_type]) )
-            $this->_table = $this->_table.'_'.$replyArr[$this->_type];
+        if( isset($replyArr[$type]) )
+            $this->_table = $this->_table.'_'.$replyArr[$type];
     }
 
 	function getBy_id($id)
 	{
-        $this->_get_table();
 		$this->db->select('*')->from($this->_table)->where('id', $id);
 		return $this->db->get()->row_array();
 	}
 
 	function getTotal($where=array())
 	{
-        $this->_get_table();
         if(isset($where['title'])) 
         {
             $this->db->like('title',$where['title']);
@@ -52,7 +48,6 @@ class reply_model extends CI_Model
 	//列表页
 	function getList($limit, $offset, $where=array())
     {
-        $this->_get_table();
 		$this->db->select('id, content, add_time, user_id')->from($this->_table);
 		($where) ? $this->db->where($where) : '';
         if( isset($limit) && !empty($limit) )
@@ -63,14 +58,12 @@ class reply_model extends CI_Model
 
 	function insert($data)
 	{
-        $this->_get_table();
 		$this->db->insert($this->_table, $data); 
 		return $this->db->affected_rows();
 	}
 
 	function update($reply_id, $data=array())
 	{
-        $this->_get_table();
 		$this->db->where('id', $reply_id)->update($this->_table, $data);
 		return $this->db->affected_rows();
 	}
@@ -85,7 +78,6 @@ class reply_model extends CI_Model
 	
 	function del($reply_id)
 	{
-        $this->_get_table();
 		$this->db->where('id', $reply_id)->limit("1")->delete($this->_table);
 		return $this->db->affected_rows();
 	}

@@ -5,7 +5,7 @@
 * date: 2013-10-04
 */
 
-class comment extends CI_Controller
+class test_comment extends CI_Controller
 {
     var $_info = array();
     var $_ref = '';
@@ -15,10 +15,17 @@ class comment extends CI_Controller
         $this->_info['cls'] = strtolower(__CLASS__);
         $this->_info['name'] = '评论';
         $this->_info['view_path'] = 'admin/'.$this->_info['cls'];
-        $this->load->model('comment_model','comment');
-        $this->comment->_get_table($this->input->get('type'));
         $this->output->set_header("Content-Type: text/html; charset=utf-8");
 	}
+
+    //用于测试评论页
+    function index()
+    {
+        $this->_init();
+        $this->data['ref'] = '/comment/';
+        $this->load->view('header',$this->data);
+        $this->load->view('comment',array('type'=>1,'target_id'=>1));
+    }
 
     //保存评论
     function saveAdd()
