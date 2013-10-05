@@ -1,0 +1,25 @@
+/* 评论 */
+.discuss {width:680px;margin:0 0 20px 0;}
+.discuss h2 {height:40px;line-height:40px;padding:0 0 0 20px;border-bottom:4px solid #fa5;font-size:14px;font-weight:normal;}
+.discuss dt {margin:10px 0 10px 0;padding:0 0 15px 0;border-bottom:1px dashed #aaa;}
+.discuss img.avator {display:inline-block;float:left;width:50px; height:50px; -webkit-border-radius:50px; -moz-border-radius:50px; -o-border-radius:50px; border-radius:50px;border:1px solid #aaa; }
+.discuss img.avator_tiny {float:left;width:30px; height:30px; -webkit-border-radius:30px; -moz-border-radius:30px; -o-border-radius:30px; border-radius:30px;border:1px solid #aaa; }
+.discuss .right {float:left;width:606px;margin:0 0 0 10px;}
+.discuss .reply_right {display:inline-block;float:left;width:560px;margin:0 0 0 10px;}
+.discuss .reply_part dt {display:inline-block;border-bottom:none;border-top:1px solid #aaa;padding:10px 0 0 0;margin:10px 0 0 0;background:#EDEDED;}
+.discuss .reply_part .user_name {display:block;margin:2px 0 6px 0;}
+.discuss .reply_part .info {display:block;margin:6px 0 0 0;}
+.discuss .first {margin:10px 0;}
+.discuss .user_of_reply {padding:10px 0 5px 0;}
+.discuss .first_have_reply {background:#EDEDED;padding:15px 10px; }
+.discuss .the_reply {padding:10px;}
+.discuss .user_name {margin:0;}
+.discuss .info {color:#aaa;}
+.discuss .reply {float:right;color:#2D80BA;margin:0 5px 0 0;}
+.discuss .reply_content {margin:0;display:none;}
+.discuss textarea {width:100%;height:72px;margin:15px 0 5px 0;border:1px solid #333;}
+.discuss .num span {display:inline-block;float:right;margin:2px 18px 4px 0;}
+.discuss .tip {height:26px;line-height:26px;color:#aaa;}
+.discuss button {float:right;width:84px;height:26px;}
+.discuss .reply_bottom a {display:inline-block;float:right;width:50px;height:26px;line-height:26px;}
+.discuss .err {border:2px solid red;}

@@ -1,13 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-* description: 评论模型
+* description: 回复模型
 * author: zg
-* date: 2013-10-04
+* date: 2013-10-05
 */
  
-class comment_model extends CI_Model
+class reply_model extends CI_Model
 {
-	var $_table = 'a_comment';
+	var $_table = 'a_comment_reply';
     //分表
     var $_type = '1';
 	function __construct()
@@ -18,9 +18,9 @@ class comment_model extends CI_Model
     //分表规则
     function _get_table()
     {
-        $commentArr = array(1=>'ask',2=>'article');
-        if( isset($commentArr[$this->_type]) )
-            $this->_table = $this->_table.'_'.$commentArr[$this->_type];
+        $replyArr = array(1=>'ask',2=>'article');
+        if( isset($replyArr[$this->_type]) )
+            $this->_table = $this->_table.'_'.$replyArr[$this->_type];
     }
 
 	function getBy_id($id)
@@ -48,38 +48,18 @@ class comment_model extends CI_Model
             $this->db->where_in('section',$in_where);
 		return $this->db->count_all_results($this->_table);
 	}
+
 	//列表页
 	function getList($limit, $offset, $where=array())
     {
         $this->_get_table();
-        $in_where = '';
-        if(isset($where['title'])) 
-        {
-            $this->db->like('title',$where['title']);
-            unset($where['title']);
-        } 
-		$this->db->select('id, user_id, content, add_time, reply_num')->from($this->_table);
-        if(isset($where['section']))
-        {
-            $in_where = $where['section'];
-            unset($where['section']);
-        }
+		$this->db->select('id, content, add_time, user_id')->from($this->_table);
 		($where) ? $this->db->where($where) : '';
-        ($in_where) ? $this->db->where_in('section',$in_where) : '';
-		$this->db->order_by("add_time DESC");
+        if( isset($limit) && !empty($limit) )
 		$this->db->limit($limit, $offset);
         //echo $this->db->last_query();
 		return $this->db->get()->result_array();
 	}
-
-    function add_reply_num($id)
-    {
-        $this->_get_table();
-        $sql = 'update '.$this->_table.' set reply_num=reply_num+1 where id='.(int)$id;
-        var_dump($sql);
-		$this->db->query($sql);
-		return $this->db->affected_rows();
-    }
 
 	function insert($data)
 	{
@@ -88,17 +68,25 @@ class comment_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
-	function update($comment_id, $data=array())
+	function update($reply_id, $data=array())
 	{
         $this->_get_table();
-		$this->db->where('id', $comment_id)->update($this->_table, $data);
+		$this->db->where('id', $reply_id)->update($this->_table, $data);
 		return $this->db->affected_rows();
 	}
 	
-	function del($comment_id)
+    //赞+1
+    function praise($reply_id)
+	{
+        $sql = 'update '.$this->_table.' set recommand=recommand+1 where id='.(int)$reply_id;
+		$this->db->query($sql);
+		return $this->db->affected_rows();
+	}
+	
+	function del($reply_id)
 	{
         $this->_get_table();
-		$this->db->where('id', $comment_id)->limit("1")->delete($this->_table);
+		$this->db->where('id', $reply_id)->limit("1")->delete($this->_table);
 		return $this->db->affected_rows();
 	}
 	

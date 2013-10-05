@@ -43,6 +43,12 @@ class user_model extends CI_Model
 		return 1;
 	}
 
+    function getFieldBy_id($id, $field)
+	{
+		$this->db->select($field)->from($this->_table)->where('user_id', (int)$id);
+		return $this->db->get()->row_array();
+    }
+
 	function get($user_id)
 	{
 		$this->db->select('*')->from($this->_table);
