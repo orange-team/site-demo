@@ -5,5 +5,5 @@
 uploads
 design
 #page
-database.php
-config.php
+config
+html_baobao/application/config/database.php
