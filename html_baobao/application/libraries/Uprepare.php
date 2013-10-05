@@ -18,7 +18,7 @@ class Uprepare
     }
     
     //问答文章数据
-    public function getAskArt($order='',$limit=20)
+    public function getAskArt($order='',$limit=20,$recommand=0)
     {
         $where = array("time_line"=>1);
         if(empty($order))$order = 'pv desc';

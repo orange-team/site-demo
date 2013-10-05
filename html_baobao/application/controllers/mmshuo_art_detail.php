@@ -19,27 +19,33 @@ class mmshuo_art_detail extends MY_Controller
         //$this->load->model('tag_model','tag');
     }
 
-    public function detail($id)
+    public function detail($id,$user_id)
     {
         $id = intval($id);
+        $user_id = intval($user_id);
         $row = array();
         //文章
         $art_info = $this->art->getOne($id);
         $user = $this->user->get($art_info['author']);
         $art_info['author'] = $user['user_nickname'];
-        $section = $this->sect->get_one(array('id'=>$art_info['section_type']));
+        $section = $this->sect->get_one(array('id'=>$art_info['section']));
         $art_info['section_type'] = $section['name'];
         $row['art'] = $art_info;
-        //print_r($art_info);exit;
         $row['seo'] = array('title'=>$art_info['title'],
                             'description'=>$art_info['abstract'],
                             'keywords'=>'经历'
                 );
         $row['file'] = array('js'=>'','css'=>'mmshuo_art_detail');
 
-        $this->load->library("Uprepare",array());
-        $rr = $this->uprepare->getAskArt();
-        print_r($rr);exit;
+
+        
+        $this->load->library("usermodel/Usermodel",array($user_id));
+        $res = $this->usermodel->getAskArticle(2);
+        var_dump($res);
+        exit;
+
+
+
 
         //右侧推荐
         $this->load->view('mmshuo_art_detail',$row);
