@@ -7,14 +7,9 @@
 
 class comment extends CI_Controller
 {
-    var $_info = array();
-    var $_ref = '';
 	function __construct()
 	{
 		parent::__construct();
-        $this->_info['cls'] = strtolower(__CLASS__);
-        $this->_info['name'] = '评论';
-        $this->_info['view_path'] = 'admin/'.$this->_info['cls'];
         $this->load->model('comment_model','comment');
         $this->comment->_get_table($this->input->get('type'));
         $this->output->set_header("Content-Type: text/html; charset=utf-8");
@@ -48,7 +43,7 @@ class comment extends CI_Controller
                 'audit_status' => 0,
 				);
         $this->load->model('reply_model','reply');
-        $this->reply->_type = $this->input->get('type');
+        $this->reply->_get_table($this->input->get('type'));
 		$affected_rows = $this->reply->insert($data);
         if(0>=$affected_rows)
         {
@@ -65,6 +60,7 @@ class comment extends CI_Controller
 	{
         $reply_id = (int)$this->input->post('reply_id');
         $this->load->model('reply_model','reply');
+        $this->reply->_get_table($this->input->get('type'));
 		$affected_rows = $this->reply->praise($reply_id);
 		echo ($affected_rows>0) ? 1 : 0;
 	}

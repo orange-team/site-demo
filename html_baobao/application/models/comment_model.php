@@ -29,39 +29,14 @@ class comment_model extends CI_Model
 
 	function getTotal($where=array())
 	{
-        if(isset($where['title'])) 
-        {
-            $this->db->like('title',$where['title']);
-            unset($where['title']);
-        } 
-        if(isset($where['section']) && $where['section'])
-        {
-            $in_where = $where['section'];
-            unset($where['section']);
-        }
         $this->db->where($where);
-        if(isset($in_where))
-            $this->db->where_in('section',$in_where);
 		return $this->db->count_all_results($this->_table);
 	}
 	//列表页
 	function getList($limit, $offset, $where=array())
     {
-        $in_where = '';
-        if(isset($where['title'])) 
-        {
-            $this->db->like('title',$where['title']);
-            unset($where['title']);
-        } 
 		$this->db->select('id, user_id, content, add_time, reply_num')->from($this->_table);
-        if(isset($where['section']))
-        {
-            $in_where = $where['section'];
-            unset($where['section']);
-        }
 		($where) ? $this->db->where($where) : '';
-        ($in_where) ? $this->db->where_in('section',$in_where) : '';
-		$this->db->order_by("add_time DESC");
 		$this->db->limit($limit, $offset);
         //echo $this->db->last_query();
 		return $this->db->get()->result_array();
@@ -70,7 +45,6 @@ class comment_model extends CI_Model
     function add_reply_num($id)
     {
         $sql = 'update '.$this->_table.' set reply_num=reply_num+1 where id='.(int)$id;
-        var_dump($sql);
 		$this->db->query($sql);
 		return $this->db->affected_rows();
     }
@@ -81,6 +55,15 @@ class comment_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
+    //审核全部
+    function auditAll()
+    {
+        $sql = 'update '.$this->_table.' set c_status=1';
+		$this->db->query($sql);
+		return $this->db->affected_rows();
+    }
+
+    //更新一条
 	function update($comment_id, $data=array())
 	{
 		$this->db->where('id', $comment_id)->update($this->_table, $data);

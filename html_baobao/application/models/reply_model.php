@@ -48,7 +48,7 @@ class reply_model extends CI_Model
 	//列表页
 	function getList($limit, $offset, $where=array())
     {
-		$this->db->select('id, content, add_time, user_id')->from($this->_table);
+		$this->db->select('id, content, add_time, user_id, recommand')->from($this->_table);
 		($where) ? $this->db->where($where) : '';
         if( isset($limit) && !empty($limit) )
 		$this->db->limit($limit, $offset);
@@ -61,6 +61,14 @@ class reply_model extends CI_Model
 		$this->db->insert($this->_table, $data); 
 		return $this->db->affected_rows();
 	}
+
+    //审核全部
+    function auditAll()
+    {
+        $sql = 'update '.$this->_table.' set audit_status=1';
+		$this->db->query($sql);
+		return $this->db->affected_rows();
+    }
 
 	function update($reply_id, $data=array())
 	{
