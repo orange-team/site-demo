@@ -40,7 +40,7 @@ class mmshuo_art_detail extends MY_Controller
 
         
         $this->load->library("usermodel/Usermodel",array($user_id));
-        $res = $this->usermodel->getAskArticle(2);
+        $res = $this->usermodel->getTag(2);
         var_dump($res);
         exit;
 

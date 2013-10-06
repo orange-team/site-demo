@@ -66,25 +66,12 @@ class Tag_model extends CI_Model
 	}
 
 	//列表页
-	function getList($limit=0, $offset=0, $where=array(1=>1))
+	function getList($where=array(),$order="",$limit=20)
     {
-        if(isset($where['name']) && !empty($where['name'])) 
-        {
-            $this->db->like('name',$where['name']);
-            unset($where['name']);
-        } 
-        if(isset($where['section']) && !empty($where['section']))
-        {
-            $in_where = $where['section'];
-            unset($where['section']);
-        }
-        if(isset($in_where)) $this->db->where_in('section',$in_where);
-		$this->db->select('*')->from($this->_table);
-		($where) ? $this->db->where($where) : '';
-		$this->db->order_by("id DESC");
-        if($limit != 0 || $offset != 0)
-            $this->db->limit($limit, $offset);
-		return $this->db->get()->result_array();
+        if(!empty($where))$this->db->where($where);
+		if(!empty($order))$this->db->order_by($order);
+        $this->db->limit($limit,0);
+		return $this->db->get($this->_table)->result_array();
 	}
 
 	function insertNew($data)

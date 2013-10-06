@@ -19,4 +19,8 @@ class Uprepare extends Usermodelbase
         }
         return $res;
     }
+    public function getTag($limit)
+    {
+        echo "fddfd";
+    }
 }
