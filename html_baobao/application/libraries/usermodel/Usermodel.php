@@ -5,15 +5,14 @@
 > Mail: arkulo@163.com 
 > Created Time: 2013年10月05日 星期六 16时59分35秒
 *************************************************************************/
-class Usermodel
+include("Usermodelbase.php");
+class Usermodel extends Usermodelbase
 {
-    private $CI;
     private $hd;
     private $userModelArr = array("Ucommon","Uprepare","Uprogprop","Uprogmedium","Uproglate","Uoneage","Uthreeage");
     public function __construct($user_id)
     {
-        $this->CI = & get_instance();
-        $this->CI->load->model("user_model","user");
+        parent::__construct();
         //判定用户当前处于哪个阶段
         $section = 0;
         if(""!=$user_id[0] && 0!=$user_id[0])
@@ -34,6 +33,10 @@ class Usermodel
     }
     public function getTag($limit)
     {
-        $this->CI->ucommon->getTag($limit);
+        return $this->hd->getTag($limit);
+    }
+    public function getWiki($limit)
+    {
+        return $this->hd->getWiki($limit);
     }
 }

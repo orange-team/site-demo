@@ -21,6 +21,14 @@ class Ucommon extends Usermodelbase
     }
     public function getTag($limit)
     {
-        echo "okk";
+        $where = array();
+        $order = "weight desc";
+        $res = $this->CI->tag->getList($where,$order,$limit);
+        return $res;
+    }
+    public function getWiki($limit)
+    {
+        $res = $this->CI->wiki->getList($limit);
+        return $res;
     }
 }

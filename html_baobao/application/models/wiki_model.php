@@ -37,19 +37,16 @@ class wiki_model extends CI_Model
 	}
 
     //列表页
-	function getList($limit=0, $offset=0, $where=array(1=>1))
+	function getList($limit=0, $offset=0, $where=array())
     {
-        if(isset($where['title']) && !empty($where['title'])) 
-        {
-            $this->db->like('title',$where['title']);
-            unset($where['title']);
-        } 
-		$this->db->select('*')->from($this->_table);
-		($where) ? $this->db->where($where) : '';
+		$this->db->where($where);
 		$this->db->order_by("id DESC");
         if($limit != 0 || $offset != 0)
+        {
             $this->db->limit($limit, $offset);
-		return $this->db->get()->result_array();
+        }
+		$res = $this->db->get($this->_table)->result_array();
+        return $res;
 	}
 
 	function insertNew($data)
