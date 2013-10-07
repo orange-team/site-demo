@@ -562,3 +562,30 @@ if ( ! function_exists('html_escape'))
 
 /* End of file Common.php */
 /* Location: ./system/core/Common.php */
+
+//自定义函数开始
+
+//人性化时间函数
+if(!function_exists('special_datetime'))
+{
+    function special_datetime($daytime)
+    {
+        $hourM = date("H:i",strtotime($daytime));                                                                                                  
+        $day = explode(" ",$daytime);
+        $result = "";
+        $dateArr = array("今天","昨天","前天");
+        $dateNum = (strtotime(date("Y-m-d",time()))-strtotime($day[0]))/86400; 
+        if(array_key_exists($dateNum,$dateArr))
+        {
+                $result = $dateArr[$dateNum]." ".$hourM;
+        }else if($dateNum<=30)
+        {
+                $result = $dateNum."天前 ".$hourM;
+        }else
+        {
+                $result = $daytime;
+        }
+        return $result;
+    }
+
+}
