@@ -28,7 +28,9 @@ class Ucommon extends Usermodelbase
     }
     public function getWiki($limit)
     {
-        $res = $this->CI->wiki->getList($limit);
+        $where = array();
+        $order = "id desc";
+        $res = $this->CI->wiki->getList($where,$order,$limit);
         return $res;
     }
 }

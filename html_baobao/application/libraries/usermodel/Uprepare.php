@@ -21,6 +21,16 @@ class Uprepare extends Usermodelbase
     }
     public function getTag($limit)
     {
-        echo "fddfd";
+        $where = array("section"=>1);
+        $order = "weight desc";
+        $res = $this->CI->tag->getList($where,$order,$limit);
+        return $res;
+    }
+    public function getWiki($limit)
+    {
+        $where = array("section"=>1);
+        $order = "id desc";
+        $res = $this->CI->wiki->getList($where,$order,$limit);
+        return $res;
     }
 }

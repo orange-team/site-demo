@@ -1,7 +1,7 @@
 <?php $this->load->view('header1');?>
 <div id="wraper">
     <div class="site_route">
-        您的位置 : <a href="/mmshuo/">妈妈说</a> &gt; 怀孕期
+        您的位置 : <a href="/mmshuo/">妈妈说</a> &gt; <?php echo $art['section_name'];?>
     </div>
     <div class="wraper_left">
         <div class="panel">
@@ -9,14 +9,21 @@
                 <a href="#"><img class="avator" src="<?php echo base_url();?>page/img/gift.png"></a>
                 <a class="user_name" href="#"><?php echo $art['author'];?></a>
                 <span><?php echo $art['add_time'];?></span>
-                <span class="section">[<?php echo $art['section_type'];?>]</span>
+                <span class="section">[<?php echo $art['section_name'];?>]</span>
             </div>
             <h1><?php echo $art['title'];?></h1>
             <div class="content">
             <?php echo $art['content'];?>
             </div>
             <div class="tag">
-                <a href="#">尿布</a><a href="#">细菌</a><a href="#">遗传基因</a>
+                <?php
+                foreach($art['tag'] as $item)
+                {
+                ?>
+                    <a href="<?php echo $item['id'];?>"><?php echo $item['name'];?></a>
+                <?php
+                }
+                ?>
             </div>
         </div>
         <div class="discuss">
@@ -104,23 +111,31 @@
             <h3>相关经历</h3>
             <dl class="list">
             <!--loop start-->
-                <dt><a href="#" class="pb_overflow">孕期的饮食是保证健康的首要孕期的饮食是保证健康的首要</a><span>98</span></dt>
+            <?php
+            foreach($relation as $item)
+            {
+            ?>
+                <dt><a href="<?php echo $item['id'];?>" class="pb_overflow"><?php echo $item['title'];?></a><span><?php echo $item['pv'];?></span></dt>
+            <?php
+            }
+            ?>
             <!--loop end-->
-                <dt><a href="#" class="pb_overflow">孕期的饮食备孕推荐文</a><span>1</span></dt>
-                <dt><a href="#" class="pb_overflow">孕期的饮食是保证健康的首要</a><span>1</span></dt>
-                <dt><a href="#" class="pb_overflow">孕期的饮食是保证健康的首要</a><span>1</span></dt>
             </dl>
         </div>
         <div class="recommend">
             <h3>相关百科</h3>
             <div class="list">
-                <div class="name">备孕期百科</div>
+                <!--<div class="name">备孕期百科</div>-->
                 <!--loop start-->
-                <a href="#" class="pb_overflow">热度高-低</a>
+                <?php 
+                foreach($wiki as $item)
+                {
+                ?>
+                    <a href="<?php echo $item['id'];?>" class="pb_overflow"><?php echo $item['wiki_key'];?></a>
+                <?php
+                }
+                ?>
                 <!--loop end-->
-                <a href="#" class="pb_overflow">专业术语</a>
-                <a href="#" class="pb_overflow">百科专业术语</a>
-                <a href="#" class="pb_overflow">专业术语</a>
             </div>
         </div><!--recommend-->
     </div><!--wraper_right-->

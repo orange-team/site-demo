@@ -20,7 +20,6 @@ class Usermodel extends Usermodelbase
             $userType = $this->CI->user->get($user_id[0]);
             $section = $userType['section'];
         }
-        echo $section,"<br />";
         //获取对应的用户模型
         $userModel = $this->userModelArr[$section];
         $this->CI->load->library("usermodel/".$userModel);

@@ -37,14 +37,11 @@ class wiki_model extends CI_Model
 	}
 
     //列表页
-	function getList($limit=0, $offset=0, $where=array())
+	function getList($where=array(),$order="",$limit=20)
     {
-		$this->db->where($where);
-		$this->db->order_by("id DESC");
-        if($limit != 0 || $offset != 0)
-        {
-            $this->db->limit($limit, $offset);
-        }
+		if(!empty($where))$this->db->where($where);
+		if(!empty($order))$this->db->order_by($order);
+        $this->db->limit($limit, 0);
 		$res = $this->db->get($this->_table)->result_array();
         return $res;
 	}
