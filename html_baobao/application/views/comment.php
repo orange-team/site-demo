@@ -93,12 +93,27 @@ var_dump($commentArr,$replyArr);
         <textarea name="content" id="comment_txt"></textarea>
         <span class="tip">请输入不超出200字的评论</span>
         <button type="submit">发表</button>
-        <a class="login" href="#">登录</a>
+        <a class="login" href="javascript:login();">登录</a>
         </form>
     </div>
 </div><!--/discuss-->
 <script type="text/javascript" src="/js/jquery.jqEasyCharCounter.min.js"></script>
 <script type="text/javascript">
+//用户
+var user = {};
+user.chk_login = function(){
+    $.post('/user_login/chk/',function(data){
+       if(1==data){
+           return 1;
+       }else{
+           this.login_div();
+       }
+    });
+};
+//显示登录iframe
+user.login_div = function(){
+    
+    };
 // jquery-character-counter
 $('#comment_txt').jqEasyCounter({
     'maxChars': 200,

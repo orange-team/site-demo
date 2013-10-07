@@ -5,7 +5,7 @@
 * date: 2013-10-04
 */
 
-class test_comment extends CI_Controller
+class test_comment extends LB_Controller
 {
     var $_info = array();
     var $_ref = '';
@@ -30,8 +30,8 @@ class test_comment extends CI_Controller
     //初始化数据
     function _init()
     {
-        $this->data['seo'] = array('title'=>'用户登录首页',
-                'description'=>'用户登录首页的描述页面信息',
+        $this->data['seo'] = array('title'=>'评论测试页',
+                'description'=>'评论测试页的描述页面信息',
                 'keywords'=>'用户登录,母婴知识,宝宝健康'
                 );
         //要载入的css, js文件

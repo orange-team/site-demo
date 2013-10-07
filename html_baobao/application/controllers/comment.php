@@ -5,7 +5,7 @@
 * date: 2013-10-04
 */
 
-class comment extends CI_Controller
+class comment extends LB_Controller
 {
 	function __construct()
 	{
@@ -80,15 +80,5 @@ class comment extends CI_Controller
         }
     }
 
-    //初始化数据
-    function _init()
-    {
-        $this->data['seo'] = array('title'=>'用户登录首页',
-                'description'=>'用户登录首页的描述页面信息',
-                'keywords'=>'用户登录,母婴知识,宝宝健康'
-                );
-        //要载入的css, js文件
-        $this->data['file'] = array('js'=>'comment','css'=>'comment');
-    }
 
 }

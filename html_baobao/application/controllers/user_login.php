@@ -39,9 +39,22 @@ class user_login extends CI_Controller
     {
         session_start();
         $this->load->library('session'); 
-        if($this->session->set_userdata('user_id'))
+        if($this->session->userdata('user_id'))
         {
             redirect('/user_center/');
+        }
+    }
+    
+    //ajax chk_login
+    function chk()
+    {
+        session_start();
+        $this->load->library('session'); 
+        if($this->session->set_userdata('user_id'))
+        {
+            echo 1;
+        }else{
+            echo 0;
         }
     }
 
@@ -103,6 +116,5 @@ class user_login extends CI_Controller
 		$this->load->helper('url');
 		redirect('/');
 	}
-
 
 }
