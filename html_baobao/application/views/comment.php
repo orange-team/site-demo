@@ -51,7 +51,11 @@ var_dump($commentArr,$replyArr);
                     <a class="user_name" href="#"><?php echo $user['user_nickname']?></a>：<?php echo $val['content']?>
                 </div>
                 <div class="info"><?php echo $val['add_time']?>
+                    <?php if($login == false){ ?>
+                    <a rel="modalLink" class="reply" href="#modalA">回复</a>
+                    <?php }else{ ?>
                     <a class="reply" href="javascript:comment.toggleReplyDiv(<?php echo $val['id']?>);">回复</a>
+                    <?php } ?>
                 </div>
                 <div class="reply_content">
                     <textarea id="reply_txt_<?php echo $val['id']?>"></textarea>
@@ -80,7 +84,11 @@ var_dump($commentArr,$replyArr);
                             <?php echo $v['content']?>
                             </div>
                             <div class="info"><?php echo $v['add_time']?> 赞 <em><?php echo $v['recommand']?></em>
+                                <?php if($login == false){ ?>
+                                <a rel="modalLink" class="reply" href="#modalA">赞</a>
+                                <?php }else{ ?>
                                 <a class="reply" href="javascript:;" onclick="javascript:comment.praise(this,<?php echo $v['id']?>)">赞</a>
+                                <?php } ?>
                             </div>
                         </div>
                     </dt>
@@ -97,7 +105,7 @@ var_dump($commentArr,$replyArr);
         <span>发表评论</span>
         <?php if($login == false) { ?>
         <div class="need_login">
-        您需要登录后才能评论 <a class="modalLink" href="#modalA">登录</a> | <a href="javascript:reg();">入住</a> 蜡笔画
+        您需要登录后才能评论 <a rel="modalLink" href="#modalA">登录</a> | <a href="javascript:reg();">入住</a> 蜡笔画
         </div>
         <?php } else { ?>
         <?php echo form_open(site_url('comment/saveAdd/?type=1&target_id='.(int)$target_id.'&ref='.$ref), array("onsubmit"=>"return comment.chk()"));?>
@@ -115,18 +123,14 @@ var_dump($commentArr,$replyArr);
 <link href="/css/user_login_div.css" rel="stylesheet" type="text/css" />
 <div class="overlay"></div>
 <div id="modalA" class="modal">
-    <p class="closeBtn">Close</p>
+    <p class="closeBtn" title="关闭">X</p>
         <div class="reg clearfloat">
         <?php echo form_open(site_url('/user_login/?ref='.urlencode($ref)), array('name'=>'user_login','id'=>'login_form'));?>
-            <h1>登录蜡笔画</h1>
+            <h3>登录蜡笔画</h3>
             <div class="field_input">
                 <input type="email" value="" placeholder="邮箱" tabindex="1" class="input email" name="email" id="email">
                 <input type="password" value="" placeholder="密码" tabindex="2" class="input passwd" name="password" autocomplete="off" id="password">
             </div>
-            <dl class="field_label clearfloat">
-                <dt class="label">&nbsp;<label for="email" class="error"> </label></dt>
-                <dt class="label">&nbsp;<label for="password" class="error"></label></dt>
-            </dl>
             <label for="remember" class="remember">
                         <input type="checkbox" value="true" checked class="chk_box_middle" name="remember" id="remember">
                         记住我,一周之内自动登录
@@ -144,21 +148,6 @@ var_dump($commentArr,$replyArr);
 
 <script type="text/javascript" src="/js/jquery.jqEasyCharCounter.min.js"></script>
 <script type="text/javascript">
-//用户
-var user = {};
-user.chk_login = function(){
-    $.post('/user_login/chk/',function(data){
-       if(1==data){
-           return 1;
-       }else{
-           this.login_div();
-       }
-    });
-};
-//显示登录iframe
-user.login_div = function(){
-    
-    };
 // jquery-character-counter
 $('#comment_txt').jqEasyCounter({
     'maxChars': 200,

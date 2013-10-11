@@ -1,10 +1,12 @@
 @charset "utf-8";
-.overlay { width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 1000; display: none; }
-.modal { display: none; background: #eee; padding: 0 20px 20px; overflow: auto; z-index: 1001; position: absolute; width: 500px; min-height: 300px; }
+.overlay {width:100%;height:100%;position:fixed;top:0;left:0;z-index:1000;display: none; }
+.modal {display:none;background:#fff;padding:0 10px 10px;overflow:auto;z-index: 1001;position:absolute;min-width:270px;min-height: 250px;}
+.closeBtn { cursor:pointer;display:inline-block;float:right;width:26px;height:26px;line-height:26px;text-align:center;color:#1BCDCF;margin:8px 0 0 0;border:1px solid #fff;}
+.closeBtn:hover {font-weight:bold;border:1px solid #1BCDCF;}
 /* 注册 */
-.reg ,.reg h1 { font-size:26px;color:#ccc;}
-.reg { float:left;width:545px;height:auto;font-size:20px;color:#ccc;font-weight:bold;margin:50px 80px 20px 80px;}
-.reg .field_input,.reg .field_label { float:left;width:318px;margin:10px 0 0 0;}
+.reg ,.reg h3 { font-size:22px;color:#ccc;}
+.reg { float:left;width:345px;height:auto;font-size:20px;color:#ccc;font-weight:bold;margin:20px 30px 10px 30px;}
+.reg .field_input,.reg .field_label { float:left;width:318px;margin:0;}
 .field_input .input,.field_label .label { float:left;width:305px;height:42px;margin:10px 0 0 0;border:2px solid #ccc; padding:2px 0 0 10px;font-size:16px;}
 .reg .field_label { display:block;width:140px;margin-left:5px;}
 .reg .field_label dl { display:block;}
@@ -12,14 +14,9 @@
 .reg .email, .reg .passwd {padding-left:36px;width:283px;}
 .reg .email {background:url('/img/email.png') no-repeat 4px 50%;}
 .reg .passwd {background:url('/img/passwd.png') no-repeat 4px 50%;}
-.reg .authcode { float:left;width:156px; margin-right:5px;}
-.reg .img_authcode { float:left;width:92px;height:40px;margin:12px 0 0 10px;background:#fcf;cursor:pointer;border:none;}
-.reg .valid {border:2px solid #6c0;}
-.reg input.error {border:2px solid red;}
-.reg label.error { display:none;width:200px;height:36px;line-height:36px;margin:0 0 0 5px;color:red;font-size:14px;font-weight:normal;}
-.reg .form_submit { display:inline-block;width:545px;height:60px;line-height:75px;}
+.reg .form_submit { display:inline-block;width:100%;height:50px;line-height:60px;}
 .reg .field_agreement { margin:10px 0;font-size:14px;color:#333;font-weight:normal;height:40px;}
-.reg .remember { float:none;display:inline-block;margin:20px 0 0 0;font-size:14px;font-weight:normal;color:#333; }
+.reg .remember { float:none;display:inline-block;margin:14px 0 0 0;font-size:14px;font-weight:normal;color:#333; }
 .reg .field_agreement .error { line-height:100%; }
 .reg .field_agreement a { text-decoration:none;color:#076699;}
 .reg .btn { width:98px;height:36px; }

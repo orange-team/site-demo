@@ -1,7 +1,6 @@
 $(document).ready(function(){
-
     $('.modalLink').modal({
-        trigger: '.modalLink',          // id or class of link or button to trigger modal
+        trigger: '[rel=modalLink]',          // id or class of link or button to trigger modal
         olay:'div.overlay',             // id or class of overlay
         modals:'div.modal',             // id or class of modal
         animationEffect: 'slideDown',   // overlay effect | slideDown or fadeIn | default=fadeIn
