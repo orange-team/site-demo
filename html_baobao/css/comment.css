@@ -18,9 +18,12 @@
 .discuss .info {color:#aaa;}
 .discuss a.reply {display:none;float:right;color:#2D80BA;margin:0 5px 0 0;}
 .discuss .reply_content {margin:0;display:none;}
-.discuss textarea {width:100%;height:72px;margin:15px 0 5px 0;border:1px solid #333;}
+.discuss .need_login, .discuss textarea {margin:15px 0 5px 0;border:1px solid #333;}
+.discuss .need_login { height:80px;line-height:80px;text-align:center; }
+.discuss textarea {width:100%;height:72px;}
+.discuss .need_login a {display:inline-block;width:34px;color:#2D80BA;font-weight:bold;}
 .discuss .num span {display:inline-block;float:right;margin:2px 18px 4px 0;}
 .discuss .tip {height:26px;line-height:26px;color:#aaa;}
 .discuss button {float:right;width:84px;height:26px;}
-.discuss .reply_bottom a {display:inline-block;float:right;width:50px;height:26px;line-height:26px;}
+.discuss .reply_bottom a.login {display:inline-block;float:right;width:50px;height:26px;line-height:26px;}
 .discuss .err {border:2px solid red;}

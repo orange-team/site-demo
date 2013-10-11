@@ -17,11 +17,11 @@ class LB_Controller extends CI_Controller
     {
         parent::__construct();
         //初始化用户信息
-        $this->_init();
+        $this->_get_user_info();
     }
 
     //初始化用户信息
-    function _init()
+    function _get_user_info()
     {
         session_start();
         $this->load->library('session'); 

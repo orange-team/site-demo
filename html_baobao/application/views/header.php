@@ -14,6 +14,10 @@ function login()
 {
     window.location.href = '<?php echo site_url('/user_login')?>/?ref='+window.location.href;
 }
+function logout()
+{
+    window.location.href = '<?php echo site_url('/user_login/destroy')?>/?ref='+window.location.href;
+}
 function reg()
 {
     window.location.href = '<?php echo site_url('/user_reg')?>/?ref='+window.location.href;

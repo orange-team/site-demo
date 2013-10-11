@@ -9,6 +9,12 @@ $CI->load->model('user_model','user');
 //初始化参数,由controller传入
 $CI->comment->_get_table($type);
 $CI->reply->_get_table($type);
+//判断用户是否登录
+$login = true;
+if(!isset($this->_user['id']) || 0>=$this->_user['id'])
+{
+    $login = false;
+}
 $where = array('c_status'=>1,'target_id'=>$target_id);
 $commentArr = $CI->comment->getList(20, 0, $where);
 $commentNum = $CI->comment->getTotal($where);
@@ -89,14 +95,53 @@ var_dump($commentArr,$replyArr);
     <?php if(0<$commentNum) {?><div class="num clearfloat"><span>共<?php echo $commentNum?>条评论</span></div><?php } ?>
     <div class="reply_bottom">
         <span>发表评论</span>
+        <?php if($login == false) { ?>
+        <div class="need_login">
+        您需要登录后才能评论 <a class="modalLink" href="#modalA">登录</a> | <a href="javascript:reg();">入住</a> 蜡笔画
+        </div>
+        <?php } else { ?>
         <?php echo form_open(site_url('comment/saveAdd/?type=1&target_id='.(int)$target_id.'&ref='.$ref), array("onsubmit"=>"return comment.chk()"));?>
         <textarea name="content" id="comment_txt"></textarea>
         <span class="tip">请输入不超出200字的评论</span>
         <button type="submit">发表</button>
-        <a class="login" href="javascript:login();">登录</a>
+        <a class="login" href="javascript:logout();">退出</a>
         </form>
+        <?php } ?>
     </div>
 </div><!--/discuss-->
+<a class="modalLink" href="#modal1">Login</a>
+
+<!--user_login-->
+<link href="/css/user_login_div.css" rel="stylesheet" type="text/css" />
+<div class="overlay"></div>
+<div id="modalA" class="modal">
+    <p class="closeBtn">Close</p>
+        <div class="reg clearfloat">
+        <?php echo form_open(site_url('/user_login/?ref='.urlencode($ref)), array('name'=>'user_login','id'=>'login_form'));?>
+            <h1>登录蜡笔画</h1>
+            <div class="field_input">
+                <input type="email" value="" placeholder="邮箱" tabindex="1" class="input email" name="email" id="email">
+                <input type="password" value="" placeholder="密码" tabindex="2" class="input passwd" name="password" autocomplete="off" id="password">
+            </div>
+            <dl class="field_label clearfloat">
+                <dt class="label">&nbsp;<label for="email" class="error"> </label></dt>
+                <dt class="label">&nbsp;<label for="password" class="error"></label></dt>
+            </dl>
+            <label for="remember" class="remember">
+                        <input type="checkbox" value="true" checked class="chk_box_middle" name="remember" id="remember">
+                        记住我,一周之内自动登录
+                    </label>
+                    <label for="remember" class="error"> </label>
+            <div class="form_submit">
+				<button type="submit" class="btn"><span>登录</span></button>
+			</div>
+        </form>
+        </div><!-- user_login -->
+</div>
+<script type='text/javascript' src='/js/jquery.modal.min.js'></script>
+<script type='text/javascript' src='/js/jquery.modal.conf.js'></script>
+<!--/user_login-->
+
 <script type="text/javascript" src="/js/jquery.jqEasyCharCounter.min.js"></script>
 <script type="text/javascript">
 //用户

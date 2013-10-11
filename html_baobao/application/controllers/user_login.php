@@ -108,13 +108,14 @@ class user_login extends CI_Controller
     }
 
 	//退出
-	function destroyed()
+	function destroy()
 	{
         $this->load->library('session'); 
         $this->session->sess_destroy();
 		//重定向到后台首页
 		$this->load->helper('url');
-		redirect('/');
+        $ref = $this->input->get('ref');
+        redirect($ref);
 	}
 
 }
