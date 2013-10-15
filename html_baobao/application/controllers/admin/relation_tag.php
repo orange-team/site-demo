@@ -18,7 +18,6 @@ class Relation_tag extends MY_Controller
 	}
 
     //列表页
-	//function showlist($obj_type='wiki',$obj_id=0)
 	function showlist($name='')
 	{
         $this->data['type'] = trim(addslashes($this->input->get('type')));

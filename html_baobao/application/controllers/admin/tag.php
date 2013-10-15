@@ -92,6 +92,7 @@ class Tag extends MY_Controller
 		$arr = $this->tag->getBy_id($id);
 		$this->load->view('admin/tagEdit', $arr);
 	}
+
 	//保存编辑
 	function saveEdit($id)
 	{
@@ -102,6 +103,7 @@ class Tag extends MY_Controller
 		$data['url'] = '/admin/tag/showList/';
 		$this->load->view('admin/info', $data);
 	}
+
     //删除	
 	function del($id)
 	{
@@ -111,6 +113,7 @@ class Tag extends MY_Controller
 		$data['url'] = '/admin/tag/showlist/';
 		$this->load->view('admin/info', $data);
 	}
+
     //ajax获取标签
     function ajax_get($key)
     {
