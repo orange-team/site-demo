@@ -1,0 +1,41 @@
+@charset "utf-8";
+/* 公共 */
+a:visited {color:#2D80BA;}
+/* 时间轴 */
+.timeline {margin:10px 0;}
+.timeline dt {display:inline-block;height:40px;border:0px solid red;text-align:center;}
+.timeline a {display:inline-block;margin:8px 0 0 0;width:110px;height:30px;line-height:30px;color:#585858;font-weight:bold;background:#FFCC99;}
+.timeline a:hover {padding:9px 0 0 0;margin:0;}
+.timeline .on a {padding:9px 0 0 0;margin:0;}
+/* 分类 */
+.section { padding:10px 15px 10px 15px;border:1px solid #ccc;}
+.section .item {width:120px;float:left;}
+.section .name {width:80px;height:28px;line-height:28px;margin:0 0 4px 0;background:#C1E197;color:#fff;text-align:center;font-weight:bold;-webkit-border-radius:12px;-moz-border-radius:12px;-o-border-radius:12px;border-radius:12px;}
+.section a {display:inline-block;width:75px;height:28px;line-height:28px;text-align:center;text-decoration:underline;color:#fa5;}
+.ask {margin:20px 0 15px 0;}
+.ask .title {width:100%;}
+.ask dt {margin:10px 0 10px 0;padding:0 0 15px 0;border-bottom:1px dashed #aaa;}
+.ask .right {float:left;width:606px;margin:0 0 0 10px;}
+.ask img.avator { float:left;width:50px; height:50px; -webkit-border-radius:50px; -moz-border-radius:50px; -o-border-radius:50px; border-radius:50px;border:1px solid #aaa; }
+.ask .title a {display:inline-block;width:564px;height:30px;line-height:30px;font-size:16px;font-weight:bold;}
+.ask .title span {display:inline-block;width:26px;height:15px;line-height:15px;margin:0 0 0 10px;text-align:center;color:#fff;background:#F7AF9B;border:1px solid #d8d8d8; -webkit-border-radius:5px; -moz-border-radius:5px; -o-border-radius:5px; border-radius:5px;}
+.ask .summary {position:relative;display:inline-block;float:left;height:20px;}
+.ask .icon {display:inline-block;float:left;position:relative;background:#d8d8d8;width:34px;height:20px;line-height:6px;text-align:center;font-size:30px;font-weight:bold;color:#fff;}
+.ask .txt {display:none;position:absolute;left:0px;top:21px;z-index:999;width:606px;border:1px solid #ccc;background:#f2f2f2;padding:10px;}
+.ask .tag {display:inline-block;float:left;height:20px;margin:0 0 0 14px;}
+.ask .tag a {display:inline-block;height:20px;line-height:20px;color:#527F37;margin:0 10px 0 0;}
+.ask .page a {display:inline-block;float:right;text-align:center;background:#d8d8d8;color:#fa5;border:1px solid #ccc;font-weight:bold;width:60px;height:30px;line-height:30px;margin:2px 18px 4px 0; -webkit-border-radius:18px; -moz-border-radius:18px; -o-border-radius:18px; border-radius:18px;}
+.ask .page a:hover {color:#fff;}
+/* 引导 */
+.guide {margin:0 0 14px 0;}
+.guide .to_top{ display:block;overflow:hidden;margin:0 0 0 1px;width:0px;height:0px;border:9px solid #E1F0CD;border-color:#E1F0CD #fff;border-width:0 9px 9px 9px;}
+.guide .txt {padding:10px;background:#E1F0CD;}
+/* 推荐内容 */
+.recommend {margin:0 0 20px 0;}
+.recommend a {color:#585858;}
+.recommend dl.list dt a {display:inline-block;width:194px;height:30px;line-height:30px;padding:4px 0 0 10px;}
+.recommend dl.list span {display:inline-block;width:26px;height:15px;line-height:15px;margin:0 0 0 10px;text-align:center;color:#fff;background:#F7AF9B;border:1px solid #d8d8d8; -webkit-border-radius:5px; -moz-border-radius:5px; -o-border-radius:5px; border-radius:5px;}
+.recommend .list {border:1px solid #d8d8d8;border-top:0; }
+.recommend .list {padding:2px 20px 6px 20px;}
+.recommend .name {width:100%;height:40px;line-height:40px;padding:0 0 0 10px;border-bottom:1px dashed #d8d8d8;}
+.recommend a {display:inline-block;width:116px;height:30px;line-height:30px;padding:4px 0 0 10px;}
