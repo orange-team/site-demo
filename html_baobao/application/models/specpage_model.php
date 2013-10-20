@@ -37,7 +37,7 @@ class Specpage_model extends CI_Model
 	}
 
     //列表页
-	function getList($limit=0, $offset=0, $where=array(1=>1))
+	function getList($limit=0, $offset=0, $where=array())
     {
         if(isset($where['title']) && !empty($where['title'])) 
         {

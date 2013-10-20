@@ -7,23 +7,41 @@
 
 class mmshuo_art_list extends LB_Controller 
 {
-    var $page_name;
+    var $page_name='妈妈说';
     var $nav;
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('article_model','art');
+		$this->load->model('ask_article_model','ask');
 		$this->load->model('section_model','section');
 		$this->load->model('tag_model','tag');
 		$this->load->model('relation_tag_model','relation_tag');
 	}
+
 	public function index()
 	{
         $this->_init();
+        $timelineArr = $this->_getTimeline();
+        $sectionArr = $this->_getSection();
+        $askArr = $this->ask->getList();
+        //print_r($askArr); exit;
+        $this->data['timeline'] = $timeline;
+        $this->data['section'] = $section;
+        $this->data['ask'] = $ask;
         $this->load->helper('url');
 		$this->load->view('mmshuo_art_list',$this->data);
 	}
+
+    //时间轴数据
+    private function _getTimeline()
+    {
+    }
+
+    //时期数据
+    private function _getSection()
+    {
+    }
 
     //初始化SEO，js，css信息
     private function _init()
@@ -36,57 +54,6 @@ class mmshuo_art_list extends LB_Controller
         $this->data['file'] = array('js'=>'mmshuo_art_list','css'=>'mmshuo_art_list');
         //面包屑导航
         $this->nav = '<a href="'.base_url().'mmshuo_art_list/"> '.$this->page_name.'</a>';
-    }
-
-    //递归获取子分类信息
-    function get_child($id=0,$type=true)
-    {
-        if($type == true)//获取该栏目下所有子栏目,定义全局变量
-            global $all_list;
-        $childs = $this->section->getBy_parent($id);//只获取子栏目信息，非子孙栏目
-        foreach($childs as $k=>$v)
-        {
-            if($id)
-            {
-               $this->get_child($v['id']);
-               $all_list[$v['id']] = $v['name'];//组合本栏目下所有子孙栏目id与name为一唯数组
-               
-            }
-        }
-        return array($childs,$all_list);
-    }
-
-	/**
-    +----------------------------------------------------------
-    * 去除多余html、js标签和空白的公用方法
-    +----------------------------------------------------------
-    */
-    public function remove_tag($str)
-    {
-    	$search = array ("'<script[^>]*?>.*?</script>'si",  // 去掉 javascript
-                 		 "'<[\/\!]*?[^<>]*?>'si",           // 去掉 HTML 标记
-                 		 "'([\r\n])[\s]+'",                 // 去掉空白字符
-                 		 "'&(quot|#34);'i",                 // 替换 HTML 实体
-                 	 	 "'&(amp|#38);'i",
-                 		 "'&(lt|#60);'i",
-                 		 "'&(gt|#62);'i",
-                  		 "'&(nbsp|#160);'i",
-                 		 "'&(iexcl|#161);'i",
-                 		 "'&(cent|#162);'i",
-                 		 "'&(pound|#163);'i",
-                 		 "'&(copy|#169);'i",
-                		 "'&#(\d+);'e");                    // 作为 PHP 代码运行
-    	$replace = array ("","","\\1","\"","&","<",">"," ",chr(161),chr(162),chr(163),chr(169),"chr(\\1)","");
-		$str= preg_replace($search,$replace,$str);
-		return $str;
-	}
-
-    // 计算中文字符串长度                                                                                                                                 
-    function utf8_strlen($string = NULL){
-        // 将字符串分解为单元
-        preg_match_all("/./us",$string,$match);
-        // 返回单元个数
-        return count($match[0]);
     }
 
     //获取父及栏目内容
@@ -107,6 +74,7 @@ class mmshuo_art_list extends LB_Controller
         }
         return $return;
     }
+
     //获取标签列表
     function get_tag($num)
     {
