@@ -11,69 +11,49 @@ class Article extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->model('article_model','art');
+		$this->load->model('article_tag_model','art_tag');
 		$this->load->model('section_model','section');
-		$this->load->model('keyword_model','keyword');
+		$this->load->model('tag_model','tag');
 	}
 	//文章列表:新闻中心-->最新新闻
-	function showlist($section=0,$title='')
-	{error_reporting('E_ALL'); 
+	function showlist($section=0,$tag=0,$title='')
+	{//error_reporting('E_ALL'); 
         $this->load->helper('form'); 
+
 
         //搜索
         $where = array();
+
         //搜栏目segment(4)
-        $this->data['section'] = 0;
-        $this->data['one'] = $this->data['two'] = $this->data['three'] = 0; //栏目id
-        $this->data['two_value'] = $this->data['three_value'] = '';         //栏目内容
-        $this->data['keywords'] = array(); //关键词数组
-        $this->data['keyword_id'] = 0;     //关键词id
+        $this->data['section_id'] = 0;
 
-        if($section)
+        if(!empty($section))
         {
-            //0:一级栏目id, 1:二级栏目id, 2:三级栏目id, 3:关键词id
-            $arr = explode('-',$section); 
-            if($arr[0] != 0)
-            {
-                $childs = $this->get_child($arr[0]);
-                $childs_id = $childs[1] ? array_keys($childs[1]) : array();//子栏目id
-                array_unshift($childs_id,$arr[0]);
-                $where['section'] = $childs_id;
-                $this->data['two_value'] = $childs[0] ? $childs[0] : '';   //二级栏目内容
-            }
-            if($arr[1] != 0 && !empty($this->data['two_value']))
-            {
-                unset($childs,$childs_id,$where['section']);
-                $childs = $this->get_child($arr[1],false);
-                $childs_id = $childs[1] ? array_keys($childs[1]) : array();//子栏目id
-                array_unshift($childs_id,$arr[1]);
-                $where['section'] = $childs_id;
-                $this->data['three_value'] = $childs[0] ? $childs[0] : ''; //三级栏目内容
-            }
-            if($arr[2] != 0 && !empty($this->data['three_value']))
-            {
-                unset($where['section']);
-                $where['section'] = array($arr[2]);
-            }
-            if($arr[3] != 0)
-            {
-                $this->data['keyword_id'] = $where['keyword'] = (int)$arr[3];
-            }
+            $where['section'] = $this->data['section_id'] = $section;
+        }
 
-            //搜关键词
-            if($where['section'])
+        //标签segment(5)
+        $this->data['tags'] = array();
+        $this->data['tag_id'] = 0;     
+        if(!empty($tag))
+        {
+            $this->data['tag_id'] = $tag;
+            $row = $this->art_tag->getList(array('tag_id'=>$tag));
+            $art_id = '';
+            if(!empty($row))
             {
-                $where_section['section'] = $where['section'];
-                $this->data['keywords'] =  $this->keyword->getList(0,0,$where_section);
+                foreach($row as $k=>$v)
+                {
+                    $art_id_arr[] = $v['target_id'];
+                }
+                $art_id = implode(',',$art_id_arr);
             }
-
-            $this->data['section'] = $section; 
-            $this->data['one'] = $arr[0]; 
-            $this->data['two'] = $arr[1]; 
-            $this->data['three'] = $arr[2]; 
+            $where['id'] = $art_id;
+            unset($art_id,$art_id_arr,$row);
         }
 
 
-        //搜标题segment(5)
+        //搜标题segment(6)
         $this->data['title'] = 0;
         if($title)  
         {
@@ -83,7 +63,7 @@ class Article extends MY_Controller
 
 		//分页
 		$this->load->library('pagination');
-		$config['base_url'] = site_url('admin/article/showlist/'.$this->data['section'].'/'.$this->data['title'].'/');
+		$config['base_url'] = site_url('admin/article/showlist/'.$this->data['section_id'].'/'.$this->data['title'].'/');
 		//每页
 		$config['per_page'] = $this->data['pagesize'] = 15; 
 		//总数
@@ -99,8 +79,9 @@ class Article extends MY_Controller
 		$offset = $this->uri->segment(6);
 		$arr = $this->art->getList($this->data['pagesize'], $offset, $where);
 
-        //顶级栏目
-        $this->data['one_section'] = $this->section->getBy_parent(0);
+        //获取栏目
+        $this->data['section'] = $this->section->getList();
+        $this->data['tags'] = $this->tag->getList(array(),'id');
 		$this->data['articleArr'] = $arr;
         $this->data['number'] = $offset+1; 
 		$this->load->view('admin/articleList', $this->data);

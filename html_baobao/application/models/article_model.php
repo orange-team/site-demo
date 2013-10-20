@@ -34,14 +34,14 @@ class article_model extends CI_Model
             $this->db->like('title',$where['title']);
             unset($where['title']);
         } 
-        if(isset($where['section']))
+        if(isset($where['id']))
         {
-            $in_where = $where['section'];
-            unset($where['section']);
+            $in_where = $where['id'];
+            unset($where['id']);
         }
         $this->db->where($where);
         if(isset($in_where))
-            $this->db->where_in('section',$in_where);
+            $this->db->where_in('id',$in_where);
 		return $this->db->count_all_results($this->_table);
 	}
 	//列表页
@@ -54,13 +54,13 @@ class article_model extends CI_Model
             unset($where['title']);
         } 
 		$this->db->select('id, title, content, section, add_time, keyword,attention ')->from($this->_table);
-        if(isset($where['section']))
+        if(isset($where['id']))
         {
-            $in_where = $where['section'];
-            unset($where['section']);
+            $in_where = $where['id'];
+            unset($where['id']);
         }
 		($where) ? $this->db->where($where) : '';
-        ($in_where) ? $this->db->where_in('section',$in_where) : '';
+        ($in_where) ? $this->db->where_in('id',$in_where) : '';
 		$this->db->order_by("id DESC");
         if(!empty($limit))
             $this->db->limit($limit, $offset);

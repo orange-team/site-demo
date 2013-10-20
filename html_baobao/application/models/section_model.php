@@ -34,7 +34,10 @@ class section_model extends CI_Model
 		$this->db->select('*')->from($this->_table);
 		($where) ? $this->db->where($where) : '';
 		$this->db->order_by("id ASC");
-		return $this->db->get()->result_array();
+        $res = array();
+        $res = $this->db->get()->result_array();
+        //echo $this->db->last_query();
+		return $res; 
 	}
 
 	function insert($data)
