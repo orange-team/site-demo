@@ -3,6 +3,7 @@
 > File Name: mmshuo_art_detail.php
 > Author: arkulo
 > Mail: arkulo@163.com 
+> Modified : zg
 *************************************************************************/
 if(!defined('BASEPATH')) exit('No direct script access allowd');
 

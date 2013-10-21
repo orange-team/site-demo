@@ -19,7 +19,8 @@ class original_model extends CI_Model
 		return $this->db->get()->row_array();
 	}
 
-	function getTotal($where=array())
+    //总条数
+	function getTotalNum($where=array())
 	{
         if(isset($where['title'])) 
         {
@@ -36,6 +37,7 @@ class original_model extends CI_Model
             $this->db->where_in('section',$in_where);
 		return $this->db->count_all_results($this->_table);
 	}
+
 	//列表页
 	function getList($limit, $offset, $where=array())
     {
@@ -58,7 +60,8 @@ class original_model extends CI_Model
         //echo $this->db->last_query();
 		return $this->db->get()->result_array();
 	}
-	function insertNew($data)
+
+	function insert($data)
 	{
 		$this->db->insert($this->_table, $data); 
 		return $this->db->affected_rows();
