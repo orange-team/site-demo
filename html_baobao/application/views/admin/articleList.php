@@ -42,6 +42,7 @@ function toSearch()
                     <?php }} ?>
                 </select>
                   <input type="submit" name="submit" id='submit' onclick='toSearch()' value=" 搜索 " />
+                  <input type="button" name="reset" id='reset' onclick="javascript:go('/admin/article/showlist/')" value="显示所有" />
 
             </td>
         </tr>

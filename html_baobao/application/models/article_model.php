@@ -53,7 +53,7 @@ class article_model extends CI_Model
             $this->db->like('title',$where['title']);
             unset($where['title']);
         } 
-		$this->db->select('id, title, content, section, add_time, keyword,attention ')->from($this->_table);
+		$this->db->select('id, title, content, section, add_time,attention ')->from($this->_table);
         if(isset($where['id']))
         {
             $in_where = $where['id'];
@@ -70,7 +70,7 @@ class article_model extends CI_Model
 	function insertNew($data)
 	{
 		$this->db->insert($this->_table, $data); 
-		return $this->db->affected_rows();
+        return $this->db->insert_id();
 	}
 
 	function update($article_id, $data=array())

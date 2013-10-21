@@ -39,16 +39,15 @@ class Article extends MY_Controller
         {
             $this->data['tag_id'] = $tag;
             $row = $this->art_tag->getList(array('tag_id'=>$tag));
-            $art_id = '';
+            $art_id_arr = array();
             if(!empty($row))
             {
                 foreach($row as $k=>$v)
                 {
                     $art_id_arr[] = $v['target_id'];
                 }
-                $art_id = implode(',',$art_id_arr);
             }
-            $where['id'] = $art_id;
+            $where['id'] = empty($art_id_arr)?'':$art_id_arr;
             unset($art_id,$art_id_arr,$row);
         }
 
@@ -78,6 +77,10 @@ class Article extends MY_Controller
 		$this->data['page'] = $this->pagination->create_links();
 		$offset = $this->uri->segment(6);
 		$arr = $this->art->getList($this->data['pagesize'], $offset, $where);
+        if(!empty($tag) && empty($where['id']))
+        {
+            $arr = array();
+        }
 
         //获取栏目
         $this->data['section'] = $this->section->getList();
@@ -92,7 +95,7 @@ class Article extends MY_Controller
 	{
 		$this->load->helper('form');
         //等级栏目
-        $this->data['one_section'] = $this->section->getBy_parent(0);
+        $this->data['section'] = $this->section->getList();
 		//在线编辑器
 		$eddt = array('name' =>'content', 'id' =>'content', 'value' =>'');
 		$this->load->library('kindeditor',$eddt);
@@ -209,15 +212,24 @@ class Article extends MY_Controller
 				'content' => $this->input->post('content'),
 				'add_time' => date('Y-m-d H:i:s'),
 				'section' => $this->input->post('section'),
-				'keyword' => $this->input->post('keyword'),
 				'description' => $this->input->post('description'),
 				'page_keywords' => $this->input->post('page_keywords'),
 				'attention' => $this->input->post('attention'),
 				'source' => $this->input->post('source'),
 				'recommend' => $this->input->post('recommend'),
 				);
-		$affected_rows = $this->art->insertNew($data);
-		$data['msg'] = ($affected_rows>0) ? '成功' : '失败';
+		$last_id = $this->art->insertNew($data);
+        $tag_id = $this->input->post('tag') ? $this->input->post('tag'):0;
+        $resTag = 0;
+        if(!empty($tag_id) && !empty($last_id))
+        {
+            $tags['target_id'] = $last_id;
+            $tags['tag_id'] = $tag_id;
+            $tags['status_tag'] = 1;
+            unset($last_id,$tag_id);
+            $resTag = $this->art_tag->insertNew($tags);
+        }
+		$data['msg'] = ($resTag>0) ? '成功' : '失败';
 		$section = $this->input->post('section').'/';
 		$data['url'] = '/admin/article/showlist/'.$section;
 		$data['history'] = '1';
@@ -269,27 +281,10 @@ class Article extends MY_Controller
     function ajax_change($id=0)//$id有值，則代表不是ajax异步获取
     {
         $section_id = $this->input->get('section_id') ? intval($this->input->get('section_id')) : $id;
-        $showKey = $this->input->get('showKey') ? intval($this->input->get('showKey')) : ''; //showKey值为1时查询关键词，0:不查询
         if(!empty($section_id))
         {
-            $childs = $this->section->getBy_parent($section_id);
-            unset($childs['pt_depth'],$childs['parent']);
-            if($showKey != '')
-            {
-                $list = $this->get_child($section_id);
-                $list[1] = $list[1] ? $list[1] : array();
-                $childs_id = array_keys($list[1]);//当前栏目下所有子栏目id
-                array_unshift($childs_id,$section_id);
-                $where['section'] = $childs_id;
-                $childs['keywords'] = $this->keyword->getList(0,0,$where);
-            }
-            if($id == 0)
-            {
-                echo !empty($childs) ? json_encode($childs) : -1; 
-            }else
-            {
-                return !empty($childs) ? $childs : -1;  
-            }
+            $list = $this->tag->getList(array('section'=>$section_id));
+            echo !empty($list) ? json_encode($list) : -1; 
         }else
         {
             return -2;

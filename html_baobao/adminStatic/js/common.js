@@ -49,50 +49,31 @@ function chkform()
 	return doSub;
 }
 //栏目三级分类 Liangxifeng 2013-06-30
-function changeOn(level,id,showKey)
+function changeOn(id)
 {
-    if('one' == level)
+    $('#tag').find('option').remove();
+    if( 0 == id )
     {
-        levelNew = 'two';
-        $('#two,#three').find('option[value!=0]').remove();
+        $("#tag").append("<option value='"+id+"'>-- 请选择 --</option>");//子栏目
     }else
     {
-        levelNew = 'three';
-        if('two' == level)
-            $('#three').find('option[value!=0]').remove();
+        $.ajax({
+            type:"GET",
+            url:"/admin/article/ajax_change",
+            data:{'section_id':id},
+            dataType:"json",
+            cache:false,
+            success:function(msg){
+                if(msg != -1)
+                {
+                    //$("#"+levelNew).css("display","inline");
+                    $.each( msg, function(i, n){
+                        $("#tag").append("<option value='"+n.id+"'>"+n.name+"</option>");//子栏目
+                    });
+                }
+            }
+        })
     }
-    if(showKey == 1)
-    {
-        $('#keyword').find('option[value!=0]').remove();
-    }
-    $.ajax({
-        type:"GET",
-        url:"/admin/article/ajax_change",
-        data:{'section_id':id,'showKey':showKey},
-        dataType:"json",
-        cache:false,
-        success:function(msg){
-            if(msg != -1)
-            {
-                $("#"+levelNew).css("display","inline");
-                $.each( msg, function(i, n){
-                    if(i != 'keywords')
-                    {
-                        $("#"+levelNew).append("<option value='"+n.id+"'>"+n.name+"</option>");//子栏目
-                    }else if(showKey == 1 && i == 'keywords')
-                    {
-                        $.each(n,function(ki,kv)
-                        {
-                            $("#keyword").append("<option value='"+kv.id+"'>"+kv.name+"</option>");//该栏目下的关键词
-                        });
-                    }
-                });
-            }/*else
-            {
-                if('three'!=level)
-                    $("#"+levelNew+",#three").css("display","none");
-            }*/
-        }
-    })
+
 }
 

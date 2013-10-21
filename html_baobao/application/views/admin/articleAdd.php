@@ -9,24 +9,10 @@
 <script type="text/javascript">
 function check_form()
 {
-    var one = $("#one").val();
-    var two = $("#two").val();
-    var three = $("#three").val();
-    var keyword = $("#keyword").val();
-    if(0!=three)
-    {
-        section = three;
-    }else if(0!=two)
-    {
-        section = two;
-    }else if(0!=one)
-    {
-        section = one;
-    }
-    $("#section").val(section);
-    var section = $("#section").val();
+    var section = $("#section_id").val();
+    var tag = $("#tag").val();
     var title = $("#title").val();
-    if(title != '' && section != 0 &&  keyword != 0)
+    if(title != '' && section != 0 &&  tag != 0)
     {
         return true;
     }else
@@ -34,9 +20,9 @@ function check_form()
         if(0==section)
         {
             $("#errorSection").html('文章所属栏目不能为空！');
-        }else if(0==keyword)
+        }else if(0==tag)
         {
-            $("#errorKeyword").html('关键词不能为空！');
+            $("#errorKeyword").html('标签不能为空！');
         }else
         { 
             $("#errorTitle").html('文章栏目不能为空！');
@@ -56,26 +42,20 @@ function check_form()
     	<tr>
       		<td class="left_title_1"><span style='color:red'>*</span>&nbsp;所属栏目</td>
       		<td>
-      			<select name="one" id="one" onchange="changeOn('one',this.value,1)">
+      			<select name="section" id="section_id" onchange="changeOn(this.value)">
                 	<option value="0">-- 请选择 --</option>
-                    <?php if(!empty($one_section)) {foreach($one_section as $k=>$v) {?>
+                    <?php if(!empty($section)) {foreach($section as $k=>$v) {?>
                     <option value="<?php echo $v['id']?>" style="background-color:#FFC;"><?php echo $v['name']?></option>
                     <?php }} ?>
-                </select>
-                <select style="display:inline;" name="two" id="two" onchange="changeOn('two',this.value,1)">
-                    <option value='0'>-- 请选择 --</option>
-                </select>
-                <select style="display:inline;" name="three" id="three" onchange="changeOn('three',this.value,1)">
-                    <option value='0'>-- 请选择 --</option>
                 </select>
                 <span style="color:red;" id="errorSection"></span>
             </td>
     	</tr>
     	<tr>
-      		<td class="left_title_2"><span style='color:red'>*</span>&nbsp;所属关键词</td>
+      		<td class="left_title_2"><span style='color:red'>*</span>&nbsp;所属标签</td>
       		<td>
-      			<select name="keyword" id="keyword">
-                	<option value="0">-- 选择关键词 --</option>
+      			<select name="tag" id="tag">
+                	<option value="0">-- 选择标签 --</option>
                 </select>
                 <span style="color:red;" id="errorKeyword"></span>
       		</td>
@@ -117,7 +97,7 @@ function check_form()
       		</td>
     	</tr>
         <tr>
-      		<td class="left_title_2">&nbsp;<input type="hidden" name='section' id='section' value='' /></td>
+      		<td class="left_title_2">&nbsp;</td>
       		<td><input type="submit" name="submit" value=" 提交 " />&nbsp;&nbsp;
             <input type="reset" name="reset" value=" 重置 " />
             </td>

@@ -70,7 +70,7 @@ class Tag_model extends CI_Model
     {
         if(!empty($where))$this->db->where($where);
 		if(!empty($order))$this->db->order_by($order);
-        $this->db->limit($limit,0);
+        if(intval($limit)) $this->db->limit($limit,0);
 		return $this->db->get($this->_table)->result_array();
 	}
 
