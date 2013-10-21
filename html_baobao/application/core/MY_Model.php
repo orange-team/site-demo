@@ -21,10 +21,10 @@ class MY_Model extends CI_Model
 	//一条记录
 	public function getOne($primary_value)
 	{
-		$sql = $this->db->where($this->primary_key, $primary_value)
+		$query = $this->db->where($this->primary_key, $primary_value)
 					->get($this->_table);
 				
-		return ($sql->num_rows() > 0) ? $sql->row() : false;
+		return ($query->num_rows() > 0) ? $query->row() : false;
 	}
 	
     //所有记录
@@ -42,7 +42,7 @@ class MY_Model extends CI_Model
     //修改
     public function update($primary_value, $data)
 	{
-		return ($this->db->update($this->_table, $data, array($this->primary_key => $primary_value)));
+		return ($this->db->update($this->_table, $data, array($this->primary_key => $primary_value))) ? true : false;
 	}
 	
 	//删除

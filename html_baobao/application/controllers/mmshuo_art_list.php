@@ -7,8 +7,17 @@
 
 class mmshuo_art_list extends LB_Controller 
 {
-    var $page_name='妈妈说';
-    var $nav;
+    public $page_name='妈妈说';
+    public $nav;
+	private $_ask = array();
+    //当前页码
+	private $_current_page = 1;
+    //每页条目数
+	private $_limit = 5;
+    //偏移
+	private $_offset = 0;
+    //条目总数
+	private $_total_count = 0;
 
 	public function __construct()
 	{
@@ -22,20 +31,32 @@ class mmshuo_art_list extends LB_Controller
 	public function index()
 	{
         $this->_init();
-        $timelineArr = $this->_getTimeline();
-        $sectionArr = $this->_getSection();
-        $askArr = $this->ask->getList();
-        //print_r($askArr); exit;
-        $this->data['timeline'] = $timeline;
-        $this->data['section'] = $section;
-        $this->data['ask'] = $ask;
-        $this->load->helper('url');
-		$this->load->view('mmshuo_art_list',$this->data);
+        $timeline = $this->_getTimeline();
+        //print_r($timeline);exit;
+        $section = $this->_getSection();
+		$this->_ask = $this->ask->getList()->result();
+        //得到条目总数
+		$this->_total_count = $this->ask->getTotal();
+
+		if(!empty($this->_ask))
+		{
+			$this->_prepare_ask();
+			$this->_apply_pagination(site_url('page').'/%');
+		}
+
+		/* 页面初始化 */
+        $data['timeline'] = $timeline;
+        $data['section'] = $section;
+        $data['ask'] = $this->_ask;
+		$data['pagination'] = $this->_pagination;
+		$this->load->view('mmshuo_art_list', $data);
 	}
 
     //时间轴数据
     private function _getTimeline()
     {
+		$this->load->model('timeline_model','timeline');
+        return $this->timeline->getList();
     }
 
     //时期数据
@@ -55,6 +76,35 @@ class mmshuo_art_list extends LB_Controller
         //面包屑导航
         $this->nav = '<a href="'.base_url().'mmshuo_art_list/"> '.$this->page_name.'</a>';
     }
+
+    /**
+     * 加工和处理ask数据
+     * 
+     * @access private
+     * @param  array  $ask 内容stdClass对象数组
+     * @return void
+     */
+	private function _prepare_ask()
+	{
+		foreach($this->_ask as &$ask)
+		{
+            //格式化日期
+            //$ask->add_time = Common::fmt_date($ask->add_time);
+			
+			/* 标签 */
+			$ask->tags = $this->ask->getTag($ask->id);
+			
+			/** 日志摘要 */
+			$ask->excerpt = Common::get_excerpt($ask->text);
+			
+			/** 是否存在摘要 */
+			$ask->more = (Common::has_break($ask->text)) ? TRUE : FALSE;
+			
+			unset($ask->slug);
+			unset($ask->text);
+		}
+	}
+
 
     //获取父及栏目内容
     function get_section($id)

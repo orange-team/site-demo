@@ -5,13 +5,14 @@
 > Mail: arkulo@163.com 
 *************************************************************************/
 
-class ask_article_model extends CI_Model
+class ask_article_model extends MY_Model
 {
 	const TBL_ASK = 'a_ask_article';
 	const TBL_ASK_TAG = 'a_ask_tag';
 
     public function __construct()
     {
+        $this->_table = self::TBL_ASK;
         parent::__construct();
     }
 
@@ -21,6 +22,14 @@ class ask_article_model extends CI_Model
         $query = $this->db->get('a_ask_article');
         return $query->row_array();
     }
+
+    public function getTag($id)
+    {
+        $this->_table = self::TBL_ASK_TAG;
+        $this->db->where('target_id',$id);
+        return $this->db->get($this->_table)->result_array();
+    }
+
     public function get($where=array(),$order='',$limit=20)
     {
         $this->db->where($where);
@@ -46,5 +55,11 @@ class ask_article_model extends CI_Model
 		return $this->db->get(self::TBL_ASK);
 	}
 
+    //总条数
+    function getTotal($where=array())
+	{
+        $this->db->where($where);
+		return $this->db->count_all_results(self::TBL_ASK);
+	}
 }
 
