@@ -12,6 +12,7 @@ class ask_article_model extends MY_Model
 
     public function __construct()
     {
+        $this->_table = self::TBL_ASK;
         parent::__construct();
     }
 
@@ -24,8 +25,9 @@ class ask_article_model extends MY_Model
 
     public function getTag($id)
     {
+        $this->_table = self::TBL_ASK_TAG;
         $this->db->where('target_id',$id);
-        return $query->result_array();
+        return $this->db->get($this->_table)->result_array();
     }
 
     public function get($where=array(),$order='',$limit=20)
