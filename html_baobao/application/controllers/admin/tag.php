@@ -19,7 +19,6 @@ class Tag extends MY_Controller
     //列表页
 	function showlist($name='')
 	{
-        $this->load->helper('form'); 
         //搜索
         $where = array();
         //搜内容segment(5)
@@ -31,7 +30,6 @@ class Tag extends MY_Controller
             $where['name'] = $this->data['name']; 
         }
 		//分页
-		$this->load->library('pagination');
 		$config['base_url'] = site_url('admin/tag/showlist/'.$this->data['name'].'/');
 		//每页
 		$config['per_page'] = $this->data['pagesize'] = 15 ; 
@@ -45,7 +43,7 @@ class Tag extends MY_Controller
 		$this->pagination->initialize($config); 
 		$this->data['page'] = $this->pagination->create_links();
 		$offset = $this->uri->segment($config['uri_segment']);
-		$arr = $this->tag->getList($this->data['pagesize'], $offset, $where);
+		$arr = $this->tag->getList($where, '', $this->data['pagesize'], $offset);
 		$this->data['tagArr'] = $arr;
         unset($arr);
         $this->data['number'] = $offset+1; 
@@ -60,7 +58,7 @@ class Tag extends MY_Controller
             $this->load->helper('common');
             $data['name'] = fileter($this->input->post('name'));
             $data['weight'] = fileter($this->input->post('weight'));
-            $affected_rows = $this->tag->insertNew($data);
+            $affected_rows = $this->tag->insert($data);
             unset($data);
             $data['msg'] = ($affected_rows>0) ? '成功' : '失败';
             $data['url'] = '/admin/tag/add/';
@@ -79,7 +77,7 @@ class Tag extends MY_Controller
 				'name' => $this->input->post('name'),
 				'weight' => $this->input->post('weight'),
 				);
-		$id = $this->tag->insertNew($data);
+		$id = $this->tag->insert($data);
 		$data['msg'] = ($id>0) ? '成功' : '图片路径更新失败';
 		$data['url'] = '/admin/tag/showlist/';
 		$this->load->view('admin/info', $data);
@@ -88,7 +86,6 @@ class Tag extends MY_Controller
 	//编辑
 	function edit($id)
 	{
-		$this->load->helper('form');
 		$arr = $this->tag->getBy_id($id);
 		$this->load->view('admin/tagEdit', $arr);
 	}
@@ -98,6 +95,7 @@ class Tag extends MY_Controller
 	{
 		if($this->input->post('name')) $data['name'] = trim(addslashes($this->input->post('name')));
 		if($this->input->post('weight')) $data['weight'] = trim(addslashes($this->input->post('weight')));
+		if($this->input->post('section')) $data['section'] = trim(addslashes($this->input->post('section')));
 		$affected_rows = $this->tag->update($id, $data);
 		$data['msg'] = ($affected_rows>0) ? '成功' : '失败';
 		$data['url'] = '/admin/tag/showList/';

@@ -66,7 +66,7 @@ class Tag_model extends MY_Model
 	}
 
 	//列表页
-	function getList($where=array(),$order="",$limit=20)
+	function getList($where=array(),$order="",$limit=20,$offset=0)
     {
         if(!empty($where))$this->db->where($where);
 		if(!empty($order))$this->db->order_by($order);
@@ -74,7 +74,7 @@ class Tag_model extends MY_Model
 		return $this->db->get($this->_table)->result_array();
 	}
 
-	function insertNew($data)
+	function insert($data)
 	{
 		$this->db->insert($this->_table, $data); 
 		return $this->db->affected_rows();

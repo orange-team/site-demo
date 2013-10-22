@@ -9,8 +9,10 @@ a:visited {color:#2D80BA;}
 .timeline .on a {padding:9px 0 0 0;margin:0;}
 /* 分类 */
 .section { padding:10px 15px 10px 15px;border:1px solid #ccc;}
-.section .item {width:120px;float:left;}
-.section .name {width:80px;height:28px;line-height:28px;margin:0 0 4px 0;background:#C1E197;color:#fff;text-align:center;font-weight:bold;-webkit-border-radius:12px;-moz-border-radius:12px;-o-border-radius:12px;border-radius:12px;}
+.section .item {width:108px;float:left;}
+.section .item a {text-decoration:none;}
+.section .item a:hover {text-decoration:underline;}
+.section .name {width:80px;height:28px;line-height:28px;margin:0 0 4px 0;background:#C1E197;color:#fff;text-align:center;font-size:15px;font-weight:bold;-webkit-border-radius:12px;-moz-border-radius:12px;-o-border-radius:12px;border-radius:12px;}
 .section a {display:inline-block;width:75px;height:28px;line-height:28px;text-align:center;text-decoration:underline;color:#fa5;}
 .ask {margin:20px 0 15px 0;}
 .ask .title {width:100%;}
@@ -21,7 +23,7 @@ a:visited {color:#2D80BA;}
 .ask .title span {display:inline-block;width:26px;height:15px;line-height:15px;margin:0 0 0 10px;text-align:center;color:#fff;background:#F7AF9B;border:1px solid #d8d8d8; -webkit-border-radius:5px; -moz-border-radius:5px; -o-border-radius:5px; border-radius:5px;}
 .ask .summary {position:relative;display:inline-block;float:left;height:20px;}
 .ask .icon {display:inline-block;float:left;position:relative;background:#d8d8d8;width:34px;height:20px;line-height:6px;text-align:center;font-size:30px;font-weight:bold;color:#fff;}
-.ask .txt {display:none;position:absolute;left:0px;top:21px;z-index:999;width:606px;border:1px solid #ccc;background:#f2f2f2;padding:10px;}
+.ask .txt {display:none;position:absolute;left:0px;top:20px;z-index:999;width:606px;border:1px solid #ccc;background:#f2f2f2;padding:10px;}
 .ask .tag {display:inline-block;float:left;height:20px;margin:0 0 0 14px;}
 .ask .tag a {display:inline-block;height:20px;line-height:20px;color:#527F37;margin:0 10px 0 0;}
 .ask .page a {display:inline-block;float:right;text-align:center;background:#d8d8d8;color:#fa5;border:1px solid #ccc;font-weight:bold;width:60px;height:30px;line-height:30px;margin:2px 18px 4px 0; -webkit-border-radius:18px; -moz-border-radius:18px; -o-border-radius:18px; border-radius:18px;}

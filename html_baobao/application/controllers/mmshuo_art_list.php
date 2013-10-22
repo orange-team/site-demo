@@ -9,11 +9,13 @@ class mmshuo_art_list extends LB_Controller
 {
     public $page_name='妈妈说';
     public $nav;
+    //当前uri
+	public $_uri = '';
 	private $_ask = array();
     //当前页码
 	private $_current_page = 1;
     //每页条目数
-	private $_limit = 5;
+	private $_limit = 1;
     //偏移
 	private $_offset = 0;
     //条目总数
@@ -26,19 +28,18 @@ class mmshuo_art_list extends LB_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->_uri = $this->uri->segment(1) . '/';
 		$this->load->model('ask_article_model','ask');
-		$this->load->model('section_model','section');
-		$this->load->model('tag_model','tag');
-		$this->load->model('relation_tag_model','relation_tag');
 	}
 
-	public function index()
+	public function index($page = 1)
 	{
         $this->_init();
+        $this->_init_pagination($page);
         $timeline = $this->_getTimeline();
         //print_r($timeline);exit;
         $section = $this->_getSection();
-		$this->_ask = $this->ask->getList()->result();
+		$this->_ask = $this->ask->getList($this->_limit, $this->_offset)->result();
         //得到条目总数
 		$this->_total_count = $this->ask->getTotal();
 
@@ -100,13 +101,44 @@ class mmshuo_art_list extends LB_Controller
 		}
 	}
 
+	 /**
+     * 初始化分页参数
+     * 
+     * @access public
+     * @param  int  $current_page
+     * @return void
+     */
+	private function _init_pagination($current_page)
+	{
+		/** 当前页 */
+		$this->_current_page = ($current_page && is_numeric($current_page)) ? intval($current_page) : 1;
+		/** 偏移量 */
+		$this->_offset = ($this->_current_page - 1) * $this->_limit;
+		if($this->_offset < 0)
+		{
+			redirect(site_url());
+		}
+	}
+	
      // 应用分页规则
 	private function _apply_pagination()
 	{
 		if($this->_total_count > $this->_limit)
-		{
-			$this->pageNext = '';
-			$this->pagePrev = '';
+        {
+            if ($this->_total_count>$this->_current_page)
+            {
+                $next = $this->_current_page+1;
+                $this->pageNext = site_url('mmshuo_art_list/index/'.$next);
+            } else {
+                $this->pageNext = 'javascript:;';
+            }
+            if ($this->_current_page>1)
+            {
+                $prev = $this->_current_page-1;
+                $this->pagePrev = site_url('mmshuo_art_list/index/'.$prev);
+            } else {
+                $this->pagePrev = 'javascript:;';
+            }
 		}
 	}
 

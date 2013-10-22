@@ -7,7 +7,7 @@
         <dl class="timeline">
             <?php if(!empty($timeline) && is_array($timeline)) {?>
             <?php foreach($timeline as $row){ ?>
-            <dt<?=($on==$row->id) ? ' class="on"' : ''?>><a href="<?=site_url('mmshuo_art_list/?timeline='.$row->id)?>"><?=$row->name?></a></dt>
+            <dt<?=($on==$row->id) ? ' class="on"' : ''?>><a href="<?=site_url($this->_uri.'mmshuo_art_list/?timeline='.$row->id)?>"><?=$row->name?></a></dt>
             <?php }} ?>
         </dl>
         <div class="section clearfloat">
@@ -16,11 +16,51 @@
             <!--loop start-->
             <div class="item">
                 <div class="name"><?=$row->name?></div>
-                <a class="pb_overflow" href="#">孕前保健</a>
+                <a class="pb_overflow" href="">孕前保健</a>
                 <a class="pb_overflow" href="#">备孕营养</a>
             </div>
             <!--loop end-->
             <?php }} ?>
+            <div class="item">
+                <div class="name">备孕期</div>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=2686')?>">孕前保健</a>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=3901')?>">孕前检查</a>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=85')?>">备孕营养</a>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=1423')?>">不孕不育</a>
+            </div>
+            <div class="item">
+                <div class="name">孕前期</div>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=18')?>">孕期减肥</a>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=883')?>">孕期营养</a>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=1828')?>">孕期疾病</a>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=523')?>">胎儿发育</a>
+            </div>
+            <div class="item">
+                <div class="name">孕中期</div>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=27')?>">胎教指南</a>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=1937')?>">待产分娩</a>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=85')?>">备孕营养</a>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=1495')?>">准爸爸</a>
+            </div>
+            <div class="item">
+                <div class="name">孕后期</div>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=1099')?>">孕期健身</a>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=1937')?>">待产分娩</a>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=523')?>">胎儿发育</a>
+            </div>
+            <div class="item">
+                <div class="name">0至1岁</div>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=2899')?>">婴儿护理</a>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=1541')?>">婴儿喂养</a>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=1247')?>">婴儿心理</a>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=1056')?>">产后保健</a>
+            </div>
+            <div class="item">
+                <div class="name">1至3岁</div>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=451')?>">早期教育</a>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=390')?>">幼儿护理</a>
+                <a class="pb_overflow" href="<?=site_url($this->_uri.'?tag=574')?>">幼儿疾病</a>
+            </div>
         </div>
         <div class="ask">
             <dl>
@@ -47,7 +87,9 @@
                 <!--loop end-->
                 <?php }} ?>
             </dl>
+            <?php if(isset($this->pageNext) && !empty($this->pageNext)) { ?>
             <div class="page clearfloat"><a href="<?=$this->pageNext?>">下一页</a><a href="<?=$this->pagePrev?>">上一页</a></div>
+            <?php } ?>
         </div>
     </div><!-- wraper_left -->
     <div class="wraper_right">
