@@ -66,7 +66,6 @@ function changeOn(id)
             success:function(msg){
                 if(msg != -1)
                 {
-                    //$("#"+levelNew).css("display","inline");
                     $.each( msg, function(i, n){
                         $("#tag").append("<option value='"+n.id+"'>"+n.name+"</option>");//子栏目
                     });

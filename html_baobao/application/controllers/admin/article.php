@@ -27,7 +27,7 @@ class Article extends MY_Controller
         //搜栏目segment(4)
         $this->data['section_id'] = 0;
 
-        if(!empty($section))
+        if($section!=0)
         {
             $where['section'] = $this->data['section_id'] = $section;
         }
@@ -67,7 +67,6 @@ class Article extends MY_Controller
 		$config['per_page'] = $this->data['pagesize'] = 15; 
 		//总数
 		$config['total_rows'] = $this->art->getTotal($where);
-		$this->data['section'] = (int)$section;
 		$config['uri_segment'] = 6;
 		$config['first_link'] = '首页';
 		$config['last_link'] = '尾页';
@@ -77,6 +76,7 @@ class Article extends MY_Controller
 		$this->data['page'] = $this->pagination->create_links();
 		$offset = $this->uri->segment(6);
 		$arr = $this->art->getList($this->data['pagesize'], $offset, $where);
+        //echo $this->db->last_query();
         if(!empty($tag) && empty($where['id']))
         {
             $arr = array();
@@ -84,7 +84,7 @@ class Article extends MY_Controller
 
         //获取栏目
         $this->data['section'] = $this->section->getList();
-        $this->data['tags'] = $this->tag->getList(array(),'id');
+        $this->data['tags'] = 0!=$section ?  $this->ajax_change($section) : array();
 		$this->data['articleArr'] = $arr;
         $this->data['number'] = $offset+1; 
 		$this->load->view('admin/articleList', $this->data);
@@ -284,7 +284,13 @@ class Article extends MY_Controller
         if(!empty($section_id))
         {
             $list = $this->tag->getList(array('section'=>$section_id));
-            echo !empty($list) ? json_encode($list) : -1; 
+            if( 0!=$id )
+            {
+                return $list;
+            }else
+            {
+                echo !empty($list) ? json_encode($list) : -1; 
+            }
         }else
         {
             return -2;

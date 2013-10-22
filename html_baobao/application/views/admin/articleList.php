@@ -7,13 +7,13 @@
 <script type="text/javascript" src="/adminStatic/js/jquery.js"></script>
 <script type="text/javascript" src="/adminStatic/js/common.js"></script>
 <script type=text/javascript>
-function toSearch()
+function toSearch(sign)
 {
     var section = $("#section").val();
     var tag = $("#tag").val();
     var title = $("#title").val();
     if(''==section) section=0;
-    if(''==tag) section=0;
+    if(''==tag || 'sec'==sign) tag=0;
     if(''==title) title=0;
     window.location.href="/admin/article/showlist/"+section+"/"+tag+"/"+title+"/";
 }
@@ -28,18 +28,18 @@ function toSearch()
             <td>
             名称：<input type="text" id="title" name="title" style="width:260px;" value="<?php echo $title?$title:'';?>"/> &nbsp;&nbsp;&nbsp;&nbsp;
             所属栏目：
-      			<select name="section" id="section" onchange="toSearch()">
-                	<option value="0">请选择</option>
+      			<select name="section" id="section" onchange="toSearch('sec')">
+                	<option value="0">-- 请选择 --</option>
                     <?php if(!empty($section)) {foreach($section as $k=>$v) {?>
                     <option value="<?php echo $v['id']?>" <?php if($v['id'] == $section_id) echo 'selected';?> style="background-color:#FFC;"><?php echo $v['name']?></option>
                     <?php }} ?>
                 </select>&nbsp;&nbsp;&nbsp;&nbsp;
             所属标签：
-                <select name="tag" id="tag" onchange="toSearch()">
-                    <option value='0'>请选择</option>
-                    <?php if($tags != ''){foreach($tags as $k=>$v){ ?>
+                <select name="tag" id="tag" onchange="toSearch('tag')">
+                    <option value='0'>-- 请选择 --</option>
+                    <?php if(!empty($tags)){foreach($tags as $k=>$v){ ?>
                     <option value="<?php echo $v['id']?>" <?php if($v['id'] == $tag_id) echo 'selected'; ?>><?php echo $v['name'];?></option>
-                    <?php }} ?>
+                    <?php  }} ?>
                 </select>
                   <input type="submit" name="submit" id='submit' onclick='toSearch()' value=" 搜索 " />
                   <input type="button" name="reset" id='reset' onclick="javascript:go('/admin/article/showlist/')" value="显示所有" />
