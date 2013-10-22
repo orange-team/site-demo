@@ -5,7 +5,7 @@
 * date: 2013-07-04
 */
  
-class Tag_model extends CI_Model
+class Tag_model extends MY_Model
 {
 	var $_table = 'a_tag';
 	function __construct()

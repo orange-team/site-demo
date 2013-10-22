@@ -23,11 +23,20 @@ class ask_article_model extends MY_Model
         return $query->row_array();
     }
 
+    //关联标签
     public function getTag($id)
     {
         $this->_table = self::TBL_ASK_TAG;
-        $this->db->where('target_id',$id);
-        return $this->db->get($this->_table)->result_array();
+        $this->db->select('tag_id')
+            ->where(array('target_id'=>$id,'status_tag'=>1));
+        $res = $this->db->get($this->_table)->result();
+        $resNew = array();
+        $this->load->model('tag_model','tag');
+        foreach($res as $key=>$val)
+        {
+            $resNew[] = $this->tag->getOne($val->tag_id)->name;
+        }
+        return $resNew;
     }
 
     public function get($where=array(),$order='',$limit=20)

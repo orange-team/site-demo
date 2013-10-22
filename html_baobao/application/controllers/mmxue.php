@@ -42,6 +42,7 @@ class Mmxue extends MY_Controller
         //得到时间轴文章
         $this->data['timelineArr'] = $this->get_timeline();
         $this->data['panelArr'] = $this->get_panel();
+        //print_r($this->data['panelArr']);
         $this->data['isRed'] = 1;
         //$this->db->stop_cache();
 		$this->load->view('mmxue', $this->data);
@@ -77,35 +78,15 @@ class Mmxue extends MY_Controller
         //初始化数组
         $panel_article = array();
         //echo '<pre>';
-        //得到妈妈学栏目的子分类
-        $this->db->select('id, name')->from('a_section')->where('parent',1)->limit(5);
-        $section = $this->db->get()->result_array();
+        //得到妈妈学栏目
+        $this->db->select('id, name')->where('name <>','')->limit(5);
+        $section = $this->db->get('a_section')->result_array();
         foreach( $section as $key=>$val )
         {
-            $sub_ids = $sub_ids_new = array();
-            //得到所有子id
-            $this->db->select('id')->from('a_section')->where('parent',$val['id']);
-            $sub_ids = $this->db->get()->result_array();
-            foreach( $sub_ids as $sv )
-            {
-                $sub_ids_new[] = $sv['id'];
-            }
-            if( is_array($sub_ids_new) && 0 < count($sub_ids_new) )
-            {
-                //得到关联keyword
-                $this->db->select('id, name')->from('a_keyword')->where_in('section',$sub_ids_new)->limit($this->limit_num);
-                $keywords = $keywords_new = array(0);
-                $keywords = $this->db->get()->result_array();
-                foreach( $keywords as $kv )
-                {
-                    $this->db->select('id, title')->from('a_article')->where('keyword =',$kv['id'])->limit(3);
-                    $panel_article[$val['id']][$kv['name']] = $this->db->get()->result_array();
-                }
-                //$this->db->select('id, title')->from('a_article')->where_in('keyword',$keywords_new)->limit(3);
-                //$tab_article[$val['id']] = $this->db->get()->result_array();
-            }
+            $this->db->select('id, title')->from('a_article')->where('section =',$val['id'])->limit(3);
+            $panel_article[$val['id']] = $this->db->get()->result_array();
         }
-        unset($sub_ids, $sub_ids_new, $section);
+        unset($key, $val, $section);
         //print_r($panel_article);
         return $panel_article;
     }

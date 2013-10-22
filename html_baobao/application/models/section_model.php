@@ -5,7 +5,7 @@
 * date: 2013-06-25
 */
  
-class section_model extends CI_Model
+class section_model extends MY_Model
 {
 	var $_table = 'a_section';
 	function __construct()
@@ -26,6 +26,13 @@ class section_model extends CI_Model
 		$this->db->select('*')->from($this->_table)->where($where)->limit(1);
 		$arr = $this->db->get()->row_array();
 		return $arr;
+    }
+
+    //所有记录
+    function getTotal()
+    {
+        $this->db->select('*')->where('name <>','');
+        return $this->db->get($this->_table)->result_array();
     }
 
 	//列表页
@@ -59,6 +66,5 @@ class section_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
-	
 	
 }
