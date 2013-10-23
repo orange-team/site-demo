@@ -108,55 +108,12 @@ class Article extends MY_Controller
 	{
 		$this->load->helper('form');
 		$arr = $this->art->getBy_id($art_id);
-        $section = $this->section->get_one(array('id'=>$arr['section']));
-        $is_two = false;     //是否显示二级栏目
-        $is_three = false;   //是否显示三级栏目
-        $keyword_section = '';  //与关键词关联的栏目id
-        $arr['one'] = $arr['two'] = '';//三个级栏目的selected标识
-
-        //如果文章属于非顶级栏目
-        if($section['parent'] != 0)
-        {
-            $section_up = $this->get_parent($section['parent']);
-            //如果文章属于三级栏目下
-            $is_two = true;
-            $arr['one'] = $section_up[0] ? $section_up[0] : '';
-            $arr['two'] = $section_up[1] ? $section_up[1] : '';
-            if('' != $arr['one'] && '' != $arr['two'])
-            {
-                $is_three = true;
-                $keyword_section = $section['id'];
-            }
-
-            //如果文章属于二级栏目下
-            if($arr['one'] == '')
-            {
-                $arr['one'] = $arr['two']; unset($arr['two']);
-                $arr['two'] = $section;
-                $keyword_section = $arr['two']['id'];
-            } 
-        }else//属于顶级栏目
-        {
-            $arr['one'] = $section;
-            $keyword_section = $arr['one']['id'];
-        }
-
-        //查询所选栏目对应的关键词
-        $list = $this->get_child($keyword_section);
-        $list[1] = $list[1] ? $list[1] : array();
-        $childs_id = array_keys($list[1]);//当前栏目下所有子栏目id
-        array_unshift($childs_id,$keyword_section);
-        $where['section'] = $childs_id;
-        $arr['keywords'] = $this->keyword->getList(0,0,$where);
-        
-        //顶级栏目
-        $arr['one_section'] = $this->section->getBy_parent(0);
-        if( $is_two == true )
-        {
-            $fid = '' != $arr['one'] ? $arr['one']['id'] : $arr['two']['id'];
-            $arr['two_section'] =  $this->section->getList(array('parent'=>$fid));
-        }
-        $arr['three_section'] = $is_three==true ? $this->section->getList(array('parent'=>$arr['two']['id'])) : '';
+        //等级栏目
+        $arr['sections'] = $this->section->getList();
+        //标签
+        $arr['tags'] = 0!=$arr['section'] ?  $this->ajax_change($arr['section']) : array();
+        //查询文章和tag关系
+        $arr['art_tag'] = $this->art_tag->get_one(array('target_id'=>$arr['id']));
 
 		//在线编辑器
 		$eddt = array('name' =>'content', 'id' =>'content', 'value' =>$arr['content']);
@@ -185,7 +142,7 @@ class Article extends MY_Controller
 
 	function saveEdit($article_id)
 	{
-		if($this->input->post('section')) $data['section'] = trim(addslashes($this->input->post('section')));
+		if($this->input->post('section')) $data['section'] = intval($this->input->post('section'));
 		if($this->input->post('keyword')) $data['keyword'] = trim(addslashes($this->input->post('keyword')));
 		if($this->input->post('title')) $data['title'] = trim(addslashes($this->input->post('title')));
 		if($this->input->post('subtitle')) $data['subtitle'] = trim(addslashes($this->input->post('subtitle')));
@@ -199,6 +156,17 @@ class Article extends MY_Controller
 		$affected_rows = $this->art->update($article_id, $data);
         //echo $this->db->last_query();exit;
 		//var_dump($affected_rows);
+        /*讨论一篇文章可以添加多个标签吗?
+        if(!empty($article_id) && $affected_rows>0)
+        {
+            $tag_id = $this->input->post('tag') ? $this->input->post('tag') : 0;
+            $tags['target_id'] = $article_id;
+            $tags['tag_id'] = $tag_id;
+            $tags['status_tag'] = 1;
+            $resTag = $this->art_tag->update($);
+        }
+		$data['msg'] = ($resTag>0) ? '成功' : '失败';
+         */
 		$data['msg'] = ($affected_rows>0) ? '成功' : '失败';
 		$data['url'] = '/admin/article/showList/';
 		$this->load->view('admin/info', $data);

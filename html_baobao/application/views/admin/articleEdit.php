@@ -13,34 +13,22 @@
     	<tr>
       		<td class="left_title_1"><span style='color:red'>*</span>&nbsp;所属栏目</td>
       		<td>
-      			<select name="one" id="one" onchange="changeOn('one',this.value,1)">
+      			<select name="section" id="section" onchange="changeOn(this.value)">
                 	<option value="0">-- 请选择 --</option>
-                    <?php if(!empty($one_section)) {foreach($one_section as $k=>$v) {?>
-                    <option value="<?php echo $v['id']?>" <?php if($one != '' && $one['id'] == $v['id']){ echo 'selected';}?> style="background-color:#FFC;"><?php echo $v['name']?></option>
-                    <?php }} ?>
-                </select>
-                <select style="display:inline;" name="two" id="two" onchange="changeOn('two',this.value,1)">
-                    <option value='0'>-- 请选择 --</option>
-                    <?php if($two_section != ''){ foreach($two_section as $k=>$v){ ?>
-                    <option value="<?php echo $v['id']; ?>" <?php if($v['id'] == $two['id']) echo 'selected'; ?>><?php echo $v['name'];?></option>
-                    <?php }} ?>
-                </select>
-                <select style="display:inline;" name="three" id="three" onchange="changeOn('three',this.value),1">
-                    <option value='0'>-- 请选择 --</option>
-                    <?php if($three_section != ''){ foreach($three_section as $k=>$v){ ?>
-                    <option value="<?php echo $v['id']; ?>" <?php if($v['id'] == $section) echo 'selected'; ?>><?php echo $v['name'];?></option>
+                    <?php if(!empty($sections)) {foreach($sections as $k=>$v) {?>
+                    <option value="<?php echo $v['id']?>" <?php if($section != '' && $section == $v['id']){ echo 'selected';}?> style="background-color:#FFC;"><?php echo $v['name']?></option>
                     <?php }} ?>
                 </select>
                 <span style="color:red;" id="errorSection"></span>
             </td>
     	</tr>
     	<tr>
-      		<td class="left_title_2"><span style='color:red'>*</span>&nbsp;所属关键词</td>
+      		<td class="left_title_2"><span style='color:red'>*</span>&nbsp;所属标签</td>
       		<td>
-      			<select name="keyword" id="keyword">
+      			<select name="tag" id="tag">
                 	<option value="0">-- 选择关键词 --</option>
-                    <?php if(!empty($keywords)) {foreach($keywords as $k=>$v) {?>
-                    <option value="<?php echo $v['id']?>" <?php if($v['id'] == $keyword) echo 'selected' ;?>><?php echo $v['name'];?></option>
+                    <?php if(!empty($tags)) {foreach($tags as $k=>$v) {?>
+                    <option value="<?php echo $v['id']?>" <?php if($v['id'] == $art_tag['tag_id']) echo 'selected' ;?>><?php echo $v['name'];?></option>
                     <?php }} ?>
                 </select>
                 <span style="color:red;" id="errorKeyword"></span>
@@ -55,8 +43,20 @@
             <td><input class="text_style" type="text" name="subtitle" value="<?php echo $subtitle;?>" /></td>
     	</tr>
     	<tr>
-    		<td class="left_title_1">文章来源</td>
-            <td><input type="text" name="source"  value="<?php echo $source;?>" /></td>
+      		<td class="left_title_1">页面描述</td>
+            <td><input class="text_style" type="type" name="description" value="<?php echo $description; ?>"/></td>
+    	</tr>
+    	<tr>
+    		<td class="left_title_2">SEO关键字</td>
+    		<td><input type="text" class="text_style" name="page_keywords" value="<?php echo $page_keywords; ?>" /></td>
+    	</tr>
+    	<tr>
+    		<td class="left_title_1">关注度</td>
+    		<td><input type="text" class="text_style w_50" name="attention" value="<?php echo $attention; ?>" /></td>
+    	</tr>
+    	<tr>
+    		<td class="left_title_2">文章来源</td>
+    		<td><input type="text" class="text_style" name="source"  value="<?php echo $source; ?>"/></td>
     	</tr>
         <tr>
     		<td class="left_title_2">相关标签</td>
@@ -71,29 +71,15 @@
       		<td> <?php echo $kindeditor;?></td>
 
     	</tr>
-        <!--
     	<tr>
-      		<td class="left_title_1">文章状态</td>
+      		<td class="left_title_2">是否推荐</td>
       		<td>
-      			<input type="radio" name="status" value="2" checked="checked" />待审核	&nbsp;&nbsp;
-      			<input type="radio" name="status" value="1" />审核通过 &nbsp;&nbsp;
-      			<input type="radio" name="status" value="0" />禁用	&nbsp;&nbsp;
-      		</td>
-    	</tr>
-    	<tr>
-      		<td class="left_title_2">文章优先</td>
-      		<td>
-      			<input type="checkbox" name="top" value="1" />置顶文章  &nbsp;&nbsp;
-      			<input type="checkbox" name="recommend" value="1" />推荐文章  &nbsp;&nbsp;
+            <input type="radio" name="recommend" value="1" <?php if(1==$recommend) echo "checked=\"checked\"" ?> />是  &nbsp;&nbsp;
+      			<input type="radio" name="recommend"  value="0" <?php if(0==$recommend) echo "checked=\"checked\"" ?>/>否  &nbsp;&nbsp;
       		</td>
     	</tr>
         <tr>
-        	<td class="left_title_1">点击量</td>
-            <td><input class="text_style" type="text" name="click" value="{$click}" style="width:66px;"></td>
-        </tr>       
-        -->
-        <tr>
-      		<td class="left_title_2">&nbsp;<input type="hidden" name='section' id='section' value='' /></td>
+      		<td class="left_title_2">&nbsp;</td>
       		<td><input type="submit" name="submit" value=" 提交 " />&nbsp;&nbsp;
             <input type="reset" name="reset" value=" 重置 " />
             </td>
@@ -112,24 +98,10 @@ relation_tag($id, 1, $tagNameArr);
 <script type="text/javascript">
 function check_form()
 {
-    var one = $("#one").val();
-    var two = $("#two").val();
-    var three = $("#three").val();
-    var keyword = $("#keyword").val();
-    if(0!=three)
-    {
-        section = three;
-    }else if(0!=two)
-    {
-        section = two;
-    }else if(0!=one)
-    {
-        section = one;
-    }
-    $("#section").val(section);
     var section = $("#section").val();
+    var tag = $("#tag").val();
     var title = $("#title").val();
-    if(title != '' && section != 0 &&  keyword != 0)
+    if(title != '' && section != 0 &&  tag != 0)
     {
         return true;
     }else
@@ -137,9 +109,9 @@ function check_form()
         if(0==section)
         {
             $("#errorSection").html('文章所属栏目不能为空！');
-        }else if(0==keyword)
+        }else if(0==tag)
         {
-            $("#errorKeyword").html('关键词不能为空！');
+            $("#errorKeyword").html('标签不能为空！');
         }else
         { 
             $("#errorTitle").html('文章栏目不能为空！');
