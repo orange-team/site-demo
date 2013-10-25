@@ -26,8 +26,9 @@ a:visited {color:#2D80BA;}
 .ask .txt {display:none;position:absolute;left:0px;top:20px;z-index:999;width:606px;border:1px solid #ccc;background:#f2f2f2;padding:10px;}
 .ask .tag {display:inline-block;float:left;height:20px;margin:0 0 0 14px;}
 .ask .tag a {display:inline-block;height:20px;line-height:20px;color:#527F37;margin:0 10px 0 0;}
-.ask .page a {display:inline-block;float:right;text-align:center;background:#d8d8d8;color:#fa5;border:1px solid #ccc;font-weight:bold;width:60px;height:30px;line-height:30px;margin:2px 18px 4px 0; -webkit-border-radius:18px; -moz-border-radius:18px; -o-border-radius:18px; border-radius:18px;}
+.ask .page a {display:inline-block;text-align:center;background:#d8d8d8;color:#fa5;border:1px solid #ccc;font-weight:bold;width:60px;height:30px;line-height:30px;margin:2px 18px 4px 0; -webkit-border-radius:18px; -moz-border-radius:18px; -o-border-radius:18px; border-radius:18px;}
 .ask .page a:hover {color:#fff;}
+.ask .page {float:right;}
 /* 引导 */
 .guide {margin:0 0 14px 0;}
 .guide .to_top{ display:block;overflow:hidden;margin:0 0 0 1px;width:0px;height:0px;border:9px solid #E1F0CD;border-color:#E1F0CD #fff;border-width:0 9px 9px 9px;}

@@ -49,14 +49,15 @@ class ask_article_model extends MY_Model
     }
 
     //列表页
-	function getList($limit=0, $offset=0, $where=array())
+	function getList($where=array(), $limit=0, $offset=0)
     {
         if(isset($where['title']) && !empty($where['title'])) 
         {
             $this->db->like('title',$where['title']);
             unset($where['title']);
         } 
-		$this->db->select('*');
+		$this->db->select(self::TBL_ASK.'.*');
+        $this->db->join(self::TBL_ASK_TAG, self::TBL_ASK_TAG.'.target_id='.self::TBL_ASK.'.id', 'left');
 		($where) ? $this->db->where($where) : '';
 		$this->db->order_by("id DESC");
         if($limit != 0 || $offset != 0)

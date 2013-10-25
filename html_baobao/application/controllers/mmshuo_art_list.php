@@ -9,9 +9,13 @@ class mmshuo_art_list extends LB_Controller
 {
     public $page_name='妈妈说';
     public $nav;
+	private $_ask = array();
     //当前uri
 	public $_uri = '';
-	private $_ask = array();
+    //分页的基础url
+    private $_base_url = '';
+    //页码的segment
+    private $_uri_segment = 4;
     //当前页码
 	private $_current_page = 1;
     //每页条目数
@@ -22,37 +26,49 @@ class mmshuo_art_list extends LB_Controller
     private $_total_count = 0;
     //分页字符串 wrapper
 	private $_pagination = '';
-    public $pageNext = '';
-    public $pagePrev = '';
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->_uri = $this->uri->segment(1) . '/';
+		$this->_uri = $this->uri->segment(1) . '/index/';
 		$this->load->model('ask_article_model','ask');
 	}
 
 	public function index($page = 1)
 	{
-        $this->_init();
-        $this->_init_pagination($page);
+        //时间轴
         $timeline = $this->_getTimeline();
-        //print_r($timeline);exit;
+        $this->data['timeline'] = $timeline;
+        //时期-->标签
         $section = $this->_getSection();
-		$this->_ask = $this->ask->getList($this->_limit, $this->_offset)->result();
-        //得到条目总数
-		$this->_total_count = $this->ask->getTotal();
 
+        //搜索
+        $where = array();
+        //tag
+        $tag = trim($this->uri->segment(3));
+        $this->data['tag'] = 0;
+        if($tag)  
+        {
+            $this->data['tag'] = addslashes($tag); 
+            $where['tag_id'] = $this->data['tag']; 
+        }
+		$current_page = $this->uri->segment($this->_uri_segment);
+        //初始化分页
+        $this->_init_pagination($current_page);
+		$this->_ask = $this->ask->getList($where, $this->_limit, $this->_offset)->result();
+        //得到条目总数
+		$this->_total_count  = $this->ask->getList($where)->num_rows();
+        //var_dump($where, $this->_limit, $this->_offset, $this->_ask);
+        $this->data['ask'] = $this->_ask;
+        //var_dump($this->_total_count);
 		if(!empty($this->_ask))
 		{
 			$this->_prepare_ask();
-			$this->_apply_pagination(site_url('page').'/%');
+			$this->_apply_pagination();
 		}
-
 		/* 页面初始化 */
-        $this->data['timeline'] = $timeline;
+        $this->_init();
         $this->data['section'] = $section;
-        $this->data['ask'] = $this->_ask;
 		$this->data['pagination'] = $this->_pagination;
 		$this->load->view('mmshuo_art_list', $this->data);
 	}
@@ -91,7 +107,7 @@ class mmshuo_art_list extends LB_Controller
      */
 	private function _prepare_ask()
 	{
-		foreach($this->_ask as &$ask)
+		foreach($this->data['ask'] as &$ask)
 		{
             //格式化日期
             //$ask->add_time = Common::fmt_date($ask->add_time);
@@ -110,6 +126,7 @@ class mmshuo_art_list extends LB_Controller
      */
 	private function _init_pagination($current_page)
 	{
+		$this->_base_url = site_url($this->_uri.$this->data['tag'].'/');
 		/** 当前页 */
 		$this->_current_page = ($current_page && is_numeric($current_page)) ? intval($current_page) : 1;
 		/** 偏移量 */
@@ -125,20 +142,24 @@ class mmshuo_art_list extends LB_Controller
 	{
 		if($this->_total_count > $this->_limit)
         {
-            if ($this->_total_count>$this->_current_page)
-            {
-                $next = $this->_current_page+1;
-                $this->pageNext = site_url('mmshuo_art_list/index/'.$next);
-            } else {
-                $this->pageNext = 'javascript:;';
-            }
-            if ($this->_current_page>1)
-            {
-                $prev = $this->_current_page-1;
-                $this->pagePrev = site_url('mmshuo_art_list/index/'.$prev);
-            } else {
-                $this->pagePrev = 'javascript:;';
-            }
+            //分页
+            $config['base_url'] = $this->_base_url;
+            //每页
+            $config['per_page'] = $this->_limit; 
+            //得到条目总数
+            $config['total_rows']  = $this->_total_count;
+            $config['uri_segment'] = $this->_uri_segment;
+            $config['first_link'] = '首页';
+            $config['last_link'] = '尾页';
+            $config['next_link'] = '下一页';
+            $config['prev_link'] = '上一页';
+            //不显示页码(1 2 3 ...)
+            $config['display_pages'] = false;
+            //不显示“尾页”
+            $config['last_link'] = false;
+            $this->pagination->initialize($config); 
+            $this->_pagination = $this->pagination->create_links();
+            return;
 		}
 	}
 
