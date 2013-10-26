@@ -48,8 +48,8 @@ function reg()
         <img class="logo_font" src="/img/logo_font.jpg" height="25" width="80">
         <div class="nav_section">
             <ul>
-                <li><a href="/mmxue/index/" class="<?php if(isset($isRed) && 1==$isRed){ echo 'classRed'; }?>" >妈妈学</a></li>
-                <li><a href="/mmshuo/index/" class="<?php if(isset($isRed) && 2==$isRed){ echo 'classRed'; }?>">妈妈说</a></li>
+                <li><a href="/mmxue/" class="<?php if(isset($isRed) && 1==$isRed){ echo 'classRed'; }?>" >妈妈学</a></li>
+                <li><a href="/mmshuo/" class="<?php if(isset($isRed) && 2==$isRed){ echo 'classRed'; }?>">妈妈说</a></li>
                 <li><a href="#" class="<?php if(isset($isRed) && 3==$isRed){ echo 'classRed'; }?>">妈妈看</a></li>
             </ul>
             <div class="clear"></div>

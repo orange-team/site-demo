@@ -71,15 +71,15 @@
                     <a href="#"><img class="avator" src="/img/defaultAvator.png"></a>
                     <div class="right">
                         <div class="title">
-                            <a class="pb_overflow" href="<?=site_url('mmshuo_detail').'/'.$row->id?>"><?=$row->title?></a><span><?=$row->pv?></span>
+                            <a class="pb_overflow" href="<?=site_url('mmshuo_art_detail/index').'/'.$row->id.'/1'?>"><?=$row->title?></a><span><?=$row->pv?></span>
                         </div>
                         <div class="summary clearfloat">
                             <div class="icon" onmouseout="$(this).next().hide();" onmouseover="$(this).next().show();">...</div>
                             <div class="txt" onmouseout="$(this).hide();" onmouseover="$(this).show();"><?=$row->abstract?></div>
                         </div>
                         <div class="tag">
-                            <?php foreach($row->tags as $tag){ ?>
-                            <a href="#"><?=$tag?></a>
+                            <?php foreach($row->tags as $tag_id=>$tag){ ?>
+                            <a href="<?=site_url($this->_uri).'/'.$tag_id?>"><?=$tag?></a>
                             <?php } ?>
                         </div>
                     </div>

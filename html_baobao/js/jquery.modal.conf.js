@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $('.modalLink').modal({
-        trigger: '[rel=modalLink]',          // id or class of link or button to trigger modal
+        trigger: '[rel=modalLink]',     // id or class of link or button to trigger modal
         olay:'div.overlay',             // id or class of overlay
         modals:'div.modal',             // id or class of modal
         animationEffect: 'slideDown',   // overlay effect | slideDown or fadeIn | default=fadeIn
@@ -14,7 +14,7 @@ $(document).ready(function(){
         moveOnScroll: true,             // move modal when window is scrolled | true or false | default=false
         resizeWindow: true,             // move modal when window is resized | true or false | default=false
         //video: 'http://player.vimeo.com/video/2355334?color=eb5a3d',    // enter the url of the video
-        //videoClass:'video',             // class of video element(s)
+        //videoClass:'video',           // class of video element(s)
         close:'.closeBtn'               // id or class of close button
     });
 });

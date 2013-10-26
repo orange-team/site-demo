@@ -26,7 +26,10 @@ a:visited {color:#2D80BA;}
 .ask .txt {display:none;position:absolute;left:0px;top:20px;z-index:999;width:606px;border:1px solid #ccc;background:#f2f2f2;padding:10px;}
 .ask .tag {display:inline-block;float:left;height:20px;margin:0 0 0 14px;}
 .ask .tag a {display:inline-block;height:20px;line-height:20px;color:#527F37;margin:0 10px 0 0;}
-.ask .page a {display:inline-block;text-align:center;background:#d8d8d8;color:#fa5;border:1px solid #ccc;font-weight:bold;width:60px;height:30px;line-height:30px;margin:2px 18px 4px 0; -webkit-border-radius:18px; -moz-border-radius:18px; -o-border-radius:18px; border-radius:18px;}
+.ask .page .prev, .ask .page .next {display:inline-block;}
+.ask .page .prev {background:url(/img/page_prev.png) no-repeat;}
+.ask .page .next {background:url(/img/page_next.png) no-repeat;}
+.ask .page a {display:inline-block;text-align:center;width:36px;height:36px;line-height:36px;margin:0 18px 0 0;}
 .ask .page a:hover {color:#fff;}
 .ask .page {float:right;}
 /* 引导 */

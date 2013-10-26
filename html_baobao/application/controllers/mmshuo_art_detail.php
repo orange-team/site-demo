@@ -1,17 +1,20 @@
-<?php
+<?php if(!defined('BASEPATH')) exit('No direct script access allowd');
 /*************************************************************************
 > File Name: mmshuo_art_detail.php
 > Author: arkulo
 > Mail: arkulo@163.com 
 > Modified : zg
 *************************************************************************/
-if(!defined('BASEPATH')) exit('No direct script access allowd');
 
 class mmshuo_art_detail extends MY_Controller
 {
+    //当前uri
+    public $_uri = '';
+
     public function __construct()
     {
         parent::__construct();
+		$this->_uri = $this->uri->segment(1) . '/index/';
         $this->load->model('ask_article_model','askArt');
         $this->load->model('user_model','user');
         //$this->load->model('ask_comment_model','comment');
@@ -20,7 +23,7 @@ class mmshuo_art_detail extends MY_Controller
         $this->load->model('relation_tag1_model','tag');
     }
 
-    public function detail($id,$user_id)
+    public function index($id,$user_id)
     {
         $id = intval($id);
         $user_id = intval($user_id);
@@ -28,6 +31,7 @@ class mmshuo_art_detail extends MY_Controller
         //文章
         $art_info = $this->askArt->getOne($id);
         $user = $this->user->get($art_info['author']);
+        //var_dump($user, $art_info);exit;
         $art_info['author'] = $user['user_nickname'];
         $section = $this->section->get_one(array('id'=>$art_info['section']));
         $art_info['section_name'] = $section['name'];
