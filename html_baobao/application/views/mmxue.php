@@ -1,8 +1,6 @@
 <?php $this->load->view('header')?>
 <div id="wraper" class="clearfloat">
-    <div class="site_route">
-        您的位置 : 妈妈学
-    </div>
+    <div class="site_route"> 您的位置 : 妈妈学 </div>
     <div class="wraper_left">
        <div class="left">
             <div class="pic_hot clearfloat" id="pic_hot">
@@ -15,7 +13,6 @@
                 </div>
                 <?php } ?>
             </div>
-
             <div class="wiki">
                 <div class="head clearfloat">
                     <h3>育儿百科 ( 专业名词的解释 , 即百科标签 )</h3>
@@ -26,7 +23,6 @@
                     <?php foreach($A_Z as $v) {?><a id="letter_<?php echo $v?>" <?php if($showKey==$v) echo 'class="on"'?>><?php echo $v?></a><?php } ?>
                     <div class="to_top" id="to_top"> </div>
                 </div>
-
                 <?php foreach($keyArr as $key=>$val) {?>
                 <div class="tag <?php if($showKey == $key) echo 'show';?>" id="key_<?php echo $key?>">
                     <?php if(0>=count($val)) echo '<p>抱歉，该字母索引下暂时还没有百科关键词</p>';
@@ -36,12 +32,11 @@
                 </div>
                 <?php } ?>
             </div><!-- wiki -->
-            
             <div class="time">
                 <dl class="head clearfloat">
                     <dt onclick="show_panel(this)" sort="1">备孕期</dt>
                     <dt onclick="show_panel(this)" sort="2" class="on">怀孕期</dt>
-                    <dt onclick="show_panel(this)" sort="3">分娩</dt>
+                    <dt onclick="show_panel(this)" sort="3">分娩期</dt>
                     <dt onclick="show_panel(this)" sort="4">0-1岁</dt>
                     <dt onclick="show_panel(this)" sort="5">1-3岁</dt>
                     <dt onclick="show_panel(this)" sort="6">3-6岁</dt>
@@ -95,7 +90,7 @@
                         <?php foreach( $timelineArr as $key=>$val ) { ?>
                         <div class="item">
                             <div class="week">
-                                <img src="/img/week_num/<?php echo sprintf('%02d',$key);?>.jpg" />
+                                <img src="/img/week_num/<?php echo sprintf('%02d',$key-1);?>.jpg" />
                                 <span>周</span>
                             </div>
                             <div class="art clearfloat">
@@ -116,9 +111,7 @@
                     </div>
                     <?php } ?>
                 </div><!-- panel -->
-                
             </div><!-- time -->
-            
             <div class="focus clearfloat">
                 <div class="head clearfloat">
                     <h3>妈妈关注</h3>

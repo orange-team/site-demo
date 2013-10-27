@@ -36,6 +36,7 @@ class Mmxue extends LB_Controller
         $this->data['keyArr'] = $this->wiki->get_wiki_key($this->data['A_Z'], 12);
         //得到时间轴文章
         $this->data['timelineArr'] = $this->get_timeline();
+        //print_r($this->data['timelineArr'] );
         $this->data['panelArr'] = $this->get_panel();
         //print_r($this->data['panelArr']);
         $this->data['isRed'] = 1;
@@ -57,7 +58,7 @@ class Mmxue extends LB_Controller
     {
         //初始化数组
         $articleArr = $timelineArr = array();
-        $this->db->select('id')->from('a_timeline')->where('time_bucket >=',1)->where('time_bucket <=',6);
+        $this->db->select('id')->from('a_timeline')->where('section >=',2)->where('section <=',4);
         $timelineArr = $this->db->get()->result_array();
         foreach( $timelineArr as $k=>$v )
         {
@@ -66,11 +67,14 @@ class Mmxue extends LB_Controller
             $tmpArr = array();
             $tmpArr = $this->db->get()->result_array();
             //var_dump($tmpArr, count($tmpArr));
-            foreach( $tmpArr as $kv=>$tv )
+            if(is_array($tmpArr) && 0<count($tmpArr))
             {
-                $tmpArr[$kv]['keywordName'] = array_pop($this->get_keyword((int)$tv['keyword']));
+                foreach( $tmpArr as $kv=>$tv )
+                {
+                    $tmpArr[$kv]['keywordName'] = array_pop($this->get_keyword((int)$tv['keyword']));
+                }
+                $articleArr[$v['id']] = $tmpArr;
             }
-            $articleArr[$v['id']] = $tmpArr;
         }
         unset($timelineArr, $tmpArr);
         return $articleArr;
