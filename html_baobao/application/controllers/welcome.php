@@ -10,10 +10,9 @@ class Welcome extends MY_Controller
 	}
 	public function index()
 	{
-        $this->load->library("usermodel_tmp/ucommon");
-	    $person = new Umodel(1);
-        $this->ucommon->decorate($person);
-        $this->ucommon->getAskArticle();
+        $this->load->library("usermodel_tmp/umodel",array(1));
+        $res = $this->umodel->getAskArticle();
+        print_r($res);
     }
 
 }

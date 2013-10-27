@@ -7,6 +7,7 @@
 *************************************************************************/
 class Ucreate implements Ubase
 {   
+    public $section;
     function __construct()
     {
         $this->CI = & get_instance();
