@@ -5,7 +5,7 @@
 * date: 2013-07-28
 */
  
-class Mmxue extends MY_Controller 
+class Mmxue extends LB_Controller 
 {
     var $_table = 'a_specpage';
     //专栏封面图片路径
@@ -25,28 +25,32 @@ class Mmxue extends MY_Controller
 
 	public function index()
 	{
-        $this->data['seo'] = array('title'=>'妈妈学首页',
-                'description'=>'妈妈学首页的描述页面信息',
-                'keywords'=>'妈妈学,母婴知识,宝宝健康'
-                );
-        //要载入的css, js文件
-        $this->data['file'] = array('js'=>'mmxue','css'=>'mmxue');
+        /* 页面初始化 */
+        $this->_init();
         //6张图区域
         $this->data['specArr'] = $this->get_cover();
         //育儿百科--字母检索
         //定义默认显示A相关wiki_key
         $this->data['showKey'] = 'F';
         $this->data['A_Z'] = range('A', 'Z');
-        //$this->db->start_cache();
         $this->data['keyArr'] = $this->wiki->get_wiki_key($this->data['A_Z'], 12);
         //得到时间轴文章
         $this->data['timelineArr'] = $this->get_timeline();
         $this->data['panelArr'] = $this->get_panel();
         //print_r($this->data['panelArr']);
         $this->data['isRed'] = 1;
-        //$this->db->stop_cache();
 		$this->load->view('mmxue', $this->data);
 	}
+
+    private function _init()
+    {
+        $this->data['seo'] = array('title'=>'妈妈学首页',
+                'description'=>'妈妈学首页的描述页面信息',
+                'keywords'=>'妈妈学,母婴知识,宝宝健康'
+                );
+        //要载入的css, js文件
+        $this->data['file'] = array('js'=>'mmxue','css'=>'mmxue');	
+    }
 
     //得到时间轴文章
     private function get_timeline()
@@ -73,7 +77,7 @@ class Mmxue extends MY_Controller
     }
 
     //得到各分类的文章
-    public function get_panel()
+    private function get_panel()
     {
         //初始化数组
         $panel_article = array();

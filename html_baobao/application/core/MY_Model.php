@@ -1,60 +1,78 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * @desc:Êı¾İ²ã»ùÀà£¬Ìá¹©»ù±¾µÄCRUD²Ù×÷
+ * @desc:æ•°æ®å±‚åŸºç±»ï¼Œæä¾›åŸºæœ¬çš„CRUDæ“ä½œ
  * @author:zg
  * @date:2013/10/21
  */
 
 class MY_Model extends CI_Model
 {
-	//±íÃû
+	//è¡¨å
 	protected $_table;
-	//Ö÷¼ü
+	//ä¸»é”®
 	protected $primary_key = 'id';
 	
 	public function __construct()
 	{
 		parent::__construct();
 	}
-	
-	//Ò»Ìõ¼ÇÂ¼
-	public function getOne($primary_value)
+
+    //é€šè¿‡ä¸»é”®ï¼Œå¾—åˆ°æŸä¸€å­—æ®µæ•°æ®
+	function getFieldById($id, $field)
 	{
-		$query = $this->db->where($this->primary_key, $primary_value)
+		$this->db->select($field)->where($this->primary_key, (int)$id);
+		$arr = $this->db->get($this->_table)->row_array();
+        return empty($arr[$field])?'':$arr[$field];
+    }
+
+	//ä¸€æ¡è®°å½•
+	public function getOne($id)
+	{
+		$query = $this->db->where($this->primary_key, $id)
 					->get($this->_table);
 				
 		return ($query->num_rows() > 0) ? $query->row() : false;
 	}
 	
-    //ËùÓĞ¼ÇÂ¼
+    //åˆ—è¡¨
+	function getList($where=array(),$order="",$limit=20)
+    {
+		if(!empty($where))$this->db->where($where);
+		if(!empty($order))$this->db->order_by($order);
+        $this->db->limit($limit, 0);
+		$res = $this->db->get($this->_table)->result_array();
+        return $res;
+	}
+
+    //æ‰€æœ‰è®°å½•
 	public function getTotal()
 	{
 		return $this->db->get($this->_table)->result();
 	}
 	
-    //ĞÂÔö
+    //æ€»æ¡æ•°
+	public function getTotalNum($where=array())
+	{
+		return $this->db->count_all($this->_table);
+	}
+
+    //æ–°å¢
     public function insert($data)
 	{
 		return ($this->db->insert($this->_table, $data)) ? $this->db->insert_id() : false;
 	}
 	
-    //ĞŞ¸Ä
-    public function update($primary_value, $data)
+    //ä¿®æ”¹
+    public function update($id, $data)
 	{
-		return ($this->db->update($this->_table, $data, array($this->primary_key => $primary_value))) ? true : false;
+		return ($this->db->update($this->_table, $data, array($this->primary_key => $id))) ? true : false;
 	}
 	
-	//É¾³ı
-	public function del($primary_value)
+	//åˆ é™¤
+	public function del($id)
 	{
-		return ($this->db->delete($this->_table, array($this->primary_key => $primary_value))) ? true : false;
+		return ($this->db->delete($this->_table, array($this->primary_key => $id))) ? true : false;
 	}
 	
-    //×ÜÌõÊı
-	function getTotalNum($where=array())
-	{
-		return $this->db->count_all($this->_table);
-	}
-
 }

@@ -5,9 +5,10 @@
 * date: 2013-07-28
 */
  
-class wiki_model extends CI_Model
+class wiki_model extends MY_Model
 {
 	var $_table = 'a_wiki';
+
 	function __construct()
 	{
 		parent::__construct();
@@ -25,53 +26,7 @@ class wiki_model extends CI_Model
 		return $this->db->get()->result_array();
     }
 
-	function getTotal($where=array())
-	{
-        if(isset($where['title']) && !empty($where['title'])) 
-        {
-            $this->db->like('title',$where['title']);
-            unset($where['title']);
-        } 
-        $this->db->where($where);
-		return $this->db->count_all_results($this->_table);
-	}
-
-    //列表页
-	function getList($where=array(),$order="",$limit=20)
-    {
-		if(!empty($where))$this->db->where($where);
-		if(!empty($order))$this->db->order_by($order);
-        $this->db->limit($limit, 0);
-		$res = $this->db->get($this->_table)->result_array();
-        return $res;
-	}
-
-	function insertNew($data)
-	{
-		$this->db->insert($this->_table, $data); 
-		return $this->db->insert_id();
-	}
-
-    //为百科根新封面图片路径
-    function update_cover($id, $data)
-    {
-        $this->db->where('id', $id)->update($this->_table, $data);
-        return $this->db->affected_rows();
-    }
-
-	function update($id, $data=array())
-	{
-		$this->db->where('id', $id)->update($this->_table, $data);
-		return $this->db->affected_rows();
-	}
-	
-	function del($id)
-	{
-		$this->db->where('id', $id)->limit("1")->delete($this->_table);
-		return $this->db->affected_rows();
-	}
-
-	function getBy_name($name,$not_in_ids=array())
+    function getBy_name($name,$not_in_ids=array())
     {
         $this->db->select('id,name')->from($this->_table)->where_not_in('id',$not_in_ids)->like('name', $name)->limit(30);
         return $this->db->get()->result_array();
@@ -90,5 +45,24 @@ class wiki_model extends CI_Model
         return $keyArr;
     }
 
-	
+    //得到总数建议用基类的func
+	function getTotal($where=array())
+	{
+        if(isset($where['title']) && !empty($where['title'])) 
+        {
+            $this->db->like('title',$where['title']);
+            unset($where['title']);
+        } 
+        $this->db->where($where);
+		return $this->db->count_all_results($this->_table);
+	}
+
+    //为百科根新封面图片路径
+    function update_cover($id, $data)
+    {
+        $this->db->where('id', $id)->update($this->_table, $data);
+        return $this->db->affected_rows();
+    }
+
+		
 }
