@@ -38,19 +38,6 @@ class user_reg extends CI_Controller
         session_start();
 		$authcode = filter($this->input->post('authcode'));
         $this->data['ref'] = $this->input->get('ref');
-        /*
-        $email = filter($this->input->post('email'));
-        //email不能重复
-        $have_email = $this->user->chk_email($email);
-        if( 0>=count($have_email) )
-        {
-            $this->data['msg'] = '该邮箱已经被注册过了';
-            $this->load->helper(array('url','form'));
-			$this->load->view('user_reg', $this->data);
-            exit;
-        }
-        */
-        $this->load->library('session');
         $my_authcode = $this->session->userdata('authcode');
         if( empty($my_authcode) || $authcode != $my_authcode )
         {
@@ -81,7 +68,7 @@ class user_reg extends CI_Controller
         unset($data,$arr);
         //跳至“用户中心”
         $ref = $this->input->get('ref');
-        redirect('/user_center/?ref='.$ref);
+        redirect('/user/center/?ref='.$ref);
 	}
 
     //ajax检查email是否存在
