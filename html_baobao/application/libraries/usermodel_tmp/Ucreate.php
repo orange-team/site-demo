@@ -16,6 +16,9 @@ class Ucreate implements Ubase
         $this->CI->load->model("user_model","user");
         $this->CI->load->model("wiki_model","wiki");   
     }
+    //读取知识文章
+
+    //读取问答文章
     public function getAskArticle($where=array(),$order="id desc",$limit=20)
     {
         //用户模型如果不重写该函数，则默认$where的值
@@ -31,4 +34,33 @@ class Ucreate implements Ubase
         }
         return $res;       
     }
+    //读取标签
+    public function getTag($where=array(),$order="id asc",$limit=20)
+    {
+        if(empty($where))
+        {
+            $where = array("section"=>$this->section);
+        }
+        return $this->CI->tag->getList($where,$order,$limit);
+         
+    }
+    public function getArticle()
+    {
+        echo "";
+    }
+    public function getWiki()
+    {
+        echo "";
+    }
 }
+
+
+
+
+
+
+
+
+
+
+

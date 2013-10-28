@@ -32,6 +32,14 @@ class Umodel implements Ubase
         $res = $this->hd->getAskArticle();
         return $res;
     }
-
-
+    public function getTag()
+    {
+        return $this->hd->getTag();
+    }
+    public function getArticle()
+    {
+    
+    }
+    public function getWiki()
+    {}
 }

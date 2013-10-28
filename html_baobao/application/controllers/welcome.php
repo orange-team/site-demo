@@ -10,8 +10,9 @@ class Welcome extends MY_Controller
 	}
 	public function index($id)
 	{
+        header("Content-type: text/html; charset=utf-8"); 
         $this->load->library("usermodel_tmp/umodel",array($id));
-        $res = $this->umodel->getAskArticle();
+        $res = $this->umodel->getTag();
         print_r($res);
     }
 
