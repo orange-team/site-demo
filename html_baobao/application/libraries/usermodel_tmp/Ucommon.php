@@ -7,10 +7,11 @@
 *************************************************************************/
 class Ucommon extends Ucreate
 {
+    //用户个性化的东西，重写函数
     public function getAskArticle()
     {
         $where = array("section"=>$this->section);
-        $order = "id desc";
+        $order = "id asc";
         $limit = "2";
         return parent::getAskArticle($where,$order,$limit);
     }

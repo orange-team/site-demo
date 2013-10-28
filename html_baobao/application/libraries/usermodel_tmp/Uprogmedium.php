@@ -7,11 +7,4 @@
 *************************************************************************/
 class Uprogmedium extends Ucreate
 {
-    public function getAskArticle()
-    {
-        $where = array("section"=>$this->section);
-        $order = "id desc";
-        $limit = "2";
-        return parent::getAskArticle($where,$order,$limit);
-    }
 }

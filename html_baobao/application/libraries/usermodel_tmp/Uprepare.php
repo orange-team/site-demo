@@ -7,11 +7,5 @@
 *************************************************************************/
 class Uprepare extends Ucreate
 {
-    public function getAskArticle()
-    {
-        $where = array("section"=>$this->section);
-        $order = "id desc";
-        $limit = "20";
-        return parent::getAskArticle($where,$order,$limit);
-    }
+    //如果有个性化的东西，可以在这里重写函数    
 }
