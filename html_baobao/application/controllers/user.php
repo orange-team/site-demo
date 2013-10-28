@@ -82,7 +82,6 @@ class user extends CI_Controller
         //要载入的css, js文件
         $this->data['file'] = array('js'=>'user_select_tag','css'=>'user_select_tag');
         $this->data['isRed'] = 2;
-		$this->load->helper(array('url','form'));
 		$this->load->view('user_select_tag', $this->data);
     }  
 

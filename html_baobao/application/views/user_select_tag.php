@@ -87,7 +87,6 @@ function select_tag(id)
         imgBox.attr('src','/img/love_grap_ground.jpg'); 
         tag_arr.splice($.inArray(id,arr),1);
     }
-    alert(tag_arr);
 }
 </script>
 
