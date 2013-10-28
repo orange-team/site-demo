@@ -8,11 +8,11 @@ class Welcome extends MY_Controller
 		$this->lang->load('common');
 		$this->lang->load('index');
 	}
-	public function index($id)
+	public function index($userid)
 	{
         header("Content-type: text/html; charset=utf-8"); 
-        $this->load->library("usermodel_tmp/umodel",array($id));
-        $res = $this->umodel->getTag();
+        $this->load->library("usermodel_tmp/umodel",array($userid));
+        $res = $this->umodel->getWiki();
         print_r($res);
     }
 

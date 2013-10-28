@@ -29,8 +29,7 @@ class Umodel implements Ubase
 
     public function getAskArticle()
     {
-        $res = $this->hd->getAskArticle();
-        return $res;
+        return $this->hd->getAskArticle();
     }
     public function getTag()
     {
@@ -38,8 +37,10 @@ class Umodel implements Ubase
     }
     public function getArticle()
     {
-    
+        return $this->hd->getArticle();
     }
     public function getWiki()
-    {}
+    {
+        return $this->hd->getWiki();
+    }
 }

@@ -63,6 +63,15 @@ class wiki_model extends MY_Model
         $this->db->where('id', $id)->update($this->_table, $data);
         return $this->db->affected_rows();
     }
-
+    
+    //得到百科列表 arkulo 20:58/28/10
+    function getList($where=array(),$order="id desc",$limit=20,$offset=0)
+    {
+        $this->db->where($where);
+        $this->db->order_by($order);
+        $this->db->limit($limit,$offset);
+        $this->db->from($this->_table);
+        return $this->db->get()->result_array();
+    }
 		
 }

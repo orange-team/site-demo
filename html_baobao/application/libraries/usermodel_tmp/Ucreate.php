@@ -11,12 +11,12 @@ class Ucreate implements Ubase
     function __construct()
     {
         $this->CI = & get_instance();
+        $this->CI->load->model("article_model","article");
         $this->CI->load->model("ask_article_model","askArt");
         $this->CI->load->model("tag_model","tag");
         $this->CI->load->model("user_model","user");
         $this->CI->load->model("wiki_model","wiki");   
     }
-    //读取知识文章
 
     //读取问答文章
     public function getAskArticle($where=array(),$order="id desc",$limit=20)
@@ -42,15 +42,24 @@ class Ucreate implements Ubase
             $where = array("section"=>$this->section);
         }
         return $this->CI->tag->getList($where,$order,$limit);
-         
     }
-    public function getArticle()
+    //读取知识文章
+    public function getArticle($where=array(),$order="id desc",$limit=20)
     {
-        echo "";
+        if(empty($where))
+        {
+            $where = array("section"=>$this->section);
+        }
+        return $this->CI->article->getList($limit,0,$where);       
     }
-    public function getWiki()
+    //读取百科文章
+    public function getWiki($where=array(),$order="id desc",$limit=20)
     {
-        echo "";
+        if(empty($where))
+        {
+            $where = array("section"=>$this->section);
+        }
+        return $this->CI->wiki->getList($where,$order,$limit);       
     }
 }
 
