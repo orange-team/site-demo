@@ -14,12 +14,6 @@ class wiki_model extends MY_Model
 		parent::__construct();
 	}
 
-	function getBy_id($id)
-	{
-		$this->db->select('*')->from($this->_table)->where('id', (int)$id);
-		return $this->db->get()->row_array();
-    }
-
 	function getBy_ids($ids)
 	{
 		$this->db->select('id,name')->from($this->_table)->where_in('id', $ids);
@@ -64,6 +58,7 @@ class wiki_model extends MY_Model
         return $this->db->affected_rows();
     }
     
+    /* replaced by MY_Model->getList(...)
     //得到百科列表 arkulo 20:58/28/10
     function getList($where=array(),$order="id desc",$limit=20,$offset=0)
     {
@@ -73,5 +68,6 @@ class wiki_model extends MY_Model
         $this->db->from($this->_table);
         return $this->db->get()->result_array();
     }
+     */
 		
 }

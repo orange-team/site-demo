@@ -8,6 +8,7 @@
 class timeline_model extends CI_Model
 {
 	var $_table = 'a_timeline';
+
 	function __construct()
 	{
 		parent::__construct();
