@@ -18,30 +18,6 @@ class article_tag_model extends CI_Model
 		$this->db->select('*')->from($this->_table)->where($where);
 		return $this->db->get()->row_array();
 	}
-	function getList($where=array())
-	{
-		$this->db->select('*')->from($this->_table)->where($where);
-		return $this->db->get()->result_array();
-	}
 
-	function insertNew($data)
-	{
-		$this->db->insert($this->_table, $data); 
-		return $this->db->affected_rows();
-	}
-
-	function update($id, $data=array())
-	{
-		$this->db->where('id', $id)->update($this->_table, $data);
-		return $this->db->affected_rows();
-	}
-	
-	function del($id)
-	{
-		$this->db->where('id', $id)->limit("1")->delete($this->_table);
-		return $this->db->affected_rows();
-	}
-
-	
 	
 }

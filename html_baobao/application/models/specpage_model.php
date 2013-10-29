@@ -5,7 +5,7 @@
 * date: 2013-07-28
 */
  
-class Specpage_model extends CI_Model
+class Specpage_model extends MY_Model
 {
 	var $_table = 'a_specpage';
 

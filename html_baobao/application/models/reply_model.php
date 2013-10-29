@@ -5,7 +5,7 @@
 * date: 2013-10-05
 */
  
-class reply_model extends CI_Model
+class reply_model extends MY_Model
 {
 	var $_table = 'a_comment_reply';
 

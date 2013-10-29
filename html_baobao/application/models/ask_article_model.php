@@ -16,13 +16,6 @@ class ask_article_model extends MY_Model
         parent::__construct();
     }
 
-    public function getOne($id)
-    {
-        $this->db->where('id',$id);
-        $query = $this->db->get('a_ask_article');
-        return $query->row_array();
-    }
-
     //关联标签
     public function getTag($id)
     {
@@ -48,28 +41,6 @@ class ask_article_model extends MY_Model
         return $query->result_array();
     }
 
-    //列表页
-	function getList($where=array(), $limit=0, $offset=0)
-    {
-        if(isset($where['title']) && !empty($where['title'])) 
-        {
-            $this->db->like('title',$where['title']);
-            unset($where['title']);
-        } 
-		$this->db->select(self::TBL_ASK.'.*');
-        $this->db->join(self::TBL_ASK_TAG, self::TBL_ASK_TAG.'.target_id='.self::TBL_ASK.'.id', 'left');
-		($where) ? $this->db->where($where) : '';
-		$this->db->order_by("id DESC");
-        if($limit != 0 || $offset != 0)
-            $this->db->limit($limit, $offset);
-		return $this->db->get(self::TBL_ASK);
-	}
-
-    //总条数
-    function getTotal($where=array())
-	{
-        $this->db->where($where);
-		return $this->db->count_all_results(self::TBL_ASK);
-	}
+    
 }
 
