@@ -13,19 +13,30 @@ class Tag_model extends MY_Model
 		parent::__construct();
 	}
 
+    /* replaced by MY_Model->getOne($id)
 	function getBy_id($id)
 	{
 		$this->db->select('*')->from($this->_table)->where('id', (int)$id);
 		return $this->db->get()->row_array();
     }
+     */
 
+    /* replaced by MY_Model->getFieldById($id,$field)
     function getFieldBy_id($id, $field)
 	{
 		$this->db->select($field)->from($this->_table)->where('id', (int)$id);
 		$arr = $this->db->get()->row_array();
         return empty($arr[$field])?'':$arr[$field];
     }
+     */
 
+    function getBy_name($name,$not_in_ids=array())
+    {
+        $this->db->select('id,name')->from($this->_table)->where_not_in('id',$not_in_ids)->like('name', $name)->limit(30);
+        return $this->db->get()->result_array();
+    }
+
+    //随机排序 或者 通过weight排序
     function getOrder_weight($limit,$offset,$rand=0)
     {
         $this->db->select('id,name')->from($this->_table);
@@ -40,7 +51,6 @@ class Tag_model extends MY_Model
         return $this->db->get()->result_array();
 
     }
-
 
 	function getBy_ids($ids)
 	{
@@ -65,6 +75,7 @@ class Tag_model extends MY_Model
 		return $this->db->count_all_results($this->_table);
 	}
 
+    /* replaced by MY_Model->getList(...)
 	//列表页
 	function getList($where=array(),$order="",$limit=20,$offset=0)
     {
@@ -73,29 +84,6 @@ class Tag_model extends MY_Model
         if(intval($limit)) $this->db->limit($limit,0);
 		return $this->db->get($this->_table)->result_array();
 	}
+     */
 
-	function insert($data)
-	{
-		$this->db->insert($this->_table, $data); 
-		return $this->db->affected_rows();
-	}
-
-	function update($id, $data=array())
-	{
-		$this->db->where('id', $id)->update($this->_table, $data);
-		return $this->db->affected_rows();
-	}
-	
-	function del($id)
-	{
-		$this->db->where('id', $id)->limit("1")->delete($this->_table);
-		return $this->db->affected_rows();
-	}
-
-	function getBy_name($name,$not_in_ids=array())
-    {
-        $this->db->select('id,name')->from($this->_table)->where_not_in('id',$not_in_ids)->like('name', $name)->limit(30);
-        return $this->db->get()->result_array();
-    }
-	
 }

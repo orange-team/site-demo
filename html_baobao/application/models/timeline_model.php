@@ -8,24 +8,28 @@
 class timeline_model extends CI_Model
 {
 	var $_table = 'a_timeline';
-
 	function __construct()
 	{
 		parent::__construct();
 	}
 
+    /* replaced by MY_Model->getOne($id)
 	function getBy_id($id)
 	{
 		$this->db->select('*')->from($this->_table)->where('id', $id);
 		return $this->db->get()->row_array();
 	}
+     */
 
+    /* replaced by MY_Model->getTotalNum($where)
 	function getTotal($where=array())
 	{
         $this->db->where($where);
 		return $this->db->count_all_results($this->_table);
 	}
+     */
 
+    /* replaced by MY_Model->getList(...)
 	//列表页
 	function getList($limit=0, $offset=0, $where=array())
     {
@@ -34,17 +38,6 @@ class timeline_model extends CI_Model
 		$this->db->limit($limit, $offset);
 		return $this->db->get($this->_table);
 	}
+     */
 
-	function insert($data)
-	{
-		$this->db->insert($this->_table, $data); 
-		return $this->db->affected_rows();
-	}
-	
-	function del($timeline_id)
-	{
-		$this->db->where('id', $timeline_id)->limit("1")->delete($this->_table);
-		return $this->db->affected_rows();
-	}
-	
 }

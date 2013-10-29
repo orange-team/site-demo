@@ -36,13 +36,13 @@ class MY_Model extends CI_Model
 	}
 	
     //列表
-	function getList($where=array(),$order="",$limit=20)
+	function getList($where=array(),$order="",$limit=20,$offset=0)
     {
 		if(!empty($where))$this->db->where($where);
 		if(!empty($order))$this->db->order_by($order);
-        $this->db->limit($limit, 0);
-		$res = $this->db->get($this->_table)->result_array();
-        return $res;
+        if(intval($limit)) $this->db->limit($limit);
+        if(intval($offset)) $this->db->offset($offset);
+		return $this->db->get($this->_table)->result_array();
 	}
 
     //所有记录
