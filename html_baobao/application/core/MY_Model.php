@@ -31,18 +31,16 @@ class MY_Model extends CI_Model
 	{
 		$query = $this->db->where($this->primary_key, $id)
 					->get($this->_table);
-				
 		return ($query->num_rows() > 0) ? $query->row() : false;
 	}
 	
     //列表
-	function getList($where=array(),$order="",$limit=20)
+	function getList($where=array(), $limit=0, $offset=0, $order='')
     {
 		if(!empty($where))$this->db->where($where);
 		if(!empty($order))$this->db->order_by($order);
         $this->db->limit($limit, 0);
-		$res = $this->db->get($this->_table)->result_array();
-        return $res;
+		return $this->db->get($this->_table)->result_array();
 	}
 
     //所有记录
