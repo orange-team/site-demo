@@ -7,6 +7,8 @@
 *************************************************************************/
 class Ucommon extends Ucreate
 {
+    private $tags = array();
+
     public function getAskArticle()
     {
         $where = array("section"=>$this->section);
