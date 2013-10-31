@@ -8,10 +8,32 @@ class Welcome extends MY_Controller
 		$this->lang->load('common');
 		$this->lang->load('index');
 	}
-	public function index()
+	public function getwiki($userid)
 	{
-        $this->load->library("usermodel_tmp/umodel",array(1));
+        header("Content-type: text/html; charset=utf-8"); 
+        $this->load->library("usermodel_tmp/umodel",array($userid));
+        $res = $this->umodel->getWiki();
+        print_r($res);
+    }
+    public function getarticle($userid)
+    {
+        header("Content-type: text/html; charset=utf-8"); 
+        $this->load->library("usermodel_tmp/umodel",array($userid));
+        $res = $this->umodel->getArticle();
+        print_r($res);
+    }
+    public function getaskarticle($userid)
+    {
+        header("Content-type: text/html; charset=utf-8"); 
+        $this->load->library("usermodel_tmp/umodel",array($userid));
         $res = $this->umodel->getAskArticle();
+        print_r($res); 
+    }
+    public function gettag($userid)
+    {
+        header("Content-type: text/html; charset=utf-8"); 
+        $this->load->library("usermodel_tmp/umodel",array($userid));
+        $res = $this->umodel->getTag();
         print_r($res);
     }
 

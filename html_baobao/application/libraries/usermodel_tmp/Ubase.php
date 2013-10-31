@@ -9,4 +9,7 @@ interface Ubase
 {
     //public function getArticle();
     public function getAskArticle();
+    public function getTag();
+    public function getArticle();
+    public function getWiki();
 }

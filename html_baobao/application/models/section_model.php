@@ -35,36 +35,5 @@ class section_model extends MY_Model
         return $this->db->get($this->_table)->result_array();
     }
 
-	//列表页
-	function getList($where=array())
-    {
-		$this->db->select('*')->from($this->_table);
-		($where) ? $this->db->where($where) : '';
-		$this->db->order_by("id ASC");
-        $res = array();
-        $res = $this->db->get()->result_array();
-        //echo $this->db->last_query();
-		return $res; 
-	}
-
-	function insert($data)
-	{
-		$this->db->insert($this->_table, $data); 
-		return $this->db->insert_id();
-	}
-
-	function update($id, $data=array())
-	{
-		$this->db->where('article_id', $id)->update($this->_table, $data);
-		return $this->db->affected_rows();
-	}
-	
-	function del($id)
-	{
-		$this->db->where('id', $id)->limit("1")->delete($this->_table);
-        echo $this->db->last_query(); 
-		return $this->db->affected_rows();
-	}
-
 	
 }
