@@ -16,15 +16,13 @@ class User extends MY_Controller
 	//新增
 	function add()
 	{
-		$this->load->helper('form');
 		$this->load->view('admin/userAdd', $this->data);
 	}
 	//编辑
 	function edit($user_id)
 	{
-		$this->load->helper('form');
 		$this->data['menu_id'] = (int)$user_id;
-		$this->data['user'] = $this->user->get($user_id);
+		$this->data['user'] = $this->user->getOne($user_id);
 		$this->data['user_id'] = (int)$user_id;
 		$this->load->view('admin/userEdit', $this->data);
 	}

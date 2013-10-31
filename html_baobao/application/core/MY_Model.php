@@ -26,29 +26,21 @@ class MY_Model extends CI_Model
         return empty($arr[$field])?'':$arr[$field];
     }
 
-	//一条记录
+	//通过逐渐，得到一条记录
 	public function getOne($id)
 	{
 		$query = $this->db->where($this->primary_key, $id)
 					->get($this->_table);
 		return ($query->num_rows() > 0) ? $query->row() : false;
-	}
-	
+    }
+   	
     //列表
-<<<<<<< HEAD
 	function getList($where=array(), $limit=0, $offset=0, $order='')
-    {
-		if(!empty($where))$this->db->where($where);
-		if(!empty($order))$this->db->order_by($order);
-        $this->db->limit($limit, 0);
-=======
-	function getList($where=array(),$order="",$limit=20,$offset=0)
     {
 		if(!empty($where))$this->db->where($where);
 		if(!empty($order))$this->db->order_by($order);
         if(intval($limit)) $this->db->limit($limit);
         if(intval($offset)) $this->db->offset($offset);
->>>>>>> bf8749996a5a7d420eadb25b05f625b2f3e16b41
 		return $this->db->get($this->_table)->result_array();
 	}
 

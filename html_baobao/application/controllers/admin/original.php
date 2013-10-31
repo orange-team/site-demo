@@ -26,7 +26,6 @@ class Original extends MY_Controller
 	//列表
 	function showlist($section=0,$title='')
 	{
-        $this->load->helper('form'); 
         //搜索
         $where = array();
         //搜栏目segment(4)
@@ -71,7 +70,7 @@ class Original extends MY_Controller
             if($where['section'])
             {
                 $where_section['section'] = $where['section'];
-                $this->data['keywords'] =  $this->keyword->getList(0,0,$where_section);
+                $this->data['keywords'] =  $this->keyword->getList($where_section, 0,0);
             }
 
             $this->data['section'] = $section; 
@@ -92,7 +91,7 @@ class Original extends MY_Controller
 		//每页
 		$config['per_page'] = $this->data['pagesize'] = 15; 
 		//总数
-		$config['total_rows'] = $this->original->getTotal($where);
+		$config['total_rows'] = $this->original->getTotalNum($where);
 		$this->data['section'] = (int)$section;
 		$config['uri_segment'] = 6;
 		$config['first_link'] = '首页';
@@ -102,7 +101,7 @@ class Original extends MY_Controller
 		$this->pagination->initialize($config); 
 		$this->data['page'] = $this->pagination->create_links();
 		$offset = $this->uri->segment($config['uri_segment']);
-		$arr = $this->original->getList($this->data['pagesize'], $offset, $where);
+		$arr = $this->original->getList($where, $this->data['pagesize'], $offset);
         //顶级栏目
         $this->data['one_section'] = $this->section->getBy_parent(0);
 		$this->data['originalArr'] = $arr;
@@ -126,9 +125,7 @@ class Original extends MY_Controller
 	//编辑原创
 	function edit($original_id)
 	{
-		$this->load->helper('form');
-		$this->load->helper('common');
-		$this->data = $this->original->getBy_id($original_id);
+		$this->data = $this->original->getOne($original_id);
         $section = $this->section->get_one(array('id'=>$this->data['section']));
         $is_two = false;     //是否显示二级栏目
         $is_three = false;   //是否显示三级栏目
@@ -168,7 +165,7 @@ class Original extends MY_Controller
         $childs_id = array_keys($list[1]);//当前栏目下所有子栏目id
         array_unshift($childs_id,$keyword_section);
         $where['section'] = $childs_id;
-        $this->data['keywords'] = $this->keyword->getList(0,0,$where);
+        $this->data['keywords'] = $this->keyword->getList($where,0,0);
         
         //顶级栏目
         $this->data['one_section'] = $this->section->getBy_parent(0);
@@ -217,7 +214,6 @@ class Original extends MY_Controller
 
 	function saveEdit($original_id)
 	{
-        $this->load->helper('common');
 		if($this->input->post('section')) $data['section'] = filter($this->input->post('section'));
 		if($this->input->post('keyword')) $data['keyword'] = filter($this->input->post('keyword'));
 		if($this->input->post('title')) $data['title'] = filter($this->input->post('title'));
@@ -252,7 +248,7 @@ class Original extends MY_Controller
 				'source' => $this->input->post('source'),
 				'recommend' => $this->input->post('recommend'),
 				);
-		$affected_rows = $this->original->insertNew($data);
+		$affected_rows = $this->original->insert($data);
 		$data['msg'] = ($affected_rows>0) ? '成功' : '失败';
 		$section = $this->input->post('section').'/';
 		$data['url'] = '/admin/original/showlist/'.$section;
@@ -285,7 +281,7 @@ class Original extends MY_Controller
                 $childs_id = array_keys($list[1]);//当前栏目下所有子栏目id
                 array_unshift($childs_id,$section_id);
                 $where['section'] = $childs_id;
-                $childs['keywords'] = $this->keyword->getList(0,0,$where);
+                $childs['keywords'] = $this->keyword->getList($where,0,0);
             }
             if($id == 0)
             {
