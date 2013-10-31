@@ -77,7 +77,6 @@ class wiki extends MY_Controller
 	//编辑百科
 	function edit($wiki_id)
 	{
-		$this->load->helper('form');
 		$arr = $this->wiki->getOne($wiki_id);
         //在线编辑器
 		$eddt = array('name' =>'wiki_content', 'id' =>'wiki_content', 'value' =>$arr['wiki_content']);
