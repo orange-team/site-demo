@@ -7,12 +7,9 @@
 *************************************************************************/
 class Ucommon extends Ucreate
 {
-<<<<<<< HEAD
     private $tags = array();
 
-=======
     //用户个性化的东西，重写函数
->>>>>>> usermodel base has completed except reading function of dataset
     public function getAskArticle()
     {
         $where = array("section"=>$this->section);
