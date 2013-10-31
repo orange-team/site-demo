@@ -86,7 +86,7 @@ class Tag extends MY_Controller
 	//编辑
 	function edit($id)
 	{
-		$arr = $this->tag->getBy_id($id);
+		$arr = $this->tag->getOne($id);
 		$this->load->view('admin/tagEdit', $arr);
 	}
 

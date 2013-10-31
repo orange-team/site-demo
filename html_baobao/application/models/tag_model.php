@@ -14,23 +14,6 @@ class Tag_model extends MY_Model
 		parent::__construct();
 	}
 
-    /* replaced by MY_Model->getOne($id)
-	function getBy_id($id)
-	{
-		$this->db->select('*')->from($this->_table)->where('id', (int)$id);
-		return $this->db->get()->row_array();
-    }
-     */
-
-    /* replaced by MY_Model->getFieldById($id,$field)
-    function getFieldBy_id($id, $field)
-	{
-		$this->db->select($field)->from($this->_table)->where('id', (int)$id);
-		$arr = $this->db->get()->row_array();
-        return empty($arr[$field])?'':$arr[$field];
-    }
-     */
-
     function getBy_name($name,$not_in_ids=array())
     {
         $this->db->select('id,name')->from($this->_table)->where_not_in('id',$not_in_ids)->like('name', $name)->limit(30);
@@ -75,16 +58,4 @@ class Tag_model extends MY_Model
         if(isset($in_where)) $this->db->where_in('section',$in_where);
 		return $this->db->count_all_results($this->_table);
 	}
-
-    /* replaced by MY_Model->getList(...)
-	//列表页
-	function getList($where=array(),$order="",$limit=20,$offset=0)
-    {
-        if(!empty($where))$this->db->where($where);
-		if(!empty($order))$this->db->order_by($order);
-        if(intval($limit)) $this->db->limit($limit,0);
-		return $this->db->get($this->_table)->result_array();
-	}
-     */
-
 }

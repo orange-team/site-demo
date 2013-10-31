@@ -9,21 +9,22 @@ class specpage extends MY_Controller
 {
     //封面图片路径
     var $specpage_path = '/uploads/img/specpage/';
+    var $_info = '';
+
 	function __construct()
 	{
 		parent::__construct();
         //当前控制器名，用于view中复用
         $this->data['_class'] = Strtolower(__CLASS__);
+        $this->_info['name'] = '专栏';
 		$this->load->model('specpage_model','specpage');
 		$this->load->model('section_model','section');
 		$this->load->model('keyword_model','keyword');
-        error_reporting(E_ALL ^ E_NOTICE);
     }
 
 	//专栏列表
 	function showlist($section=0,$title='')
 	{
-        $this->load->helper('form'); 
         //搜索
         $where = array();
         //搜内容segment(4)
@@ -35,12 +36,11 @@ class specpage extends MY_Controller
             $where['title'] = $this->data['title']; 
         }
 		//分页
-		$this->load->library('pagination');
 		$config['base_url'] = site_url('admin/specpage/showlist/'.$this->data['title'].'/');
 		//每页
 		$config['per_page'] = $this->data['pagesize'] = 15 ; 
 		//总数
-		$config['total_rows'] = $this->specpage->getTotal($where);
+		$config['total_rows'] = $this->specpage->getTotalNum($where);
 		$config['uri_segment'] = 5;
 		$config['first_link'] = '首页';
 		$config['last_link'] = '尾页';
@@ -49,7 +49,7 @@ class specpage extends MY_Controller
 		$this->pagination->initialize($config); 
 		$this->data['page'] = $this->pagination->create_links();
 		$offset = $this->uri->segment(5);
-		$arr = $this->specpage->getList($this->data['pagesize'], $offset, $where);
+		$arr = $this->specpage->getList($where, $this->data['pagesize'], $offset);
 		$this->data['specpageArr'] = $arr;
         unset($arr);
         $this->data['number'] = $offset+1; 
@@ -109,8 +109,8 @@ class specpage extends MY_Controller
         //封面图片路径
         $this->specpage_path .= $specpage_id.'/';
 		$this->load->helper('form');
-		$arr = $this->specpage->getBy_id($specpage_id);
-        $section = $this->section->get_one(array('id'=>$arr['section']));
+		$arr = $this->specpage->getOne($specpage_id);
+        $section = $this->section->getOne(array('id'=>$arr['section']));
         $is_two = false;     //是否显示二级栏目
         $is_three = false;   //是否显示三级栏目
         $keyword_section = '';  //与关键词关联的栏目id

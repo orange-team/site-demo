@@ -2,7 +2,7 @@
 
 class Admin_user_model extends MY_Model
 {
-	private $_table='admin_user';
+	var $_table='admin_user';
 
 	function __construct()
 	{
