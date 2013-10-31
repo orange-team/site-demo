@@ -8,9 +8,9 @@ class Welcome extends MY_Controller
 		$this->lang->load('common');
 		$this->lang->load('index');
 	}
-	public function index()
+	public function index($id)
 	{
-        $this->load->library("usermodel_tmp/umodel",array(1));
+        $this->load->library("usermodel_tmp/umodel",array($id));
         $res = $this->umodel->getAskArticle();
         print_r($res);
     }

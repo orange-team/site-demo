@@ -18,6 +18,11 @@ class Ucreate implements Ubase
     }
     public function getAskArticle($where=array(),$order="id desc",$limit=20)
     {
+        //用户模型如果不重写该函数，则默认$where的值
+        if(empty($where))
+        {
+            $where = array("section"=>$this->section);
+        }
         $res = $this->CI->askArt->get($where,$order,$limit);
         foreach($res as $key=>$item)
         {
