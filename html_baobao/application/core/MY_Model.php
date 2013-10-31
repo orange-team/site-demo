@@ -35,11 +35,20 @@ class MY_Model extends CI_Model
 	}
 	
     //列表
+<<<<<<< HEAD
 	function getList($where=array(), $limit=0, $offset=0, $order='')
     {
 		if(!empty($where))$this->db->where($where);
 		if(!empty($order))$this->db->order_by($order);
         $this->db->limit($limit, 0);
+=======
+	function getList($where=array(),$order="",$limit=20,$offset=0)
+    {
+		if(!empty($where))$this->db->where($where);
+		if(!empty($order))$this->db->order_by($order);
+        if(intval($limit)) $this->db->limit($limit);
+        if(intval($offset)) $this->db->offset($offset);
+>>>>>>> bf8749996a5a7d420eadb25b05f625b2f3e16b41
 		return $this->db->get($this->_table)->result_array();
 	}
 

@@ -7,8 +7,11 @@
 *************************************************************************/
 class Ucommon extends Ucreate
 {
+<<<<<<< HEAD
     private $tags = array();
 
+=======
+>>>>>>> e45f7be6bba63095a92c26ffeac4598dfab17894
     //用户个性化的东西，重写函数
     public function getAskArticle()
     {
