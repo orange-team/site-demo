@@ -20,7 +20,6 @@ class comment extends MY_Controller
 	//列表
 	function showlist($section=0,$title='')
 	{
-        $this->load->helper('form'); 
         //搜索
         $where = array();
         //搜栏目segment(4)
@@ -65,7 +64,7 @@ class comment extends MY_Controller
             if($where['section'])
             {
                 $where_section['section'] = $where['section'];
-                $this->data['keywords'] =  $this->keyword->getList(0,0,$where_section);
+                $this->data['keywords'] =  $this->keyword->getList($where_section, 0, 0);
             }
 
             $this->data['section'] = $section; 
@@ -86,7 +85,7 @@ class comment extends MY_Controller
 		//每页
 		$config['per_page'] = $this->data['pagesize'] = 15; 
 		//总数
-		$config['total_rows'] = $this->comment->getTotal($where);
+		$config['total_rows'] = $this->comment->getTotalNum($where);
 		$this->data['section'] = (int)$section;
 		$config['uri_segment'] = 6;
 		$config['first_link'] = '首页';
@@ -96,7 +95,7 @@ class comment extends MY_Controller
 		$this->pagination->initialize($config); 
 		$this->data['page'] = $this->pagination->create_links();
 		$offset = $this->uri->segment($config['uri_segment']);
-		$arr = $this->comment->getList($this->data['pagesize'], $offset, $where);
+		$arr = $this->comment->getList($where, $this->data['pagesize'], $offset);
         //顶级栏目
         $this->data['one_section'] = $this->section->getBy_parent(0);
 		$this->data['commentArr'] = $arr;
@@ -120,9 +119,7 @@ class comment extends MY_Controller
 	//编辑原创
 	function edit($comment_id)
 	{
-		$this->load->helper('form');
-		$this->load->helper('common');
-		$this->data = $this->comment->getBy_id($comment_id);
+		$this->data = $this->comment->getOne($comment_id);
         //在线编辑器
 		$edit = array('name' =>'content', 'id' =>'content', 'value' =>$this->data['content']);
 		$this->load->library('kindeditor',$edit);
@@ -159,13 +156,11 @@ class comment extends MY_Controller
             $data['msg'] = ($affected_rows>0) ? '成功' : '失败';
             $data['url'] = site_url($this->_info['view_path'].'/showList/');
             echo $data['msg'];
-            //$this->load->view('admin/info', $data);
         }
     }
 
 	function saveEdit($comment_id)
 	{
-        $this->load->helper('common');
 		if($this->input->post('section')) $data['section'] = filter($this->input->post('section'));
 		if($this->input->post('keyword')) $data['keyword'] = filter($this->input->post('keyword'));
 		if($this->input->post('title')) $data['title'] = filter($this->input->post('title'));

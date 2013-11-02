@@ -26,7 +26,6 @@ class Img_lib extends MY_Controller
 	//列表
 	function showlist($title='')
 	{
-        $this->load->helper('form'); 
         //搜索
         $where = array();
         $this->data['keywords'] = array(); //关键词数组
@@ -42,18 +41,18 @@ class Img_lib extends MY_Controller
         $this->load->helper('admin');
 		$config['base_url'] = site_url($this->_info['view_path'].'/showlist/'.$this->data['title'].'/');
 		//总数
-		$config['total_rows'] = $this->img_lib->getTotal($where);
+		$config['total_rows'] = $this->img_lib->getTotalNum($where);
 		$config['per_page'] = $this->data['pagesize'] = 15; 
 		$config['uri_segment'] = 5;
 		$this->data['page'] = my_page($config);
 		$offset = $this->uri->segment(5);
-		$arr = $this->img_lib->getList(15, $offset, $where);
+		$arr = $this->img_lib->getList($where, 15, $offset);
 		$this->load->model('tag_model','tag');
         foreach($arr as $key=>$val)
         {
             $arr[$key]['path'] = $this->img_lib_path.substr($val['path'],0,2).'/'.$val['path'];
             //获得标签名称
-            $arr[$key]['tag_name'] = $this->tag->getFieldBy_id($val['tag_id'],'name');
+            $arr[$key]['tag_name'] = $this->tag->getFieldById($val['tag_id'],'name');
         }
         //顶级栏目
 		$this->data['img_libArr'] = $arr;
@@ -84,7 +83,7 @@ class Img_lib extends MY_Controller
 				'source' => $this->input->post('本站'),
 				'add_time' => date('Y-m-d H:i:s'),
 				);
-		$img_lib_id = $this->img_lib->addone($data);
+		$img_lib_id = $this->img_lib->insert($data);
         //上传图片,并做缩略
         $this->load->helper('upload');
 		$uploadData = upload_img('upImg','img_lib');
@@ -112,13 +111,12 @@ class Img_lib extends MY_Controller
         //读取图片库
 		$this->load->helper('form');
 		$this->load->helper('common');
-		$this->data = $this->img_lib->getBy_id($img_lib_id);
+		$this->data = $this->img_lib->getOne($img_lib_id);
         $this->load->view($this->_info['view_path'].'Edit', $this->data);
 	}
 
 	function saveEdit($img_lib_id)
 	{
-        $this->load->helper('common');
         $data = array();
 		if($this->input->post('title')) $data['title'] = filter($this->input->post('title'));
 		if($this->input->post('source')) $data['source'] = filter($this->input->post('source'));
@@ -144,7 +142,6 @@ class Img_lib extends MY_Controller
     //百度指数是gbk的，所以单写页面实现跳转
     function go_baidu_index($str)
     {
-        $this->load->helper('common');
         header('Content-Type: text/html; charset=gbk');
         echo '
         <script type="text/javascript">

@@ -39,18 +39,6 @@ class wiki_model extends MY_Model
         return $keyArr;
     }
 
-    //得到总数建议用基类的func
-	function getTotal($where=array())
-	{
-        if(isset($where['title']) && !empty($where['title'])) 
-        {
-            $this->db->like('title',$where['title']);
-            unset($where['title']);
-        } 
-        $this->db->where($where);
-		return $this->db->count_all_results($this->_table);
-	}
-
     //为百科根新封面图片路径
     function update_cover($id, $data)
     {
@@ -58,16 +46,5 @@ class wiki_model extends MY_Model
         return $this->db->affected_rows();
     }
     
-    /* replaced by MY_Model->getList(...)
-    //得到百科列表 arkulo 20:58/28/10
-    function getList($where=array(),$order="id desc",$limit=20,$offset=0)
-    {
-        $this->db->where($where);
-        $this->db->order_by($order);
-        $this->db->limit($limit,$offset);
-        $this->db->from($this->_table);
-        return $this->db->get()->result_array();
-    }
-     */
 		
 }

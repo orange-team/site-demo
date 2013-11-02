@@ -22,7 +22,6 @@ class wiki extends MY_Controller
 	//百科列表
 	function showlist($section=0,$wiki_key='')
 	{
-        $this->load->helper('form'); 
         //搜索
         $where = array();
         //搜内容segment(4)
@@ -41,7 +40,7 @@ class wiki extends MY_Controller
 		//每页
 		$config['per_page'] = $this->data['pagesize'] = 15 ; 
 		//总数
-		$config['total_rows'] = $this->wiki->getTotal($where);
+		$config['total_rows'] = $this->wiki->getTotalNum($where);
 		$config['uri_segment'] = 6;
 		$config['first_link'] = '首页';
 		$config['last_link'] = '尾页';
@@ -55,7 +54,7 @@ class wiki extends MY_Controller
         foreach($arr as $key=>$val)
         {
             //获得标签名称
-            $arr[$key]['tag_name'] = $this->tag->getFieldBy_id($val['tag_id'],'name');
+            $arr[$key]['tag_name'] = $this->tag->getFieldById($val['tag_id'],'name');
         }
 		$this->data['wikiArr'] = $arr;
         unset($arr);
@@ -66,12 +65,11 @@ class wiki extends MY_Controller
     //添加
 	function add()
 	{
-		$this->load->helper('form');
 		//在线编辑器
 		$eddt = array('name' =>'wiki_content', 'id' =>'wiki_content', 'value' =>'');
 		$this->load->library('kindeditor',$eddt); 
         $this->data = array('id'=>'null','wiki_key'=>'');
-		$this->data['id'] = $this->wiki->insertNew($this->data);
+		$this->data['id'] = $this->wiki->insert($this->data);
         $this->data['kindeditor'] = $this->kindeditor->getEditor($eddt);
 		$this->load->view($this->_info['view_path'].'Edit', $this->data);
 	}
@@ -79,8 +77,7 @@ class wiki extends MY_Controller
 	//编辑百科
 	function edit($wiki_id)
 	{
-		$this->load->helper('form');
-		$arr = $this->wiki->getBy_id($wiki_id);
+		$arr = $this->wiki->getOne($wiki_id);
         //在线编辑器
 		$eddt = array('name' =>'wiki_content', 'id' =>'wiki_content', 'value' =>$arr['wiki_content']);
 		$this->load->library('kindeditor',$eddt);

@@ -15,8 +15,9 @@ class specpage extends MY_Controller
 	{
 		parent::__construct();
         //当前控制器名，用于view中复用
-        $this->data['_class'] = Strtolower(__CLASS__);
+        $this->_info['cls'] = strtolower(__CLASS__);
         $this->_info['name'] = '专栏';
+        $this->_info['view_path'] = 'admin/'.$this->_info['cls'];
 		$this->load->model('specpage_model','specpage');
 		$this->load->model('section_model','section');
 		$this->load->model('keyword_model','keyword');
