@@ -31,16 +31,18 @@ class MY_Model extends CI_Model
 	{
 		$query = $this->db->where($this->primary_key, $id)
 					->get($this->_table);
-		return ($query->num_rows() > 0) ? $query->row() : false;
+		return ($query->num_rows() > 0) ? $query->row_array() : false;
     }
    	
     //列表
-	function getList($where=array(), $limit=0, $offset=0, $order='')
+	public function getList($where=array(), $limit=0, $offset=0, $order='',$where_in=array(),$where_like=array())
     {
 		if(!empty($where))$this->db->where($where);
 		if(!empty($order))$this->db->order_by($order);
         if(intval($limit)) $this->db->limit($limit);
         if(intval($offset)) $this->db->offset($offset);
+        if(!empty($where_in)) $this->db->where_in($where_in['field'],$where_in['values']); 
+		if(!empty($where_like))$this->db->like($where_like);
 		return $this->db->get($this->_table)->result_array();
 	}
 
@@ -52,9 +54,12 @@ class MY_Model extends CI_Model
 	}
 	
     //总条数
-	public function getTotalNum($where=array())
+	public function getTotalNum($where=array(),$where_in=array(),$where_like=array())
 	{
-		return $this->db->count_all($this->_table);
+		if(!empty($where))$this->db->where($where);
+        if(!empty($where_in)) $this->db->where_in($where_in['field'],$where_in['values']); 
+		if(!empty($where_like))$this->db->like($where_like);
+		return $this->db->count_all_results($this->_table);
 	}
 
     //新增

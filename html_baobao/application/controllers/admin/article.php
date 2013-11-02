@@ -23,6 +23,7 @@ class Article extends MY_Controller
 
         //搜索
         $where = array();
+        $where_in = array();
 
         //搜栏目segment(4)
         $this->data['section_id'] = 0;
@@ -47,36 +48,37 @@ class Article extends MY_Controller
                     $art_id_arr[] = $v['target_id'];
                 }
             }
-            $where['id'] = empty($art_id_arr)?'':$art_id_arr;
+            $where_in['field'] = 'id';
+            $where_in['values'] = empty($art_id_arr)?'':$art_id_arr;
             unset($art_id,$art_id_arr,$row);
         }
 
 
         //搜标题segment(6)
         $this->data['title'] = 0;
-        if($title)  
+        $where_like = array();
+        if(!empty($title))
         {
-            $this->data['title'] = urldecode(trim(addslashes($title))); 
-            $where['title'] = $this->data['title']; 
+            $this->data['title'] = $title;
+            $where_like = array('title'=>$title); 
         }
 
 		//分页
 		$this->load->library('pagination');
-		$config['base_url'] = site_url('admin/article/showlist/'.$this->data['section_id'].'/'.$this->data['title'].'/');
+		$config['base_url'] = site_url('admin/article/showlist/'.$this->data['section_id'].'/'.$this->data['tag_id'].'/'.$this->data['title'].'/');
 		//每页
-		$config['per_page'] = $this->data['pagesize'] = 15; 
+		$config['per_page'] = $this->data['pagesize'] = 2; 
 		//总数
-		$config['total_rows'] = $this->art->getTotal($where);
-		$config['uri_segment'] = 6;
+		$config['total_rows'] = $this->art->getTotalNum($where,$where_in,$where_like);
+		$config['uri_segment'] = 7;
 		$config['first_link'] = '首页';
 		$config['last_link'] = '尾页';
 		$config['next_link'] = '下一页';
 		$config['prev_link'] = '上一页';
 		$this->pagination->initialize($config); 
 		$this->data['page'] = $this->pagination->create_links();
-		$offset = $this->uri->segment(6);
-		$arr = $this->art->getList($this->data['pagesize'], $offset, $where);
-        //echo $this->db->last_query();
+		$offset = $this->uri->segment(7);
+		$arr = $this->art->getList($where,$this->data['pagesize'], $offset, 'id DESC', $where_in, $where_like);
         if(!empty($tag) && empty($where['id']))
         {
             $arr = array();
@@ -107,7 +109,7 @@ class Article extends MY_Controller
 	function editArt($art_id)
 	{
 		$this->load->helper('form');
-		$arr = $this->art->getBy_id($art_id);
+		$arr = $this->art->getOne($art_id);
         //等级栏目
         $arr['sections'] = $this->section->getList();
         //标签
@@ -186,7 +188,7 @@ class Article extends MY_Controller
 				'source' => $this->input->post('source'),
 				'recommend' => $this->input->post('recommend'),
 				);
-		$last_id = $this->art->insertNew($data);
+		$last_id = $this->art->insert($data);
         $tag_id = $this->input->post('tag') ? $this->input->post('tag'):0;
         $resTag = 0;
         if(!empty($tag_id) && !empty($last_id))
@@ -195,7 +197,7 @@ class Article extends MY_Controller
             $tags['tag_id'] = $tag_id;
             $tags['status_tag'] = 1;
             unset($last_id,$tag_id);
-            $resTag = $this->art_tag->insertNew($tags);
+            $resTag = $this->art_tag->insert($tags);
         }
 		$data['msg'] = ($resTag>0) ? '成功' : '失败';
 		$section = $this->input->post('section').'/';
