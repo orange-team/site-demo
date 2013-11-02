@@ -35,11 +35,7 @@ class MY_Model extends CI_Model
     }
    	
     //列表
-<<<<<<< HEAD
-	function getList($where=array(),$limit=0,$offset=0,$order='')
-=======
 	function getList($where=array(), $limit=0, $offset=0, $order='')
->>>>>>> 5923db8d16706da15725ff3d64798b253c2bd287
     {
 		if(!empty($where))$this->db->where($where);
 		if(!empty($order))$this->db->order_by($order);
