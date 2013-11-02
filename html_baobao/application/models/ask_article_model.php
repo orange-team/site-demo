@@ -27,7 +27,8 @@ class ask_article_model extends MY_Model
         $this->load->model('tag_model','tag');
         foreach($res as $key=>$val)
         {
-            $resNew[$val->tag_id] = $this->tag->getOne($val->tag_id)->name;
+            $tmpArr = $this->tag->getOne($val->tag_id);
+            $resNew[$val->tag_id] = $tmpArr['name'];
         }
         return $resNew;
     }

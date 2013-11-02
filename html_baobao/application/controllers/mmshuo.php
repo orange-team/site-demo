@@ -55,12 +55,11 @@ class Mmshuo extends LB_Controller
         }
         //var_dump($current_page, $tag);
 		$this->_offset = $this->uri->segment($this->_uri_segment);
-		$this->_ask = $this->ask->getList($where, $this->_limit, $this->_offset)->result();
+		$this->_ask = $this->ask->getList($where, $this->_limit, $this->_offset);
         //得到条目总数
-		$this->_total_count  = $this->ask->getList($where)->num_rows();
+		$this->_total_count  = count($this->ask->getList($where));
         //var_dump($where, $this->_limit, $this->_offset, $this->_ask);
         $this->data['ask'] = $this->_ask;
-        //var_dump($this->_total_count);
 		if(!empty($this->_ask))
 		{
 			$this->_prepare_ask();
@@ -68,6 +67,7 @@ class Mmshuo extends LB_Controller
 		}
 		/* 页面初始化 */
         $this->_init();
+        $this->data['on'] = 1;
         $this->data['section'] = $section;
 		$this->data['pagination'] = $this->_pagination;
 		$this->load->view('mmshuo_art_list', $this->data);
@@ -113,9 +113,10 @@ class Mmshuo extends LB_Controller
             //格式化日期
             //$ask->add_time = Common::fmt_date($ask->add_time);
 			/* 标签 */
-			$ask->tags = $this->ask->getTag($ask->id);
+			$ask['tags'] = $this->ask->getTag($ask['id']);
 			//unset($ask->content);
 		}
+        //print_r($ask->tags);exit;
 	}
 
     // 应用分页规则

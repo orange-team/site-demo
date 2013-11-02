@@ -7,7 +7,7 @@
         <dl class="timeline">
             <?php if(!empty($timeline) && is_array($timeline)) {?>
             <?php foreach($timeline as $row){ ?>
-            <dt<?=($on==$row->id) ? ' class="on"' : ''?>><a href="<?=site_url($this->_uri.'mmshuo_art_list/?timeline='.$row->id)?>"><?=$row->name?></a></dt>
+            <dt<?=($on==$row['id']) ? ' class="on"' : ''?>><a href="<?=site_url($this->_uri.'mmshuo_art_list/?timeline='.$row['id'])?>"><?=$row['time_bucket']?></a></dt>
             <?php }} ?>
         </dl>
         <div class="section clearfloat">
@@ -15,7 +15,7 @@
             <?php foreach($section as $row){ ?>
             <!--loop start-->
             <div class="item">
-                <div class="name"><?=$row->name?></div>
+                <div class="name"><?=$row['name']?></div>
                 <a class="pb_overflow" href="">孕前保健</a>
                 <a class="pb_overflow" href="#">备孕营养</a>
             </div>
@@ -71,14 +71,14 @@
                     <a href="#"><img class="avator" src="/img/defaultAvator.png"></a>
                     <div class="right">
                         <div class="title">
-                            <a class="pb_overflow" href="<?=site_url('mmshuo_art_detail/index').'/'.$row->id.'/1'?>"><?=$row->title?></a><span><?=$row->pv?></span>
+                            <a class="pb_overflow" href="<?=site_url('mmshuo_art_detail/index').'/'.$row['id'].'/1'?>"><?=$row['title']?></a><span><?=$row['pv']?></span>
                         </div>
                         <div class="summary clearfloat">
                             <div class="icon" onmouseout="$(this).next().hide();" onmouseover="$(this).next().show();">...</div>
-                            <div class="txt" onmouseout="$(this).hide();" onmouseover="$(this).show();"><?=$row->abstract?></div>
+                            <div class="txt" onmouseout="$(this).hide();" onmouseover="$(this).show();"><?=$row['abstract']?></div>
                         </div>
                         <div class="tag">
-                            <?php foreach($row->tags as $tag_id=>$tag){ ?>
+                            <?php foreach($row['tags'] as $tag_id=>$tag){ ?>
                             <a href="<?=site_url($this->_uri).'/'.$tag_id?>"><?=$tag?></a>
                             <?php } ?>
                         </div>
