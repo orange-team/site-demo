@@ -1,6 +1,5 @@
 <?php
 $CI = &get_instance();
-$CI->load->helper('form');
 $CI->load->model('comment_model','comment');
 $CI->load->model('reply_model','reply');
 $CI->load->model('user_model','user');
@@ -16,24 +15,9 @@ if(!isset($this->_user['id']) || 0>=$this->_user['id'])
     $login = false;
 }
 $where = array('c_status'=>1,'target_id'=>$target_id);
-$commentArr = $CI->comment->getList(20, 0, $where);
-$commentNum = $CI->comment->getTotal($where);
+$commentArr = $CI->comment->getList($where, 20, 0);
+$commentNum = $CI->comment->getTotalNum($where);
 $replyArr = $userArr = array();
-/*
-foreach($commentArr as $key=>$val)
-{
-    //获取用户名
-    if(!isset($userArr[$val['user_id']]))
-    {
-        $arr = $CI->user->getFieldBy_id($val['user_id'],'user_nickname');
-        $userArr[$val['user_id']] = $arr['user_nickname'];
-    }
-    if(0>=$val['reply_num']) continue;
-    //获取回复
-    $replyArr[$val['id']][] = $CI->reply->getList('','',array('audit_status'=>1,'comment_id'=>$val['id']));
-}
-var_dump($commentArr,$replyArr);
-*/
 ?>
 <link href="/css/comment.css" rel="stylesheet" type="text/css" />
 <div class="discuss">

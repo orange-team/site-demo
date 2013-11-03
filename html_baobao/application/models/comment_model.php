@@ -5,7 +5,7 @@
 * date: 2013-10-04
 */
  
-class comment_model extends CI_Model
+class comment_model extends MY_Model
 {
 	var $_table = 'a_comment';
 	function __construct()
