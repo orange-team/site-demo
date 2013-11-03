@@ -30,7 +30,12 @@ function reg()
     <div class="nav"></div>
     <div class="hd_box">
         <div class="top_nav_rg">
+            <?php if( $this->session->userdata('user_id') ) { 
+                //echo $this->session->userdata('nickname'); ?>
+            <a href="javascript:logout();" class="login">退出</a> 
+            <?php } else { ?>
             <a href="javascript:login();" class="login">登录</a> 
+            <?php } ?>
             <a href="javascript:reg();">免费注册</a> 
             <a><img src="/img/xina.png" width="25" height="25" /> 微博登录</a> 
             <a><img src="/img/qq.png" width="25" height="25" /> QQ登录</a> 

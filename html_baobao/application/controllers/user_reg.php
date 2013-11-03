@@ -5,7 +5,7 @@
 * date: 2013-09-19
 */
 
-class user_reg extends CI_Controller
+class user_reg extends LB_Controller
 {
     var $_info = array();
     var $_ref = '';
@@ -14,20 +14,17 @@ class user_reg extends CI_Controller
 		parent::__construct();
         $this->_info['cls'] = strtolower(__CLASS__);
         $this->_info['name'] = '用户';
-        //$this->_info['view_path'] = ''.$this->_info['cls'];
         $this->load->model('user_model','user');
 	}
 
     function index()
 	{
         $this->_init();
-        $this->load->helper('common');
         if(filter($this->input->post('email')))
         {
             $this->_chk();
         }
 		$this->data['err_msg'] = $this->uri->segment(3, 0);
-        $this->load->helper(array('url','form'));
         $this->data['ref'] = $this->input->get('ref');
 		$this->load->view('user_reg', $this->data);
 	}
@@ -35,7 +32,6 @@ class user_reg extends CI_Controller
     //注册
 	function _chk()
 	{
-        session_start();
 		$authcode = filter($this->input->post('authcode'));
         $this->data['ref'] = $this->input->get('ref');
         $my_authcode = $this->session->userdata('authcode');
@@ -53,7 +49,7 @@ class user_reg extends CI_Controller
                 'user_reg_time' => $now,
                 'user_login_time' => $now,
         );
-        $insert_id = $this->user->add($data);
+        $insert_id = $this->user->insert($data);
         //数据写入失败
         if( 0>=$insert_id )
         {
@@ -63,8 +59,9 @@ class user_reg extends CI_Controller
             exit;
         }
         //注册session
-        $arr = array('nickname'=>$data['nickname'], 'user_id'=>$insert_id);
+        $arr = array('nickname'=>$data['user_nickname'], 'user_id'=>$insert_id);
         $this->session->set_userdata($arr); 
+        $this->_user['id'] = $insert_id;
         unset($data,$arr);
         //跳至“用户中心”
         $ref = $this->input->get('ref');
@@ -90,7 +87,6 @@ class user_reg extends CI_Controller
         $authcode = $my_authcode = '';
         $authcode = $this->input->post('authcode');
         $msg = 'true';
-        session_start();
         $this->load->library('session'); 
         $my_authcode = $this->session->userdata('authcode'); 
         if ($authcode && $authcode!=$my_authcode)

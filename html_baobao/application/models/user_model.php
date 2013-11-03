@@ -1,12 +1,17 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
-class user_model extends CI_Model
+/**
+* description: 评论模型
+* author: zg
+* date: 2013-10-04
+*/
+ 
+class user_model extends MY_Model
 {
-	private $_table='a_user';
+	var $_table='a_user';
+    var $primary_key='user_id';
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->database();
 	}
 
     //验证email

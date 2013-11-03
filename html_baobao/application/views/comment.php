@@ -10,7 +10,7 @@ $CI->comment->_get_table($type);
 $CI->reply->_get_table($type);
 //判断用户是否登录
 $login = true;
-if(!isset($this->_user['id']) || 0>=$this->_user['id'])
+if(!$this->session->userdata('user_id'))
 {
     $login = false;
 }
@@ -26,7 +26,7 @@ $replyArr = $userArr = array();
         <?php if(0>=count($commentArr)) echo '<span style="display:block;height:35px;line-height:35px;text-align:center;">暂无评论</span>';?>
         <?php
         foreach($commentArr as $key=>$val) {
-        $user = $CI->user->getFieldBy_id($val['user_id'],'user_nickname');
+        $user = $CI->user->getFieldById($val['user_id'],'user_nickname');
         ?>
         <dt class="clearfloat" id="comment_<?php echo $val['id']?>" onmouseover="javascript:$(this).find('a.reply').first().show();" onmouseout="javascript:$(this).find('a.reply').first().hide();">
             <a href="#"><img class="avator" src="/img/defaultAvator.png"></a>
@@ -50,15 +50,14 @@ $replyArr = $userArr = array();
                 <?php
                 if(0<$val['reply_num']) { 
                 //获取回复
-                $reply = $CI->reply->getList('','',array('audit_status'=>1,'comment_id'=>$val['id']));
+                $reply = $CI->reply->getList(array('audit_status'=>1,'comment_id'=>$val['id']));
                 if( 0>=count($reply) ) continue;
-                //var_dump(count($reply), $reply);exit;
                 ?>
                 <dl class="reply_part">
                     <?php foreach($reply as $k=>$v) {
                     if( 0>=count($v) ) continue;
                     $user = array();
-                    $user = $CI->user->getFieldBy_id($v['user_id'],'user_nickname');
+                    $user = $CI->user->getFieldById($v['user_id'],'user_nickname');
                     ?>
                     <dt onmouseover="javascript:$(this).find('a.reply').first().show();" onmouseout="javascript:$(this).find('a.reply').first().hide();">
                         <a href="#"><img class="avator_tiny" src="/img/defaultAvator.png"></a>

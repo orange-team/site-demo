@@ -6,6 +6,7 @@
  * author: zg
  * date : 2013/10/07
  */
+
 //前台基类
 class LB_Controller extends CI_Controller
 {
