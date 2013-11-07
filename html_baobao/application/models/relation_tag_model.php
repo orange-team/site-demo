@@ -22,17 +22,6 @@ class Relation_tag_model extends CI_Model
         }
 		return $this->db->get()->result_array();
     }
-	function insertNew($data)
-	{
-		$this->db->insert($this->_table, $data); 
-		return $this->db->affected_rows();
-	}
-
-	function del($data)
-	{
-		$this->db->where($data)->limit("1")->delete($this->_table);
-		return $this->db->affected_rows();
-	}
 
 	function getBy_name($name)
     {
